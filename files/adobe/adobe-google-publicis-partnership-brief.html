@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adobe Ã Google Ã Publicis | Creative Performance Partnership Brief</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f0f10;
+      color: #ffffff;
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ââ Header ââ */
+    .page-header {
+      background: linear-gradient(135deg, #0a0a0b 0%, #151520 60%, #0f0f10 100%);
+      border-bottom: 1px solid #2a2a2d;
+      padding: 64px 28px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: -60%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(217,119,87,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(217,119,87,0.12);
+      border: 1px solid rgba(217,119,87,0.28);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #D97757;
+      margin-bottom: 22px;
+    }
+
+    .header-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #D97757;
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+    .page-title {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      margin-bottom: 18px;
+    }
+
+    .page-title .x { color: #D97757; }
+
+    .page-subtitle {
+      font-size: 16px;
+      color: #9a9aaa;
+      max-width: 640px;
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 28px;
+      font-size: 12px;
+      color: #555560;
+      flex-wrap: wrap;
+    }
+
+    /* ââ Section scaffold ââ */
+    .section {
+      padding: 72px 0;
+      border-bottom: 1px solid #1c1c20;
+    }
+
+    .section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #D97757;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    .section-intro {
+      font-size: 14px;
+      color: #9a9aaa;
+      max-width: 700px;
+      margin-bottom: 40px;
+      line-height: 1.75;
+    }
+
+    /* ââ Opportunity stat cards ââ */
+    .opp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .opp-card {
+      background: #1a1a1d;
+      border: 1px solid #2a2a2d;
+      border-radius: 12px;
+      padding: 26px 22px;
+    }
+
+    .opp-card .occ-icon { font-size: 26px; margin-bottom: 12px; }
+    .opp-card .occ-figure { font-size: 30px; font-weight: 800; color: #D97757; margin-bottom: 6px; line-height: 1; }
+    .opp-card .occ-label { font-size: 13px; color: #9a9aaa; line-height: 1.5; }
+
+    /* ââ Win-win-win cards ââ */
+    .win-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .win-card {
+      background: #1a1a1d;
+      border: 1px solid #2a2a2d;
+      border-radius: 12px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .win-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .win-card.adobe::after  { background: linear-gradient(90deg, #E34028, #ff7a5a); }
+    .win-card.google::after { background: linear-gradient(90deg, #4285F4, #34A853); }
+    .win-card.publicis::after { background: linear-gradient(90deg, #6557D2, #a080ff); }
+
+    .win-party {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .win-card.adobe .win-party  { color: #E34028; }
+    .win-card.google .win-party { color: #4285F4; }
+    .win-card.publicis .win-party { color: #9b8ff5; }
+
+    .win-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.35;
+    }
+
+    .win-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .win-list li {
+      font-size: 13px;
+      color: #b8b8c4;
+      display: flex;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .win-list li::before { content: 'â'; color: #D97757; flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+
+    /* ââ Flywheel ââ */
+    .flywheel-wrap {
+      background: #141418;
+      border: 1px solid #2a2a2d;
+      border-radius: 16px;
+      padding: 44px 36px 36px;
+      overflow-x: auto;
+    }
+
+    .flywheel-title {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #D97757;
+      margin-bottom: 32px;
+    }
+
+    .flywheel-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 740px;
+      gap: 0;
+    }
+
+    .fw-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 120px;
+      flex-shrink: 0;
+    }
+
+    .fw-circle {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: rgba(217,119,87,0.1);
+      border: 2px solid rgba(217,119,87,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .fw-label { font-size: 11px; font-weight: 600; color: #d0d0d8; line-height: 1.4; }
+    .fw-sub   { font-size: 10px; color: #D97757; margin-top: 3px; font-weight: 500; }
+
+    .fw-arrow {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3a3a42;
+      font-size: 18px;
+      padding: 0 4px;
+    }
+
+    .flywheel-return {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 11px;
+      color: #484850;
+      font-style: italic;
+    }
+
+    /* ââ Publicis role cards ââ */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .role-card {
+      background: #1a1a1d;
+      border: 1px solid #2a2a2d;
+      border-radius: 12px;
+      padding: 24px 22px;
+    }
+
+    .rbadge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .rbadge.deliver   { background: rgba(52,199,89,0.12); color:#5fd97d; border:1px solid rgba(52,199,89,0.25); }
+    .rbadge.enabler   { background: rgba(100,149,237,0.12); color:#6baff7; border:1px solid rgba(100,149,237,0.25); }
+    .rbadge.commercial{ background: rgba(217,119,87,0.15); color:#D97757; border:1px solid rgba(217,119,87,0.3); }
+
+    .role-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .role-card p  { font-size: 12px; color: #8a8a9a; line-height: 1.6; }
+
+    .role-note {
+      background: rgba(217,119,87,0.06);
+      border: 1px solid rgba(217,119,87,0.18);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #c0b8a8;
+      line-height: 1.7;
+    }
+
+    .role-note strong { color: #D97757; }
+
+    /* ââ Matrix / axes table ââ */
+    .axes-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: #1a1a1d;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #2a2a2d;
+    }
+
+    .axes-table th {
+      background: #1e1e24;
+      color: #888;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 16px;
+      text-align: left;
+      border-bottom: 1px solid #2a2a2d;
+    }
+
+    .axes-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #202026;
+      color: #b0b0c0;
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    .axes-table tr:last-child td { border-bottom: none; }
+    .axes-table td:first-child { color: #ffffff; font-weight: 600; width: 180px; }
+
+    /* ââ Program category block ââ */
+    .prog-block { margin-bottom: 52px; }
+    .prog-block:last-child { margin-bottom: 0; }
+
+    .prog-cat-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .cat-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(217,119,87,0.09);
+      border: 1px solid rgba(217,119,87,0.22);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+
+    .prog-cat-header h3 { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+    .prog-cat-header .cat-sub { font-size: 12px; color: #7a7a88; }
+
+    /* ââ Program table ââ */
+    .prog-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      background: #171719;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #242428;
+    }
+
+    .prog-table th {
+      background: #1c1c22;
+      color: #666672;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      text-align: left;
+      border-bottom: 1px solid #242428;
+    }
+
+    .prog-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #1e1e24;
+      color: #a8a8b8;
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    .prog-table tr:last-child td { border-bottom: none; }
+
+    .prog-table td.pn { color: #ffffff; font-weight: 600; min-width: 150px; }
+    .prog-table td.pd { min-width: 240px; }
+
+    /* Inline badges */
+    .b {
+      display: inline-block;
+      font-size: 10px; font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 7px;
+      white-space: nowrap;
+    }
+
+    .b-adobe    { background:rgba(227,64,40,0.18); color:#ff7055; border:1px solid rgba(227,64,40,0.3); }
+    .b-google   { background:rgba(66,133,244,0.18); color:#6baff7; border:1px solid rgba(66,133,244,0.3); }
+    .b-joint    { background:rgba(217,119,87,0.18); color:#D97757; border:1px solid rgba(217,119,87,0.3); }
+    .b-publicis { background:rgba(101,87,210,0.18); color:#a090f5; border:1px solid rgba(101,87,210,0.3); }
+    .b-client   { background:rgba(52,199,89,0.14); color:#5fd97d; border:1px solid rgba(52,199,89,0.25); }
+    .b-govt     { background:rgba(255,214,0,0.12); color:#ffd600; border:1px solid rgba(255,214,0,0.22); }
+
+    .pr-deliver   { background:rgba(52,199,89,0.12); color:#5fd97d; border:1px solid rgba(52,199,89,0.22); }
+    .pr-enabler   { background:rgba(100,149,237,0.12); color:#6baff7; border:1px solid rgba(100,149,237,0.22); }
+    .pr-principal { background:rgba(217,119,87,0.18); color:#D97757; border:1px solid rgba(217,119,87,0.3); }
+    .pr-author    { background:rgba(180,130,255,0.12); color:#c4a0ff; border:1px solid rgba(180,130,255,0.22); }
+    .pr-absent    { background:rgba(80,80,90,0.14); color:#666672; border:1px solid rgba(80,80,90,0.22); }
+
+    /* ââ Entry point cards ââ */
+    .entry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .entry-card {
+      background: #1a1a1d;
+      border: 1px solid #2a2a2d;
+      border-radius: 12px;
+      padding: 26px 22px;
+    }
+
+    .entry-num {
+      width: 32px; height: 32px;
+      background: rgba(217,119,87,0.12);
+      border: 1px solid rgba(217,119,87,0.28);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; color: #D97757;
+      margin-bottom: 14px;
+    }
+
+    .entry-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; line-height: 1.35; }
+    .entry-card .edesc { font-size: 12.5px; color: #8a8a9a; line-height: 1.6; margin-bottom: 14px; }
+
+    .entry-why {
+      font-size: 11.5px; color: #D97757; font-weight: 500;
+      background: rgba(217,119,87,0.07);
+      border-radius: 7px; padding: 8px 10px; line-height: 1.55;
+    }
+
+    /* ââ Next steps ââ */
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .next-item {
+      background: #1a1a1d;
+      border: 1px solid #2a2a2d;
+      border-radius: 10px;
+      padding: 18px 20px;
+      display: flex; gap: 14px;
+    }
+
+    .next-n {
+      width: 26px; height: 26px;
+      border-radius: 6px;
+      background: rgba(217,119,87,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: #D97757;
+      flex-shrink: 0;
+    }
+
+    .next-body h5 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .next-body p  { font-size: 12px; color: #7a7a88; line-height: 1.55; }
+
+    /* ââ Callout ââ */
+    .callout {
+      background: rgba(217,119,87,0.05);
+      border: 1px solid rgba(217,119,87,0.18);
+      border-radius: 12px;
+      padding: 18px 22px;
+      font-size: 13.5px;
+      color: #c0b8a0;
+      line-height: 1.72;
+      margin-bottom: 40px;
+    }
+
+    .callout strong { color: #D97757; }
+
+    /* ââ Footer ââ */
+    .page-footer {
+      background: #0a0a0b;
+      border-top: 1px solid #1a1a1e;
+      padding: 30px 28px;
+      text-align: center;
+      color: #363640;
+      font-size: 11px;
+    }
+
+    /* Responsive */
+    @media (max-width: 760px) {
+      .opp-grid, .win-grid, .role-grid, .entry-grid { grid-template-columns: 1fr; }
+      .next-grid { grid-template-columns: 1fr; }
+      .page-title { font-size: 30px; }
+      .section { padding: 48px 0; }
+      .flywheel-wrap { padding: 28px 16px 24px; }
+    }
+
+    /* Fade-in */
+    @keyframes up { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    .section { animation: up 0.35s ease both; }
+  </style>
+</head>
+<body>
+
+<!-- âââââââââââââââââââ HEADER âââââââââââââââââââ -->
+<header class="page-header">
+  <div class="container">
+    <div class="header-pill">
+      <div class="header-dot"></div>
+      Partnership Brief Â· Working Document
+    </div>
+    <h1 class="page-title">
+      Adobe <span class="x">Ã</span> Google <span class="x">Ã</span> Publicis<br>Creative Performance Partnership
+    </h1>
+    <p class="page-subtitle">
+      A strategic framework for a tri-party program that drives Adobe platform adoption, Google Ads performance, and SMB creative capability across the Australian market.
+    </p>
+    <div class="header-meta">
+      <span>April 2026</span>
+      <span>Â·</span>
+      <span>AU Market Â· SMB / Agency Focus</span>
+      <span>Â·</span>
+      <span>Early-stage ideation â not validated with counterparts</span>
+    </div>
+  </div>
+</header>
+
+
+<!-- âââââââââââââââââââ 1. THE OPPORTUNITY âââââââââââââââââââ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">The Opportunity</div>
+    <h2 class="section-title">A shared problem, a shared solution</h2>
+
+    <p class="section-intro">
+      The quality of creative assets is the single most leveraged variable in digital advertising performance. Poor creative degrades ad effectiveness, wastes media spend, and drives advertisers toward cheaper â but ultimately less capable â tools. The inverse is equally true: when SMBs and agencies produce better creative, everything upstream improves. Google Ads performance rises. Advertiser confidence and investment grow. Adobe's platform demonstrates measurable ROI. This is the foundation for a tri-party program where each party's commercial goals are served by the same outcome: <strong style="color:#ffffff">more AU businesses producing better creative, more consistently.</strong>
+    </p>
+
+    <div class="opp-grid">
+      <div class="opp-card">
+        <div class="occ-icon">ð¯</div>
+        <div class="occ-figure">Creative</div>
+        <div class="occ-label">is the #1 driver of paid media performance â yet most SMBs have no structured creative production capability</div>
+      </div>
+      <div class="opp-card">
+        <div class="occ-icon">â¡</div>
+        <div class="occ-figure">AI tools</div>
+        <div class="occ-label">have commoditised basic creative production, creating a quality gap and an IP liability risk that premium tooling can solve</div>
+      </div>
+      <div class="opp-card">
+        <div class="occ-icon">ð</div>
+        <div class="occ-figure">AU SMBs</div>
+        <div class="occ-label">represent a large, under-served market â high in Google Ads volume, low in structured creative investment</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- âââââââââââââââââââ 2. WHAT SUCCESS LOOKS LIKE âââââââââââââââââââ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Mutual Goals</div>
+    <h2 class="section-title">What success looks like â for each party</h2>
+    <p class="section-intro">Every program in this framework should be evaluated against all three sets of goals. Any initiative that serves only one party will not achieve the commercial commitment needed to sustain it.</p>
+
+    <div class="win-grid">
+      <div class="win-card adobe">
+        <div class="win-party">Adobe</div>
+        <h3>Differentiate Creative Cloud &amp; Firefly. Drive MAU and ARR.</h3>
+        <ul class="win-list">
+          <li>Grow Creative Cloud and GenStudio adoption among AU SMBs and independent agencies â a segment historically difficult to reach at scale</li>
+          <li>Demonstrate measurable performance lift from Adobe-produced creative versus generic AI alternatives</li>
+          <li>Position Firefly as the IP-safe, commercially indemnified standard for AI creative â ahead of Canva, free-tier competitors, and unbranded AI tools</li>
+          <li>Drive trial-to-paid conversion through contextually relevant partner distribution</li>
+          <li>Generate APAC case studies and data to support enterprise and agency sales motions globally</li>
+        </ul>
+      </div>
+      <div class="win-card google">
+        <div class="win-party">Google</div>
+        <h3>Grow advertiser investment through better-performing campaigns.</h3>
+        <ul class="win-list">
+          <li>Lift ad quality and creative effectiveness across the long-tail SMB and agency portfolio managed by the AU SMB/Agency team</li>
+          <li>Drive increased Google Ads spend from advertisers who see measurable ROAS improvement â higher confidence leads to higher budgets</li>
+          <li>Reduce campaign churn driven by poor creative performance and disengaged advertisers</li>
+          <li>Give the AU SMB/Agency team a differentiated capability to offer clients â beyond bid strategy and keyword optimisation</li>
+          <li>Strengthen agency partner relationships by equipping them with new accreditation and production capability</li>
+        </ul>
+      </div>
+      <div class="win-card publicis">
+        <div class="win-party">Publicis</div>
+        <h3>Deepen the Adobe relationship and capture commercial upside in new formats.</h3>
+        <ul class="win-list">
+          <li>Fulfil and extend its retained value to Adobe by acting as a strategic enabler of high-value partner programs Adobe cannot run alone</li>
+          <li>Establish a visible market position as the creative production and media partner of record for AU SMB transformation</li>
+          <li>Capture direct commercial upside in programs that sit outside the retained scope â principal media, production wraps, consulting mandates</li>
+          <li>Build a repeatable SMB services model that can be scaled across APAC markets</li>
+          <li>Generate category-defining thought leadership under the Publicis brand alongside Adobe and Google</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- âââââââââââââââââââ 3. THE FLYWHEEL âââââââââââââââââââ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">The Thesis</div>
+    <h2 class="section-title">The Creative Performance Flywheel</h2>
+    <p class="section-intro">
+      Better creative is not a one-off intervention â it is a self-reinforcing loop. Every program in this framework should be assessed for where it enters the cycle and how it accelerates it.
+    </p>
+
+    <div class="flywheel-wrap">
+      <div class="flywheel-title">The Virtuous Cycle</div>
+      <div class="flywheel-row">
+
+        <div class="fw-node">
+          <div class="fw-circle">ð¨</div>
+          <div class="fw-label">Quality<br>Creative Assets</div>
+          <div class="fw-sub">Adobe tooling</div>
+        </div>
+        <div class="fw-arrow">â</div>
+
+        <div class="fw-node">
+          <div class="fw-circle">ð</div>
+          <div class="fw-label">Higher Ad<br>Performance</div>
+          <div class="fw-sub">Google Ads ROAS</div>
+        </div>
+        <div class="fw-arrow">â</div>
+
+        <div class="fw-node">
+          <div class="fw-circle">ð°</div>
+          <div class="fw-label">Increased<br>Media Investment</div>
+          <div class="fw-sub">Advertiser confidence</div>
+        </div>
+        <div class="fw-arrow">â</div>
+
+        <div class="fw-node">
+          <div class="fw-circle">ð§</div>
+          <div class="fw-label">Demand for<br>Better Tools</div>
+          <div class="fw-sub">Platform pull-through</div>
+        </div>
+        <div class="fw-arrow">â</div>
+
+        <div class="fw-node">
+          <div class="fw-circle">ð</div>
+          <div class="fw-label">Adobe MAU<br>&amp; ARR Growth</div>
+          <div class="fw-sub">Licence adoption</div>
+        </div>
+
+      </div>
+      <div class="flywheel-return">â© cycle repeats â each turn deepens the capability and commercial case for all three parties</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- âââââââââââââââââââ 5. DESIGN MATRIX âââââââââââââââââââ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Program Design Framework</div>
+    <h2 class="section-title">Partnership permutation axes</h2>
+    <p class="section-intro">
+      Every program in the portfolio below can be located on these six axes. Use this framework to stress-test new ideas, identify gaps, with evaluate fit before committing resource.
+    </p>
+
+    <table class="axes-table">
+      <thead>
+        <tr>
+          <th>Axis</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Who funds</td>
+          <td>Adobe / Google / Publicis / Client / Joint / Government co-fund</td>
+        </tr>
+        <tr>
+          <td>Outcome target</td>
+          <td>Licence adoption / Usage &amp; ARR growth / Data &amp; insights / Brand positioning / Retention / IP-safe creative standard</td>
+        </tr>
+        <tr>
+          <td>Audience</td>
+          <td>Google AU field team / Google's direct SMB clients / Independent agencies / Holdco agency teams / SMB end customers</td>
+        </tr>
+        <tr>
+          <td>Vehicle</td>
+          <td>Certification / Credits &amp; referrals / Co-marketing / Product integration / Research / Events / Managed service</td>
+        </tr>
+        <tr>
+          <td>Cadence</td>
+          <td>One-off pilot / Ongoing program / Annual flagship</td>
+        </tr>
+        <tr>
+          <td>Publicis role</td>
+          <td>Author / Operator / Media principal / Consulting lead / Neutral integrator / Absent</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- âââââââââââââââââââ 6. PROGRAM PORTFOLIO âââââââââââââââââââ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Program Portfolio</div>
+    <h2 class="section-title">Programs by category</h2>
+    <p class="section-intro">
+      Ten program categories spanning enablement, commercial mechanics, market development, product integration, research, events, and innovation. Each program is evaluated for funder, audience, Publicis role, and success metric. <strong style="color:#ffffff">Recommended entry points are highlighted separately below.</strong>
+    </p>
+
+    <!-- ââ A. CERTIFICATION & ENABLEMENT ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ðA</div>
+        <div>
+          <h3>A Â· Certification &amp; Enablement</h3>
+          <div class="cat-sub">Build structured creative capability inside Google's field team and their client base</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">Adobe Ã Google SMB Creative Certification</td>
+            <td class="pd">Two-tier certification track for Google AU's SMB/Agency team. Level 1: Creative Cloud fluency. Level 2: Firefly, Express, and GenStudio for performance creative.</td>
+            <td>Google AU field team</td>
+            <td><span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-author">Author</span> <span class="b pr-deliver">Deliver</span></td>
+            <td>Certified reps in market; uplift in Adobe-originated creative in managed accounts</td>
+          </tr>
+          <tr>
+            <td class="pn">"Creative Effectiveness" Micro-credential</td>
+            <td class="pd">Free, Google-endorsed short course on Adobe Learning. Teaches SMB marketers to build performance creative with Firefly and Express. Completion unlocks 90-day CC trial plus Google Ads credit.</td>
+            <td>Google's SMB clients</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-author">Author</span></td>
+            <td>Completions; trial-to-paid conversion rate; Google credit redemption</td>
+          </tr>
+          <tr>
+            <td class="pn">Firefly Fundamentals for AU Agencies</td>
+            <td class="pd">Half-day in-person sessions across Sydney, Melbourne, and Brisbane for Google's top 200 SMB agency partners. Jointly branded. Completion awards a badge the agency can market to its own clients.</td>
+            <td>Independent AU avencies</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Deliver</span></td>
+            <td">Agencies badged; downstream client creative adoption</td>
+          </tr>
+          <tr>
+            <td class="pn">Train-the-Trainer for Google Reps</td>
+            <td class="pd">Two-day intensive equipping Google SMB reps to run mini-workshops with their own clients. Converts Google's field force into an Adobe activation layer at scale without adding headcount on either side.</td>
+            <td>Google AU field team</td>
+            <td><span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-author">Author</span> <span class="b pr-deliver">Deliver</span></td>
+            <td>Reps trained; workshops subsequently delivered; creative adoption signal</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ââ B. REFERRAL & COMMERCIAL MECHANICS ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ð<!---
+        <div>
+          <h3>B Â· Referral &amp; Commercial Mechanics</h3>
+          <div class="cat-sub">Create structured incentives that align field behaviour with joint commercial outcomes</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">Google-Coded Adobe Trial Referrals</td>
+            <td class="pd">Each Google SMB rep receives a unique referral code. Clients activating via the code receive 20% off Creative Cloud for six months. Reps recognised via internal leaderboards and SPIFs. Creates clean attribution for both parties.</td>
+            <td>Google's SMB clients</td>
+            <td><span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td>Referral volume; trial activations; paid conversion rate</td>
+          </tr>
+          <tr>
+            <td class="pn">Performance Creative Credit Program</td>
+            <td class="pd">Google Ads accounts above a spend threshold receive an Adobe credit (e.g. A$2,000) usable against Creative Cloud or GenStudio. Funded by Adobe, Google, or shared. Publicis administers the redemption layer.</td>
+            <td>Google's SMB advertisers</td>
+            <td><span class="b b-joint">Joint</spanan></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td>Credits redeemed; Adobe licence activations; average spend delta</td>
+          </tr>
+          <tr>
+            <td class="pn">Reverse Referral â Adobe to Google</td>
+            <td class="pd">Mirror program: Adobe AU sales team originates Google Ads credit packs for their customer base. Bi-directional alignment ensures both field teams actively promote the partnership, not just Google's.</td>
+            <td>Adobe's SMB customers</td>
+            <td><span class="b b-google">Google</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td>Google Ads credits originated by Adobe field; new Google advertiser activations</td>
+          </tr>
+          <tr>
+            <td class="pn">Agency Revenue-Share on Adobe Seats</td>
+            <td class="pd">Agencies that originate Adobe CC or GenStudio seats for their SMB clients receive a recurring commission (e.g. 5% of ARR for 24 months). Converts the AU independent agency base into a distributed Adobe sales channel.</td>
+            <td>AU independent agencies</td>
+            <td><span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td>Agency-originated seat volume; ARR contribution; agency participation rate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ââ C. CO-MARKETING & MDF ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ð¡</div>
+        <div>
+          <h3>C Â· Co-Marketing &amp; Market Development Funds</h3>
+          <div class="cat-sub">Deploy pooled investment to activate the AU SMB market and generate proof points</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">AU SMB Creative Launchpad</td>
+            <td class="pd">Joint MDF pool (e.g. A$500K, evenly split) that SMBs apply to via a brief. Winners receive matched Google Ads credits, Firefly/Express licences, and a production playbook. All three parties gain case studies and usage data.</td>
+            <td>AU SMBs</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Deliver</span> <span class="b pr-enabler">Enabler</span></td>
+            <td>Applications; funded activations; case study output; media spend generated</td>
+          </tr>
+          <tr>
+            <td class="pn">"Back Your Brand" Co-funded Campaigns</td>
+            <td class="pd">Co-funded campaign support for AU brands producing creative on Adobe tooling. A minimum Adobe-produced asset count triggers matched Google media. Publicis acts as agency-of-record.</td>
+            <td>AU brands / DTC</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Agency of Record</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>Brands activated; Adobe assets produced; matched media deployed; performance benchmarks</td>
+          </tr>
+          <tr>
+            <td class="pn">Campaign Fund with Creative Gate</td>
+            <td class="pd">Google provides a campaign fund (e.g. A$10K per client, 100 clients) contingent on creative being Firefly or Express-produced. Ties Google spend incentives directly to Adobe tool adoption. Filters low-quality AI creative in one move.</td>
+            <td>Google's SMB advertisers</td>
+            <td><span class="b b-google">Google</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td">Clients qualifying the creative gate; Firefly adoption rate; performance delta vs. control group</td>
+          </tr>
+          <tr>
+            <td class="pn">IP-Safe Creative Quality Pledge Fund</td>
+            <td class="pd">SMBs who publicly commit to IP-clean, commercially indemnified creative (Firefly) gain access to a joint fund for Google Search and YouTube placement. Positions both brands on the right side of the AI quality and IP debate.</td>
+            <td>AU SMBs / DTC brands</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td>Pledge signatories; fund deployed; media performance; PR coverage</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:#555560;margin-top:10px">Â¹ Agency-of-record role is outside standard retained scope â requires separate commercial arrangement with Publicis.</p>
+    </div>
+
+    <!-- ââ D. PRODUCT INTEGRATION ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ð</div>
+        <div>
+          <h3>D Â· Product Integration &amp; Tooling</h3>
+          <div class="cat-sub">Embed Adobe capabilities inside Google's product surfaces â reducing friction from insight to asset</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">Firefly Assets Inside Google Ads Creative Studio</td>
+            <td class="pd">Deep integration allowing Google Ads' native creative builder to pull Firefly-generated assets with licensing metadata intact. Solves AI provenance and rights management for SMBs. Premium Firefly tier promoted contextually inside Google Ads UI.</td>
+            <td>All Google Ads users</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-absent">Absent</span></td>
+            <td>Firefly API calls from Google Ads; paid Firefly tier conversions; advertiser satisfaction</td>
+          </tr>
+          <tr>
+            <td class="pn">Adobe GenStudio Templates for Performance Max</td>
+            <td class="pd">Pre-built PMax-ready asset kits â correct aspect ratios, variant counts, brand-safe prompts â distributed as starter packs to SMB clients. Adobe gets distribution; Google gets better PMax performance; SMBs skip the blank-canvas problem.</td>
+            <td>Google's SMB advertisers</td>
+            <td><span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-author">Author</span></td>
+            <td>Template downloads; PMax performance uplift in accounts using templates</td>
+          </tr>
+          <tr>
+            <td class="pn">GA4 + Adobe Analytics Starter Stack for DTC SMBs</td>
+            <td class="pd">Co-branded analytics bundle for small DTC brands. Adobe Analytics starter tier packaged with Google Ads managed accounts. Extends Adobe's data footprint beyond its enterprise base.</td>
+            <td>DTC SMBs</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td">Bundle activations; Adobe Analytics MAU; data-driven campaign lift</td>
+          </tr>
+          <tr>
+            <td class="pn">Firefly Connector for Looker Studio</td>
+            <td class="pd">Embed Firefly asset generation inside Looker Studio creative reporting. Marketer sees a performance drop, regenerates creative variants in-place, and pushes directly back to Google Ads. Closes the loop from insight to asset in a single workflow.</td>
+            <td>Google Ads users / agencies</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-absent">Absent</span></td>
+            <td>Connector installs; Firefly generations from Looker; workflow adoption rate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ââ E. RESEARCH & THOUGHT LEADERSHIP ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ð</div>
+        <div>
+          <h3>E Â· Research &amp; Thought Leadership</h3>
+          <div class="cat-sub">Build the empirical case for creative quality as a commercial lever â jointly owned by all three parties</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">AU Creative Effectiveness Benchmark (Annual)</td>
+            <td class="pd">Annual joint research quantifying the impact of creative quality on Google Ads performance across AU SMB. Gated lead magnet for all three parties. Publicis authors the analysis; Adobe and Google co-endorse and distribute.</td>
+            <td>AU market / B2B</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-author">Author</span></td>
+            <td>Downloads; media coverage; pipeline influenced; speaking opportunities</td>
+          </tr>
+          <tr>
+            <td class="pn">AI Creative Quality Index</td>
+            <td class="pd">Provocative Adobe-led research measuring quality and IP-risk gaps between generic AI image tools and Firefly. Google co-endorses because low-quality AI creative degrades ad quality scores and platform performance. Publicis amplifies via earned and paid channels.</td>
+            <td>AU market / industry</td>
+            <td><span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-author">Author</span> <span class="b pr-deliver">Amplify</span></td>
+            <td>Coverage; inbound leads; Firefly trial uplift post-publication</td>
+          </tr>
+          <tr>
+            <td class="pn">AU SMB Transformation Report (Longitudinal)</td>
+            <td class="pd">Track Adobe tooling adoption against SMB revenue growth over 24 months using anonymised Google Ads spend data alongside Adobe licence data. Flagship APAC content â owned by Adobe with Google data partnership.</td>
+            <td>AU market / enterprise buyers</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-author">Author</span></td>
+            <td>Year 1 baseline; Year 2 uplift; media pickup; enterprise sales influence</td>
+          </tr>
+          <tr>
+            <td class="pn">"Human + AI Creative" Productivity Study</td>
+            <td class="pd">Measures time-to-market and creative variant counts for teams using Adobe AI tooling versus manual or third-party AI tools. Targets the CFO narrative â not just CMO â by framing creative efficiency as an operational ROI story.</td>
+            <td>AU business leaders / CFO audience</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-author">Author</span></td>
+            <td">Publishable findings; ROI benchmarks; sales enablement asset usage</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ââ F. EVENTS & COMMUNITY ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ð¤</div>
+        <div>
+          <h3>F Â· Events &amp; Community</h3>
+          <div class="cat-sub">Create shared moments that build capability, generate social proof, and deepen partner relationships</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">AU Creative Summit (Annual, Co-badged)</td>
+            <td class="pd">Annual one-day summit in Sydney. Adobe owns the creative stage; Google owns the performance stage; Publicis curates client panels. Shared invite list, shared sponsorship, split production cost.</td>
+            <td>SMB + AU agencies</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Curate &amp; Produce</span></td>
+            <td>Attendance; post-event Adobe trials; pipeline generated; media coverage</td>
+          </tr>
+          <tr>
+            <td class="pn">Monthly "Creative Clinic" for SMB Agencies</td>
+            <td class="pd">Google reps bring five agency clients monthly for a working session with Adobe solution consultants. Real creative problems solved live. Builds Adobe field relationships directly into Google's agency partner base.</td>
+            <td>Google's agency clients</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Deliver</span></td>
+            <td">Monthly attendance; problems solved; pipeline influenced; NPS</td>
+          </tr>
+          <tr>
+            <td class="pn">Firefly Friday Roadshow</td>
+            <td class="pd">Quarterly hands-on sessions across AU capitals. Google hosts the invite list; Adobe brings the training. Every attendee leaves with a portfolio piece and a 30-day trial. Optimised for social amplification.</td>
+            <td>AU SMB marketers</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Deliver</span></td>
+            <td>Attendees; trials activated; social posts; conversion to paid</td>
+          </tr>
+          <tr>
+            <td class="pn">"Creative in an AI World" Speaker Series</td>
+            <td class="pd">Adobe executive-fronted speaker circuit, six AU cities, co-hosted by Google AU. Positions Adobe's AI creative leadership, builds the demand narrative for Firefly, and deepens the Google-Adobe partnership in market.</td>
+            <td>AU business leaders / CMOs</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Produce</span></td>
+            <td>Audience reach; media coverage; C-suite pipeline; Adobe brand lift</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ââ G. PUBLICIS TRIANGULATIONS ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ðº</div>
+        <div>
+          <h3>G Â· Publicis-Inclusive Triangulations</h3>
+          <div class="cat-sub">Programs where Publicis is a commercial participant â outside retained scope, with direct margin or revenue share</div>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-bottom:18px">
+        <strong>Note:</strong> Programs in this category represent material commercial opportunities for Publicis beyond the retained relationship. Each requires a separate commercial arrangement. They are included here because they represent the highest-value long-term plays for all three parties at scale.
+      </div>
+
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">Creative Ops as a Service (SMB)</td>
+            <td class="pd">Publicis wraps Adobe GenStudio and Google Ads delivery into a productised offer for SMBs too small for a full agency engagement. Margin on the wrap; revenue share with Adobe on licences; Google preferred media. Tri-party MDF funds the GTM.</td>
+            <td>SMBs / DTC brands</td>
+            <td><span class="b b-joint">Joint + MDF</span></td>
+            <td><span class="b pr-principal">Principal / Commercial</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>SMBs enrolled; Adobe ARR via channel; Google Ads spend; Publicis margin</td>
+          </tr>
+          <tr>
+            <td class="pn">Principal Media + Adobe Production Bundle</td>
+            <td class="pd">Publicis principal-trades Google inventory and bundles an Adobe production line (Firefly at scale) as a value-add for clients. Adobe usage becomes a line item inside principal media deals. Scales consumption without individual licence cycles.</td>
+            <td>Mid-market AU brands</td>
+            <td><span class="b b-publicis">Publicis</span> + <span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-principal">Media Principal</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>Deals structured; Firefly usage volume; Google spend; Publicis trading margin</td>
+          </tr>
+          <tr>
+            <td class="pn">Sapient + Adobe Ã Google SMB Transformation Practice</td>
+            <td class="pd">Joint consulting offer for fast-growth DTC brands ready to move beyond basic ecommerce into Adobe Commerce and serious Google media. Three-party revenue model; real deal sizes.</td>
+            <td>Fast-growth DTC / mid-market</td>
+            <td><span class="b b-client">Client</span></td>
+            <td><span class="b pr-principal">Consulting Lead</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>Engagements won; deal value; Adobe Commerce deployments; Google Ads growth</td>
+          </tr>
+          <tr>
+            <td class="pn">Publicis as Neutral Integrator</td>
+            <td class="pd">Adobe and Google rarely build deep product integrations due to competitive tensions. Publicis acts as the neutral party that stitches workflows together for shared clients â taking the integration risk and capturing the consulting margin.</td>
+            <td>Shared enterprise/mid-market clients</td>
+            <td><span class="b b-client">Client</span></td>
+            <td><span class="b pr-principal">Consulting / Integration</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>Integration mandates; client satisfaction; repeat engagement rate</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:#555560;margin-top:10px">Â¹ Requires separate commercial arrangement â outside retained Adobe scope. Publicis margin/rev share applies.</p>
+    </div>
+
+    <!-- ââ H. IP SAFETY & CREATIVE QUALITY ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ð¡ï¸</div>
+        <div>
+          <h3>H Â· IP Safety &amp; AI Creative Quality</h3>
+          <div class="cat-sub">Establish Firefly as the de facto standard for commercially safe AI creative â and make that standard visible in Google's ecosystem</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">Firefly-Verified Ad Creative Tier in Google Ads</td>
+            <td class="pd">Badge or metadata tag inside Google Ads indicating creative was produced with IP-clean, commercially indemnified tools. Taps into growing advertiser demand for IP indemnification. AU DTC pilot.</td>
+            <td>AU advertisers / agencies</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td>Accounts using verified creative; Quality Score delta; advertiser satisfaction</td>
+          </tr>
+          <tr>
+            <td class="pn">IP-Safe Pledge for Google AU Agency Partners</td>
+            <td class="pd">Agencies committing to IP-clean, commercially indemnified AI tools (Firefly) receive preferential access to Google Ads beta programs and Adobe partner discounts. Creates a quality signal and anti-commoditisation moat.</td>
+            <td>AU agency partners</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td>Agencies pledged; Firefly adoption within pledged agencies; beta access uptake</td>
+          </tr>
+          <tr>
+            <td class="pn">Enterprise IP Indemnity Extended to SMB</td>
+            <td class="pd">Adobe's enterprise-tier Firefly IP indemnity extended to SMB clients routed through the Google AU program. Removes legal anxiety for small brands using AI creative and creates a clear differentiator versus free tools with no indemnity coverage.</td>
+            <td>Google's SMB advertisers</td>
+            <td><span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-absent">Absent</span></td>
+            <td>SMBs accessing extended indemnity; conversion to paid tier; competitive win rate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ââ I. SMB LONG-TAIL ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ð¦</div>
+        <div>
+          <h3>I Â· SMB Long-tail Programs</h3>
+          <div class="cat-sub">High-volume, low-friction programs designed for the long tail â the largest addressable audience in the partnership</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">"Creative-in-a-Day" Sprint</td>
+            <td class="pd">Fixed-fee sprint. A brief arrives Monday; a fully produced campaign (Firefly assets, PMax creative, landing page variants) is delivered Tuesday. Delivered by Publicis. Adobe and Google provide tooling and credits.</td>
+            <td>AU SMBs</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Deliver</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>Sprints delivered; client satisfaction; conversion to ongoing Adobe licence; Google Ads activation</td>
+          </tr>
+          <tr>
+            <td class="pn">Adobe Express + Google Ads Credits Bundle</td>
+            <td class="pd">Premium Express features bundled with matched Google Ads credits for any SMB activated through the Google team. Low-cost acquisition with high conversion pathway to paid Creative Cloud.</td>
+            <td>New Google Ads SMB accounts</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-absent">Absent</span></td>
+            <td>Bundle activations; Express to CC upgrade rate; incremental Google Ads spend</td>
+          </tr>
+          <tr>
+            <td class="pn">SMB Creative Operating System (Free Playbook)</td>
+            <td class="pd">Downloadable 30-page playbook, tri-branded, on how small ecommerce and DTC brands should set up their creative operations from day one. Tooling recommendations drive adoption. Published across all three channels.</td>
+            <td>AU SMBs / ecommerce</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-author">Author</span></td>
+            <td>Downloads; email captures; Adobe trial activations attributable to playbook</td>
+          </tr>
+          <tr>
+            <td class="pn">"First 10 Creatives Free" Onboarding</td>
+            <td class="pd">Every new Google Ads account above a spend threshold receives their first ten Firefly-generated ad creatives produced by Publicis, free of charge. Activates tool adoption at exactly the moment clients feel creative pain â account launch.</td>
+            <td>New Google Ads accounts</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Deliver</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>Accounts onboarded; creative produced; Firefly licence conversions; 90-day spend retention</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:#555560;margin-top:10px">Â¹ Delivery volume may exceed retained scope â commercial arrangement to be confirmed based on program scale.</p>
+    </div>
+
+    <!-- ââ J. INNOVATION & INCUBATION ââ -->
+    <div class="prog-block">
+      <div class="prog-cat-header">
+        <div class="cat-icon">ð±</div>
+        <div>
+          <h3>J Â· Innovation &amp; Incubation</h3>
+          <div class="cat-sub">Higher-investment, higher-visibility programs that anchor the partnership's public narrative and generate lasting proof points</div>
+        </div>
+      </div>
+      <table class="prog-table">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Description</th>
+            <th>Audience</th>
+            <th>Funder</th>
+            <th>Publicis Role</th>
+            <th>Success Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pn">The Queensland Creative Incubator</td>
+            <td class="pd">12-week SMB incubator in Brisbane. 20 AU SMBs. Adobe tools, Google media credit, Publicis strategy. Demo Day open to investors and media. State government co-funding via Trade and Investment QLD.</td>
+            <td>AU SMBs (Brisbane cohort)</td>
+            <td><span class="b b-joint">Joint</span> + <span class="b b-govt">Govt</span></td>
+            <td><span class="b pr-deliver">Consulting Lead</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>Cohort graduation rate; media coverage; Adobe licence retention; Google Ads spend 6-month delta</td>
+          </tr>
+          <tr>
+            <td class="pn">DTC Creative Effectiveness Competition</td>
+            <td class="pd">Annual competition. AU SMBs compete on creative effectiveness using Adobe tooling and Google Ads exclusively. Cash prize; the real prize is case-study-worthy marketing and industry recognition for winning brands.</td>
+            <td>AU DTC SMBs</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Produce</span></td>
+            <td>Entries; media coverage; case studies generated; finalist brand retention</td>
+          </tr>
+          <tr>
+            <td class="pn">Female Founders Creative Accelerator</td>
+            <td class="pd">Aligns with Google AU's existing diversity programs. 25 female-founded SMBs receive a funded 90-day creative uplift: Adobe licences, Google media, Publicis strategy wrap. High-visibility, high-PR-value program.</td>
+            <td>Female-founded AU SMBs</td>
+            <td><span class="b b-joint">Joint</span></td>
+            <td><span class="b pr-deliver">Deliver</span> <span style="font-size:9px;color:#D97757">Â¹</span></td>
+            <td>Founders enrolled; creative output; PR value; Google Ads performance; Adobe retention post-program</td>
+          </tr>
+          <tr>
+            <td class="pn">"Creative AI Sandbox" for Top AU Agencies</td>
+            <td class="pd">Invitation-only environment where Google's top 10 AU agency partners receive early access to unreleased Firefly capabilities in exchange for usage data and publishable case studies. Adobe gets real-world R&amp;D signal; agencies get competitive advantage.</td>
+            <td>Top 10 AU agencies</td>
+            <td><span class="b b-adobe">Adobe</span></td>
+            <td><span class="b pr-enabler">Enabler</span></td>
+            <td>Agencies enrolled; usage data quality; case studies published; Firefly feature feedback loops</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:#555560;margin-top:10px">Â¹ Program scale and structure will determine whether this sits within retained scope or requires a separate arrangement.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- âââââââââââââââââââ 7. ENTRY POINTS âââââââââââââââââââ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Where to Start</div>
+    <h2 class="section-title">Recommended entry points</h2>
+    <p class="section-intro">
+      Three programs designed to open the partnership without requiring large upfront commitment. Each stands alone, delivers visible results quickly, and opens the door to the larger triangulated plays once trust and commercial alignment are established.
+    </p>
+
+    <div class="entry-grid">
+      <div class="entry-card">
+        <div class="entry-num">1</div>
+        <h4>A1 + A2 Â· Creative Certification Track</h4>
+        <p class="edesc">Certify Google AU's SMB/Agency field team (A1), then offer a micro-credential to their clients (A2). Low budget risk, high internal visibility. Gives the Google team a reason to champion Adobe internally without committing significant spend.</p>
+        <div class="entry-why">Low risk Â· High visibility Â· No budget commitment required to launch pilot</div>
+      </div>
+      <div class="entry-card">
+        <div class="entry-num">2</div>
+        <h4>C3 Â· Campaign Fund with Creative Gate</h4>
+        <p class="edesc">The most direct and measurable way to drive Firefly adoption at volume. Google activates its existing campaign fund levers; Adobe gets tool adoption tied to real spend data. Clean attribution for both parties from day one.</p>
+        <div class="entry-why">Measurable Â· Uses Google's existing levers Â· Direct Firefly adoption signal</div>
+      </div>
+      <div class="entry-card">
+        <div class="entry-num">3</div>
+        <h4>E2 Â· AI Creative Quality Index</h4>
+        <p class="edesc">Positions Adobe's IP-safety and quality story with empirical data. Gives Google a content asset for agency and advertiser conversations. Only requires research and marketing investment â no program infrastructure to stand up.</p>
+        <div class="entry-why">Marketing dollars only Â· Generates leads for all three parties Â· Builds the category narrative</div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px" class="callout">
+      <strong>Sequencing principle:</strong> All three entry points can run simultaneously and independently. They are designed to generate commercial credibility and internal champions before committing to the higher-investment programs in categories G, I, and J. Once trust is established and data exists, the triangulated plays (G1 principal media, G2 production bundle, J1 incubator) become significantly easier to close and fund.
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container">
+    <div class="section-label">Next Steps</div>
+    <h2 class="section-title">To validate and progress</h2>
+    <p class="section-intro">This document is an early-stage ideation brief. The following steps convert it into an actionable proposal.</p>
+
+    <div class="next-grid">
+      <div class="next-item">
+        <div class="next-n">1</div>
+        <div class="next-body">
+          <h5>Validate with Google AU counterparts</h5>
+          <p>Confirm which programs align with existing Google AU SMB/Agency team mandates and available funding mechanisms (MDF, SPIF, beta program access). Identify internal sponsors on the Google side.</p>
+        </div>
+      </div>
+      <div class="next-item">
+        <div class="next-n">2</div>
+        <div class="next-body">
+          <h5>Confirm Adobe APAC internal sponsorship</h5>
+          <p>Identify the Adobe APAC marketing and partnerships leads who would own this program. Validate whether any of these plays already exist inside Adobe's global partner framework to avoid duplication.</p>
+        </div>
+      </div>
+      <div class="next-item">
+        <div class="next-n">3</div>
+        <div class="next-body">
+          <h5>Identify relevant Publicis relationships</h5>
+          <p>Confirm which Publicis APAC relationships can carry a tri-party conversation â and whether those individuals hold the seniority to make commercial commitments beyond the retained brief.</p>
+        </div>
+      </div>
+      <div class="next-item">
+        <div class="next-n">4</div>
+        <div class="next-body">
+          <h5>Build one-page business cases for entry points</h5>
+          <p>Size the commercial opportunity for A1+A2 and C3. Estimate investment required, expected trial activations, and revenue attributable to each party. Use these as the pitch document for first conversations.</p>
+        </div>
+      </div>
+      <div class="next-item">
+        <div class="next-n">5</div>
+        <div class="next-body">
+          <h5>Agree scope boundary for Publicis retained vs. commercial</h5>
+          <p>Before any program is proposed externally, align internally on which deliverables sit within the retained relationship and which require a separate arrangement. Prevents commercial ambiguity at the proposal stage.</p>
+        </div>
+      </div>
+      <div class="next-item">
+        <div class="next-n">6</div>
+        <div class="next-body">
+          <h5>Determine AU-first vs. APAC scale from the outset</h5>
+          <p>Decide whether pilot programs are designed as AU-only proof-of-concepts or built with APAC replication in mind from the start. The latter requires more structural investment upfront but significantly improves the business case for Adobe and Google globally.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="page-footer">
+  <div class="container">
+    Adobe Ã Google Ã Publicis Â· Creative Performance Partnership Â· AU Market Â· April 2026 Â· Early-stage ideation â not validated with counterparts
+  </div>
+</footer>
+
+</body>
+</html>

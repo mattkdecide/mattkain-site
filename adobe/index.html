@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adobe Â· Workspace</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d0f;
+      --surface:  #141416;
+      --border:   #222226;
+      --text:     #f0f0f2;
+      --muted:    #888898;
+      --faint:    #333340;
+      --accent:   #D97757;
+      --accent-lo: rgba(217,119,87,0.10);
+      --adobe-red: #FA0F00;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .brand-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--adobe-red);
+    }
+
+    .brand-path {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .header-meta {
+      font-size: 11px;
+      color: var(--faint);
+    }
+
+    /* Main */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .page-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    /* Section */
+    .folder-section {
+      margin-bottom: 40px;
+    }
+
+    .folder-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    /* File list */
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .file-row {
+      display: grid;
+      grid-template-columns: 36px 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: var(--surface);
+      transition: background 0.12s;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .file-row:last-child { border-bottom: none; }
+    .file-row:hover { background: #1a1a1d; }
+
+    .file-icon {
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .file-info {}
+
+    .file-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .file-desc {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .file-date {
+      font-size: 11px;
+      color: var(--faint);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .file-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      padding: 5px 12px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      transition: background 0.12s;
+      white-space: nowrap;
+    }
+
+    .file-link:hover { background: var(--accent-lo); }
+
+    /* Status badge */
+    .badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .badge-draft { background: rgba(217,119,87,0.15); color: var(--accent); }
+    .badge-review { background: rgba(100,160,250,0.12); color: #64a0fa; }
+    .badge-final { background: rgba(80,200,120,0.12); color: #50c878; }
+
+    /* Empty state */
+    .empty {
+      padding: 32px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    /* Footer */
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 32px 40px;
+      font-size: 11px;
+      color: var(--faint);
+    }
+
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      Matt Kain <span class="brand-path">/ Adobe</span>
+    </div>
+    <div class="header-meta">Private workspace &nbsp;Â·&nbsp; Not indexed</div>
+  </div>
+</header>
+
+<main>
+  <div class="page-title">Adobe Workspace</div>
+  <p class="page-sub">Strategic documents, briefs, and working materials. Not publicly linked.</p>
+
+  <!-- PARTNERSHIP STRATEGY -->
+  <div class="folder-section">
+    <div class="folder-section-label">Partnership Strategy</div>
+    <div class="file-list">
+
+      <a href="adobe-google-publicis-partnership-brief.html" class="file-row">
+        <div class="file-icon">ð¯</div>
+        <div class="file-info">
+          <div class="file-name">Adobe Ã Google Ã Publicis â Creative Performance Partnership Brief <span class="badge badge-draft">Draft</span></div>
+          <div class="file-desc">Tri-party strategic framework Â· AU SMB market Â· 10 programme categories Â· Entry point recommendations</div>
+        </div>
+        <div class="file-date">Apr 2026</div>
+        <span class="file-link">Open â</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- PLACEHOLDER SECTIONS -->
+  <div class="folder-section">
+    <div class="folder-section-label">Market Intelligence</div>
+    <div class="empty">No files yet â add docs to this section as they are created.</div>
+  </div>
+
+  <div class="folder-section">
+    <div class="folder-section-label">Meeting Materials</div>
+    <div class="empty">No files yet â add QBR decks, briefing notes, and follow-ups here.</div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Matt Kain Â· Adobe APAC Â· <a href="mailto:kain@mattkain.com">kain@mattkain.com</a> &nbsp;Â·&nbsp; Last updated April 2026</p>
+</footer>
+
+</body>
+</html>

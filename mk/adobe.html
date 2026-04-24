@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Adobe Summit 2026 ‚Äî APAC Intelligence Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: #0f0f10; color: #fff; font-size: 15px; line-height: 1.6; }
+  a { color: #eb1000; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* HEADER */
+  .site-header { border-bottom: 1px solid #1e1e22; padding: 18px 28px; display: flex; align-items: center; gap: 14px; }
+  .logo-mark { width: 32px; height: 32px; background: #eb1000; border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-mark svg { width: 20px; height: 20px; fill: white; }
+  .site-name { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: -0.2px; }
+  .site-sub { font-size: 11px; color: #555; margin-top: 1px; }
+  .header-nav { margin-left: auto; font-size: 12px; color: #444; }
+
+  /* HERO */
+  .hero { background: linear-gradient(160deg, #150505 0%, #0f0f10 50%, #10100f 100%); border-bottom: 1px solid #1e1e22; padding: 52px 28px 44px; max-width: 1020px; margin: 0 auto; }
+  .hero-eyebrow { font-size: 11px; font-weight: 600; color: #eb1000; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 14px; }
+  .hero h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 16px; }
+  .hero h1 span { color: #eb1000; }
+  .hero-meta { font-size: 13px; color: #555; display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 24px; }
+  .hero-meta strong { color: #888; }
+  .hero-summary { font-size: 16px; color: #ccc; line-height: 1.7; max-width: 720px; font-weight: 300; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.4px; text-transform: uppercase; }
+  .tag-red { background: rgba(235,16,0,0.15); color: #eb1000; border: 1px solid rgba(235,16,0,0.25); }
+  .tag-grey { background: rgba(255,255,255,0.06); color: #888; border: 1px solid rgba(255,255,255,0.1); }
+
+  /* LAYOUT */
+  .container { max-width: 1020px; margin: 0 auto; padding: 0 28px; }
+  .main { padding: 48px 0 80px; }
+  .section { margin-bottom: 56px; }
+  .section-label { font-size: 10px; font-weight: 700; color: #eb1000; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+  .section-title { font-size: 22px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 20px; }
+  .section-title .muted { color: #555; font-weight: 400; }
+
+  /* STAT STRIP */
+  .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: #1a1a1e; border: 1px solid #1a1a1e; border-radius: 10px; overflow: hidden; margin-bottom: 40px; }
+  .stat-cell { background: #111114; padding: 20px 22px; }
+  .stat-num { font-size: 28px; font-weight: 800; letter-spacing: -1px; color: #fff; }
+  .stat-num.red { color: #eb1000; }
+  .stat-label { font-size: 12px; color: #555; margin-top: 3px; }
+
+  /* ANNOUNCEMENT CARDS */
+  .announce-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .announce-card { background: #111114; border: 1px solid #1e1e22; border-radius: 10px; padding: 22px; transition: border-color 0.2s; }
+  .announce-card:hover { border-color: #eb1000; }
+  .announce-card .card-num { font-size: 11px; font-weight: 700; color: #eb1000; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .announce-card h3 { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 8px; line-height: 1.3; }
+  .announce-card p { font-size: 13px; color: #888; line-height: 1.6; }
+  .announce-card .card-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 12px; }
+  .card-tag.new { background: rgba(235,16,0,0.12); color: #eb1000; border: 1px solid rgba(235,16,0,0.2); }
+  .card-tag.update { background: rgba(255,255,255,0.05); color: #666; border: 1px solid rgba(255,255,255,0.08); }
+  .card-tag.rebrand { background: rgba(100,180,255,0.08); color: #5ab4ff; border: 1px solid rgba(100,180,255,0.15); }
+  .card-tag.partner { background: rgba(80,220,150,0.08); color: #4dd99a; border: 1px solid rgba(80,220,150,0.15); }
+
+  /* CALLOUT */
+  .callout { background: rgba(235,16,0,0.06); border: 1px solid rgba(235,16,0,0.18); border-radius: 10px; padding: 22px 24px; margin: 20px 0; }
+  .callout-label { font-size: 10px; font-weight: 700; color: #eb1000; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; }
+  .callout p { font-size: 14px; color: #ddd; line-height: 1.7; }
+  .callout strong { color: #fff; }
+
+  /* CONTENT BLOCKS */
+  .content-block { margin-bottom: 28px; }
+  .content-block h3 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.1px; }
+  .content-block p, .content-block li { font-size: 14px; color: #aaa; line-height: 1.7; }
+  .content-block ul { padding-left: 18px; }
+  .content-block ul li { margin-bottom: 5px; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .data-table th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #444; border-bottom: 1px solid #1e1e22; padding: 10px 14px; text-align: left; }
+  .data-table td { font-size: 13px; color: #999; border-bottom: 1px solid #161618; padding: 12px 14px; vertical-align: top; line-height: 1.5; }
+  .data-table td:first-child { color: #fff; font-weight: 500; white-space: nowrap; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+  .pill-bull { background: rgba(80,220,150,0.1); color: #4dd99a; border: 1px solid rgba(80,220,150,0.2); }
+  .pill-neut { background: rgba(255,200,80,0.1); color: #ffc84a; border: 1px solid rgba(255,200,80,0.2); }
+  .pill-caut { background: rgba(255,150,50,0.1); color: #ff9a44; border: 1px solid rgba(255,150,50,0.2); }
+
+  /* TALKING POINTS */
+  .tp-grid { display: grid; gap: 14px; }
+  .tp-card { background: #111114; border: 1px solid #1e1e22; border-radius: 8px; padding: 18px 20px; display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+  .tp-icon { width: 32px; height: 32px; background: rgba(235,16,0,0.1); border: 1px solid rgba(235,16,0,0.2); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .tp-icon svg { width: 15px; height: 15px; fill: #eb1000; }
+  .tp-card h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.1px; }
+  .tp-card p { font-size: 13px; color: #888; line-height: 1.65; }
+
+  /* ACTION TABLE */
+  .action-row { display: grid; grid-template-columns: 1fr auto auto; gap: 12px 20px; align-items: center; padding: 14px 0; border-bottom: 1px solid #161618; }
+  .action-row:last-child { border-bottom: none; }
+  .action-text { font-size: 13px; color: #ccc; line-height: 1.5; }
+  .action-owner { font-size: 12px; color: #555; white-space: nowrap; }
+  .action-due { font-size: 12px; font-weight: 600; color: #eb1000; white-space: nowrap; }
+
+  /* COVERAGE */
+  .coverage-list { list-style: none; display: grid; gap: 10px; }
+  .coverage-item { background: #111114; border: 1px solid #1e1e22; border-radius: 8px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px; }
+  .coverage-source { font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.8px; min-width: 120px; padding-top: 2px; flex-shrink: 0; }
+  .coverage-title { font-size: 13px; color: #ccc; line-height: 1.5; }
+
+  /* SNEAKS */
+  .sneak-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .sneak-card { background: #111114; border: 1px solid #1e1e22; border-radius: 8px; padding: 16px; }
+  .sneak-num { font-size: 10px; font-weight: 700; color: #444; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .sneak-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .sneak-desc { font-size: 12px; color: #666; line-height: 1.5; }
+  .sneak-winner { border-color: rgba(235,16,0,0.3); }
+  .sneak-winner .sneak-num { color: #eb1000; }
+
+  /* DIVIDER */
+  hr.section-divider { border: none; border-top: 1px solid #1a1a1e; margin: 48px 0; }
+
+  /* FOOTER */
+  .footer { border-top: 1px solid #1a1a1e; padding: 32px 28px; max-width: 1020px; margin: 0 auto; }
+  .footer-disclaimer { font-size: 11px; color: #333; line-height: 1.7; margin-bottom: 16px; max-width: 780px; }
+  .footer-meta { font-size: 11px; color: #333; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .footer-meta span { color: #2a2a2a; }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 26px; }
+    .stat-strip { grid-template-columns: repeat(2, 1fr); }
+    .announce-grid { grid-template-columns: 1fr; }
+    .action-row { grid-template-columns: 1fr; }
+    .action-owner, .action-due { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="logo-mark">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M56 0L100 100H60L56 0ZM44 0L0 100H40L44 0ZM20 65h60l-5-13H25L20 65Z" fill-rule="evenodd"/></svg>
+  </div>
+  <div>
+    <div class="site-name">Adobe APAC Executive OS</div>
+    <div class="site-sub">Intelligence ¬∑ Private</div>
+  </div>
+  <div class="header-nav">mattkain.com/mk/adobe.html</div>
+</div>
+
+<div style="max-width:1020px; margin:0 auto; border-left:1px solid #1a1a1e; border-right:1px solid #1a1a1e; min-height:100vh;">
+
+<div class="hero">
+  <div class="hero-eyebrow">Event Intelligence ¬∑ Adobe Summit 2026</div>
+  <h1>The Agentic Enterprise<br><span>Is No Longer a Concept</span></h1>
+  <div class="hero-meta">
+    <span><strong>Event:</strong> Adobe Summit 2026</span>
+    <span><strong>Location:</strong> Las Vegas, Nevada</span>
+    <span><strong>Dates:</strong> 19 &ndash; 22 April 2026</span>
+    <span><strong>Updated:</strong> 24 April 2026</span>
+  </div>
+  <p class="hero-summary">Adobe's largest annual event delivered a decisive strategic pivot: Experience Cloud becomes CX Enterprise, Firefly confirms $250M ARR as a standalone revenue line, and six major holding companies standardise on Adobe's agentic platform. Shantanu Narayen's final keynote reframed the market. Jensen Huang delivered the line of the summit. This page captures what matters for APAC leadership.</p>
+  <div class="hero-tags">
+    <span class="tag tag-red">CX Enterprise</span>
+    <span class="tag tag-red">Firefly $250M ARR</span>
+    <span class="tag tag-red">Agentic AI</span>
+    <span class="tag tag-grey">Brand Intelligence</span>
+    <span class="tag tag-grey">GenStudio</span>
+    <span class="tag tag-grey">APAC Implications</span>
+  </div>
+</div>
+
+<div class="container main">
+
+  <!-- OVERVIEW -->
+  <section class="section">
+    <div class="section-label">Overview</div>
+    <div class="section-title">Summit at a Glance <span class="muted">¬∑ Key numbers</span></div>
+
+    <div class="stat-strip">
+      <div class="stat-cell">
+        <div class="stat-num red">$250M</div>
+        <div class="stat-label">Firefly ARR ¬∑ Q1 FY26</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">35T</div>
+        <div class="stat-label">AEP segment evals/day</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Major holdcos standardising</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Summit Sneaks unveiled</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">5</div>
+        <div class="stat-label">AI platform integrations</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num red">18yr</div>
+        <div class="stat-label">Narayen's final keynote</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Line That Defined Summit</div>
+      <p>NVIDIA CEO Jensen Huang, on stage at Adobe Summit 2026: <strong>"The front end of SaaS is now agentic."</strong> Adobe built its entire Summit narrative around that frame &mdash; and announced the products to back it. This was the most-quoted line of the event and validated Adobe's strategic direction in front of tens of thousands of customers and partners.</p>
+    </div>
+
+    <div class="content-block">
+      <h3>What This Summit Was About</h3>
+      <p>Adobe Summit 2026 was three things simultaneously: a product launch platform (CX Enterprise, Brand Intelligence, GenStudio for Content Marketing, Firefly Creative Agent), a credibility event (Firefly $250M ARR, NVIDIA endorsement, six holdco standardisation), and a CEO farewell. Shantanu Narayen has led Adobe for 18 years &mdash; this was his final keynote. His successor has not yet been named, but the platform Narayen leaves behind is materially stronger than when the transition was announced.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ANNOUNCEMENTS -->
+  <section class="section">
+    <div class="section-label">Announcements</div>
+    <div class="section-title">Major Product Announcements <span class="muted">¬∑ Day 1 &amp; 2</span></div>
+
+    <div class="announce-grid">
+
+      <div class="announce-card">
+        <div class="card-num">01 &mdash; Day 1 Keynote</div>
+        <h3>CX Enterprise</h3>
+        <p>Adobe Experience Cloud officially rebranded as Adobe CX Enterprise &mdash; an end-to-end agentic platform organised around three pillars: Brand Visibility, Customer Engagement, and Content Supply Chain. Anil Chakravarthy elevated to President, Customer Experience Orchestration Business.</p>
+        <span class="card-tag rebrand">Rebrand</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">02 &mdash; Day 1 Keynote</div>
+        <h3>Adobe Brand Intelligence</h3>
+        <p>New AI governance layer ensuring brand consistency across all AI-powered channels. Adobe's direct counter-narrative to Canva's brand management push. Enterprise-grade, commercially safe, integrated natively into CX Enterprise.</p>
+        <span class="card-tag new">New product</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">03 &mdash; Day 1 Keynote</div>
+        <h3>CX Enterprise Coworker</h3>
+        <p>A fully agentic AI system that plans, orchestrates, and executes CX workflows on behalf of marketing teams. Built on open standards: MCP (Model Context Protocol) and A2A (Agent-to-Agent). Adobe's answer to Microsoft Copilot in the marketing stack.</p>
+        <span class="card-tag new">New product</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">04 &mdash; Day 1 Keynote</div>
+        <h3>Firefly Creative Agent</h3>
+        <p>Orchestrates complex multi-step workflows across Photoshop, Premiere, Lightroom, Express, and Illustrator from a single natural-language prompt. Accompanied by Firefly Creative Production &mdash; the enterprise Workflow Builder for batch production at scale.</p>
+        <span class="card-tag new">New product</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">05 &mdash; Day 1 Keynote</div>
+        <h3>Firefly $250M ARR</h3>
+        <p>First time Adobe has broken Firefly out as a standalone revenue line: $250M ARR in Q1 FY2026. This is the number to deploy in all APAC customer conversations on AI monetisation. Significantly exceeded analyst expectations.</p>
+        <span class="card-tag update">Revenue milestone</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">06 &mdash; Day 1 Keynote</div>
+        <h3>GenStudio for Content Marketing</h3>
+        <p>Entirely new product entering early access at Summit. Atomises long-form content into social clips, short videos, posts, and emails &mdash; reducing production timelines from 4&ndash;6 weeks to minutes. Major capability gap vs. Canva's Creative OS. Separate from GenStudio for Performance Marketing.</p>
+        <span class="card-tag new">New product</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">07 &mdash; Day 1 Keynote</div>
+        <h3>Adobe Marketing Agent</h3>
+        <p>Generally available inside Microsoft 365 Copilot. Entering beta in Anthropic Claude Enterprise, ChatGPT Enterprise, Google Gemini Enterprise, Amazon Q, and IBM watsonx Orchestrate. Adobe is the connective tissue across all major enterprise AI platforms.</p>
+        <span class="card-tag partner">Partner</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">08 &mdash; Day 1 Keynote</div>
+        <h3>NVIDIA Partnership Deepened</h3>
+        <p>3D digital twin workflows enabling high-fidelity product replicas for content creation. Jensen Huang on stage &mdash; major credibility signal. Kling 3.0 and Kling 3.0 Omni models added to Firefly's multi-model library. Partner + build strategy confirmed.</p>
+        <span class="card-tag partner">Partner</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">09 &mdash; Post-Summit</div>
+        <h3>Holdco Standardisation</h3>
+        <p>dentsu, Havas, Omnicom, Publicis, Stagwell, and WPP all standardising on CX Enterprise. All six major holding companies. A decisive competitive signal vs. Salesforce Agentforce Marketing. Publicis, WPP, and dentsu all have large APAC operations &mdash; this accelerates APAC enterprise conversations.</p>
+        <span class="card-tag partner">Partner</span>
+      </div>
+
+      <div class="announce-card">
+        <div class="card-num">10 &mdash; Day 2 / NAB</div>
+        <h3>Creative Cloud Updates</h3>
+        <p>Photoshop Rotate Object (3D perspective from flat image) + Harmonise (shadows/lighting). Premiere Pro Color Mode (dedicated colour grading, public beta). Frame.io Drive (desktop app mounting Frame.io projects directly onto machine). Relevant to APAC agencies and post-production studios.</p>
+        <span class="card-tag update">Update</span>
+      </div>
+
+    </div>
+
+    <div class="callout" style="margin-top:24px;">
+      <div class="callout-label">APAC Priority Talking Points from Announcements</div>
+      <p><strong>CX Enterprise rebrand</strong> is the new conversation opener &mdash; replaces product-by-product selling. <strong>Firefly $250M ARR</strong> is the AI credibility number. <strong>Brand Intelligence</strong> is the Canva counter. <strong>GenStudio for Content Marketing</strong> early access solves the multi-market, multi-language content problem. <strong>Holdco standardisation</strong> de-risks APAC agency conversations.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- CREATIVE CLOUD -->
+  <section class="section">
+    <div class="section-label">Creative Cloud</div>
+    <div class="section-title">Creative &amp; Firefly Deep Dive <span class="muted">¬∑ Product detail</span></div>
+
+    <div class="content-block">
+      <h3>Firefly Platform &mdash; State of Play</h3>
+      <p>Adobe's positioning is "partner + build": partnering with NVIDIA, OpenAI, and Google for model capability while building its own commercially safe models and governance layer via Brand Intelligence. The key differentiator language is "commercially safe, enterprise-grade, brand-governed AI" &mdash; distinct from Canva (no governance story) and Microsoft/Google (no creative depth). Kling 3.0 and Kling 3.0 Omni now in the Firefly multi-model library, confirming Adobe is building a platform, not a single model.</p>
+    </div>
+
+    <div class="content-block">
+      <h3>Firefly Creative Production &mdash; Enterprise Workflow Builder</h3>
+      <p>Composes reusable end-to-end production workflows. Batch production from approved assets to activation. Designed for enterprise marketing teams running high-volume, multi-market content operations &mdash; directly addresses the APAC content production challenge across multiple languages and markets.</p>
+    </div>
+
+    <div class="content-block">
+      <h3>GenStudio &mdash; Two Products, Full Supply Chain</h3>
+      <ul>
+        <li><strong>GenStudio for Content Marketing</strong> (early access): Long-form to short-form content atomisation. Weeks to minutes. Adobe's answer to Canva's Creative OS for enterprises that produce editorial and social content at scale.</li>
+        <li><strong>GenStudio for Performance Marketing</strong> (updated): Omnichannel insights dashboard, automated creative element tagging, proactive optimisation, multi-model AI. New activation channels: ChatGPT distribution and connected TV platforms.</li>
+      </ul>
+    </div>
+
+    <div class="content-block">
+      <h3>Summit Sneaks &mdash; Day 3</h3>
+    </div>
+
+    <div class="sneak-grid">
+      <div class="sneak-card sneak-winner">
+        <div class="sneak-num">Audience Winner</div>
+        <div class="sneak-name">Project Concurrent</div>
+        <div class="sneak-desc">AI turns campaign guesswork into predictions. Audience-voted winner at Summit Sneaks. Per B&amp;T Australia coverage post-event.</div>
+      </div>
+      <div class="sneak-card">
+        <div class="sneak-num">Project 02</div>
+        <div class="sneak-name">Project Tailored Takes</div>
+        <div class="sneak-desc">Firefly Foundry attribute tweaking (objects, camera angles); combines start and end frame with text prompt to generate video.</div>
+      </div>
+      <div class="sneak-card">
+        <div class="sneak-num">Project 03</div>
+        <div class="sneak-name">Project Asset Amplify</div>
+        <div class="sneak-desc">Generates websites, social posts, and more from a company's existing assets, based on target audience.</div>
+      </div>
+      <div class="sneak-card">
+        <div class="sneak-num">Project 04</div>
+        <div class="sneak-name">Project Page Turner</div>
+        <div class="sneak-desc">Crowd favourite in real-time voting at Summit Sneaks.</div>
+      </div>
+      <div class="sneak-card">
+        <div class="sneak-num">Project 05</div>
+        <div class="sneak-name">Project Face Off</div>
+        <div class="sneak-desc">Crowd favourite in real-time voting at Summit Sneaks.</div>
+      </div>
+      <div class="sneak-card">
+        <div class="sneak-num">Projects 06 &ndash; 07</div>
+        <div class="sneak-name">Additional Sneaks</div>
+        <div class="sneak-desc">Two additional projects not yet named in press coverage. All 7 Sneaks available at business.adobe.com/events/adobe-summit-sneaks.html.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- COMPETITIVE -->
+  <section class="section">
+    <div class="section-label">Competitive</div>
+    <div class="section-title">Competitive Intelligence <span class="muted">¬∑ Summit edition</span></div>
+
+    <div class="content-block">
+      <h3>How Competitors Responded</h3>
+    </div>
+
+    <table class="data-table" style="margin-bottom:28px;">
+      <thead>
+        <tr>
+          <th>Competitor</th>
+          <th>Response / Reaction</th>
+          <th>Timing</th>
+          <th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Canva</td>
+          <td>Canva Create 2026 ran concurrently (23 April). Repositioned as "AI platform with design tools" &mdash; direct mirror of Adobe's language. Canva now at 31M users, $4B ARR.</td>
+          <td>Same week</td>
+          <td><span class="pill pill-caut">Watch</span></td>
+        </tr>
+        <tr>
+          <td>Salesforce</td>
+          <td>No counter-response surfaced yet. Adobe CX Enterprise directly challenges Salesforce Agentforce Marketing. Battle for enterprise CX orchestration narrative is now explicit. CX Enterprise built on open standards (MCP, A2A) vs. Salesforce's more proprietary Agentforce architecture.</td>
+          <td>Post-Summit</td>
+          <td><span class="pill pill-neut">Monitor</span></td>
+        </tr>
+        <tr>
+          <td>Microsoft</td>
+          <td>No specific counter. CX Enterprise Coworker vs. Copilot is the new competitive frame. Adobe Marketing Agent now GA inside M365 Copilot &mdash; collaboration, not pure competition.</td>
+          <td>Ongoing</td>
+          <td><span class="pill pill-neut">Monitor</span></td>
+        </tr>
+        <tr>
+          <td>Google</td>
+          <td>No specific counter-response. Adobe Marketing Agent entering beta in Google Gemini Enterprise.</td>
+          <td>Ongoing</td>
+          <td><span class="pill pill-bull">Partner</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="content-block">
+      <h3>Gaps in Adobe's Narrative</h3>
+      <ul>
+        <li><strong>CEO transition timeline still unanswered.</strong> Successor not named. Leadership uncertainty remains a risk in APAC enterprise sales cycles. Counter: Narayen leaves behind $250M Firefly ARR, CX Enterprise, and the NVIDIA partnership &mdash; strategy is stronger than when the transition was announced.</li>
+        <li><strong>Pricing model clarity.</strong> CX Enterprise pricing structure not fully disclosed. Consumption vs. seat vs. platform pricing still unclear for customer conversations. Partially answered &mdash; needs follow-up post-Summit.</li>
+        <li><strong>APAC-specific content.</strong> No regional announcement or APAC customer story on main stage this year. Requires active APAC contextualisation.</li>
+        <li><strong>Document Cloud quiet.</strong> Acrobat AI not prominently featured. Unclear how it fits the CX Enterprise narrative at this stage.</li>
+      </ul>
+    </div>
+
+    <div class="content-block">
+      <h3>Announcements Stronger Than Expected</h3>
+      <ul>
+        <li><strong>Firefly $250M ARR</strong> &mdash; concrete revenue number exceeded analyst expectations; addresses the "AI monetisation" concern directly.</li>
+        <li><strong>CX Enterprise rebrand</strong> &mdash; bolder than anticipated; signals intent to own the orchestration narrative vs. Salesforce.</li>
+        <li><strong>GenStudio for Content Marketing</strong> &mdash; new product nobody predicted; fills a real gap.</li>
+        <li><strong>Jensen Huang on stage</strong> &mdash; NVIDIA CEO endorsement. Credibility signal exceeded expectations.</li>
+        <li><strong>Holdco standardisation</strong> &mdash; all six major holding companies. Decisive vs. Salesforce.</li>
+      </ul>
+    </div>
+
+    <div class="content-block">
+      <h3>APAC Counter-Narratives Required</h3>
+      <ul>
+        <li><strong>vs. Canva:</strong> "Canva creates, Adobe governs and activates." Brand Intelligence + Firefly commercially safe + AEP activation = the enterprise-grade advantage. Build as a one-page APAC brief.</li>
+        <li><strong>vs. Salesforce Agentforce Marketing:</strong> "Adobe owns the content; Salesforce owns the CRM data." CX Enterprise closes the data gap. Salesforce has no answer on creative quality, brand governance, or content supply chain. AEP vs. Data Cloud brief needed.</li>
+        <li><strong>vs. CEO transition concern:</strong> "Narayen built the platform; his successor inherits a $250M AI revenue line, a freshly rebranded CX Enterprise, and the NVIDIA partnership."</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- COVERAGE -->
+  <section class="section">
+    <div class="section-label">Coverage</div>
+    <div class="section-title">Press &amp; Analyst Coverage <span class="muted">¬∑ Post-Summit</span></div>
+
+    <ul class="coverage-list">
+      <li class="coverage-item">
+        <span class="coverage-source">MarTech</span>
+        <span class="coverage-title">"Adobe rebrands Experience Cloud as 'CX Enterprise,' goes all-in on AI agents"</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">CMSWire</span>
+        <span class="coverage-title">"NVIDIA CEO Jensen Huang at Adobe Summit: Agentic Is Here"</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">SiliconANGLE</span>
+        <span class="coverage-title">"Five takeaways from CEO Shantanu Narayen's final keynote at Adobe Summit"</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">Computerworld</span>
+        <span class="coverage-title">"Adobe builds an 'agentic content supply chain' for the AI era"</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">Diginomica</span>
+        <span class="coverage-title">"Adobe Summit 2026: AI has gone from know-it-all to actually getting work done, says NVIDIA CEO"</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">CX Today</span>
+        <span class="coverage-title">"Liz Miller calls out the market on AI strategy and she's not holding back" &mdash; Constellation Research analyst; notable for directness</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">CX Today</span>
+        <span class="coverage-title">"The enterprise playbook for AI-driven customer orchestration"</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">Martech Notes</span>
+        <span class="coverage-title">"Adobe unveils CX Enterprise Coworker at Summit 2026: Agentic AI gets its own teammate"</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">B&amp;T Australia</span>
+        <span class="coverage-title">"Adobe Sneaks 2026: Winning demo sees AI turn campaign guesswork into predictions"</span>
+      </li>
+      <li class="coverage-item">
+        <span class="coverage-source">PYMNTS.com</span>
+        <span class="coverage-title">"Adobe launches AI agents to automate marketing workflows"</span>
+      </li>
+    </ul>
+
+    <div class="content-block" style="margin-top:24px;">
+      <h3>Analyst Sentiment</h3>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Analyst / Firm</th>
+          <th>Commentary</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Forrester</td>
+          <td>"Enterprise content moves from tools to systems" &mdash; validates Adobe's direction; notes execution risk.</td>
+          <td><span class="pill pill-neut">Neutral-Bullish</span></td>
+        </tr>
+        <tr>
+          <td>CMSWire</td>
+          <td>"Doubles down on agentic AI &mdash; the hard work is the operating model." Strong products, delivery is the question.</td>
+          <td><span class="pill pill-neut">Neutral</span></td>
+        </tr>
+        <tr>
+          <td>Constellation Research</td>
+          <td>"Agentic orchestration for CX, creative workflows" &mdash; positions Adobe well for enterprise.</td>
+          <td><span class="pill pill-bull">Bullish</span></td>
+        </tr>
+        <tr>
+          <td>GuruFocus / Market</td>
+          <td>"Faces increased competition from Canva" &mdash; $4B Canva ARR cited as structural threat.</td>
+          <td><span class="pill pill-caut">Cautious</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- UPDATES & STRATEGIC IMPLICATIONS -->
+  <section class="section">
+    <div class="section-label">Updates</div>
+    <div class="section-title">Strategic Implications for APAC <span class="muted">¬∑ Action required</span></div>
+
+    <div class="tp-grid" style="margin-bottom:32px;">
+
+      <div class="tp-card">
+        <div class="tp-icon">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4zm.75 3.25a.75.75 0 00-1.5 0V10c0 .199.079.39.22.53l2.5 2.5a.75.75 0 001.06-1.06L11 9.69V7.25z"/></svg>
+        </div>
+        <div>
+          <h4>CX Enterprise Is the New Conversation Starter</h4>
+          <p>Every APAC customer conversation should now open with the CX Enterprise frame &mdash; not product-by-product selling. It directly addresses the "too many products" objection that has stalled enterprise deals.</p>
+        </div>
+      </div>
+
+      <div class="tp-card">
+        <div class="tp-icon">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <h4>Firefly $250M ARR Is the AI Credibility Answer</h4>
+          <p>When APAC customers or prospects question Adobe's AI momentum vs. Microsoft/Google bundling, $250M ARR is the answer. Real revenue from commercially safe AI. Use it proactively in every senior meeting from May.</p>
+        </div>
+      </div>
+
+      <div class="tp-card">
+        <div class="tp-icon">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <h4>Brand Intelligence Is the Canva Counter-Narrative</h4>
+          <p>Canva cannot match enterprise-grade brand governance. Brand Intelligence + Firefly commercial safety + AEP activation workflow is the sharpest competitive differentiator in the APAC agency and enterprise segment. One-pager needed by 25 April.</p>
+        </div>
+      </div>
+
+      <div class="tp-card">
+        <div class="tp-icon">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <h4>GenStudio for Content Marketing Fills a Critical APAC Gap</h4>
+          <p>Long-form to short-form content atomisation in minutes &mdash; directly addresses multi-market, multi-language content production for APAC enterprise marketers. Early access conversations should begin with Pete Nagy immediately post-Summit.</p>
+        </div>
+      </div>
+
+      <div class="tp-card">
+        <div class="tp-icon">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"/></svg>
+        </div>
+        <div>
+          <h4>Agentic Web / LLM Discoverability Is a New Strategic Topic</h4>
+          <p>APAC brands in retail and financial services will want to understand how their content performs in AI-agent-mediated discovery environments. Adobe's SK2 Super Session addresses this directly. Get ahead of this as a thought leadership angle in May.</p>
+        </div>
+      </div>
+
+      <div class="tp-card">
+        <div class="tp-icon">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
+        </div>
+        <div>
+          <h4>Holdco Standardisation De-risks APAC Agency Conversations</h4>
+          <p>Publicis, WPP, and dentsu standardising on CX Enterprise removes a significant objection in APAC agency partner meetings. The holdco endorsement is a proof point, not just a product claim. Reference this in every agency conversation from May.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="content-block">
+      <h3>Action Items Post-Summit</h3>
+    </div>
+
+    <div style="background:#111114; border:1px solid #1e1e22; border-radius:10px; padding:8px 20px; margin-bottom:24px;">
+      <div class="action-row">
+        <div class="action-text">Build Canva Create vs. CX Enterprise counter-positioning one-pager for APAC</div>
+        <div class="action-owner">Matt / AI-assisted</div>
+        <div class="action-due">25 Apr</div>
+      </div>
+      <div class="action-row">
+        <div class="action-text">Brief Pete Nagy on Summit narrative &mdash; CX Enterprise, Firefly $250M, Brand Intelligence</div>
+        <div class="action-owner">Matt</div>
+        <div class="action-due">25 Apr</div>
+      </div>
+      <div class="action-row">
+        <div class="action-text">Update Competitor Watchlist &mdash; Canva $4B ARR, Canva Create repositioning</div>
+        <div class="action-owner">AI-assisted</div>
+        <div class="action-due">30 Apr</div>
+      </div>
+      <div class="action-row">
+        <div class="action-text">Update April Competitive Intel Briefing with Summit outcomes</div>
+        <div class="action-owner">AI-assisted</div>
+        <div class="action-due">30 Apr</div>
+      </div>
+      <div class="action-row">
+        <div class="action-text">Start GenStudio for Content Marketing early access conversation with Pete</div>
+        <div class="action-owner">Matt</div>
+        <div class="action-due">30 Apr</div>
+      </div>
+      <div class="action-row">
+        <div class="action-text">Confirm Adobe Experience Makers APAC 2026 dates &mdash; use CX Enterprise framing</div>
+        <div class="action-owner">Matt</div>
+        <div class="action-due">30 Apr</div>
+      </div>
+      <div class="action-row">
+        <div class="action-text">Explore Agentic Web / LLM discoverability as a thought leadership angle for APAC</div>
+        <div class="action-owner">Matt</div>
+        <div class="action-due">1 May</div>
+      </div>
+      <div class="action-row">
+        <div class="action-text">Run Summit debrief with APAC agency partners</div>
+        <div class="action-owner">Matt</div>
+        <div class="action-due">1 May</div>
+      </div>
+      <div class="action-row" style="border-bottom:none;">
+        <div class="action-text">May briefing: G2 sentiment sweep post-Summit &mdash; Adobe, Canva, Salesforce</div>
+        <div class="action-owner">Standing task</div>
+        <div class="action-due">1 May</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Adobe Marketing Agent &mdash; Key Talking Point</div>
+      <p>Adobe Marketing Agent is generally available inside Microsoft 365 Copilot and entering beta in Anthropic Claude Enterprise, ChatGPT Enterprise, Google Gemini Enterprise, Amazon Q, and IBM watsonx Orchestrate. This is the GTM signal: <strong>"Adobe works wherever your AI stack already lives."</strong> CX Enterprise is connective tissue across all major enterprise AI platforms &mdash; not a closed ecosystem.</p>
+    </div>
+  </section>
+
+</div><!-- /main -->
+
+<footer class="footer">
+  <p class="footer-disclaimer">Adobe, Creative Cloud, Adobe Experience Platform, Adobe Firefly, Adobe Photoshop, Adobe Premiere Pro, and other product names mentioned are either registered trademarks or trademarks of Adobe in the United States and/or other countries. This content is produced independently by Matt Kain and is not affiliated with or endorsed by Adobe.</p>
+  <p class="footer-disclaimer">This analysis is produced independently by Matt Kain. This page is not affiliated with, sponsored by, or endorsed by Adobe.</p>
+  <div class="footer-meta">
+    <span>Adobe APAC Executive OS</span>
+    <span>&middot;</span>
+    <span>Event Intelligence</span>
+    <span>&middot;</span>
+    <span>Adobe Summit 2026</span>
+    <span>&middot;</span>
+    <span>Updated 24 April 2026</span>
+    <span>&middot;</span>
+    <span>Private &mdash; noindex</span>
+  </div>
+</footer>
+
+</div><!-- /border wrapper -->
+</body>
+</html>

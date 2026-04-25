@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Industry Events Calendar — Adobe APAC Executive OS</title>
+<style>
+  :root {
+    --adobe: #eb1000;
+    --adobe-light: #fff0ef;
+    --competitor: #0066cc;
+    --competitor-light: #eff5ff;
+    --industry: #7c3aed;
+    --industry-light: #f5f0ff;
+    --earnings: #16a34a;
+    --earnings-light: #f0fdf4;
+    --apac: #ea7c00;
+    --apac-light: #fff7ed;
+    --past: #9ca3af;
+    --past-light: #f9fafb;
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #6b7280;
+    --radius: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* HEADER */
+  .header {
+    background: #1a1a2e;
+    color: white;
+    padding: 28px 40px 24px;
+    border-bottom: 3px solid var(--adobe);
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .header-sub { font-size: 13px; color: #9ca3af; margin-top: 4px; }
+  .header-date { font-size: 12px; color: #6b7280; text-align: right; }
+  .header-date strong { color: #d1d5db; display: block; font-size: 13px; }
+
+  /* FILTERS */
+  .controls {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .controls-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px; }
+  .filter-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-btn {
+    border: 1.5px solid transparent;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .filter-btn[data-filter="all"] { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+  .filter-btn[data-filter="adobe"] { background: var(--adobe-light); color: var(--adobe); border-color: var(--adobe); }
+  .filter-btn[data-filter="competitor"] { background: var(--competitor-light); color: var(--competitor); border-color: var(--competitor); }
+  .filter-btn[data-filter="industry"] { background: var(--industry-light); color: var(--industry); border-color: var(--industry); }
+  .filter-btn[data-filter="earnings"] { background: var(--earnings-light); color: var(--earnings); border-color: var(--earnings); }
+  .filter-btn[data-filter="apac"] { background: var(--apac-light); color: var(--apac); border-color: var(--apac); }
+  .filter-btn.inactive { background: white; color: var(--muted); border-color: var(--border); }
+  .filter-btn:hover { opacity: 0.85; }
+  .divider { width: 1px; height: 24px; background: var(--border); margin: 0 4px; }
+  .toggle-past { background: white; border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--muted); transition: all 0.15s; }
+  .toggle-past.showing { background: #f9fafb; border-color: #d1d5db; color: #374151; }
+
+  /* STATS BAR */
+  .stats {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 40px;
+    display: flex;
+    gap: 24px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .stat-item strong { color: var(--text); }
+
+  /* MAIN */
+  .main { padding: 32px 40px; max-width: 1200px; }
+
+  /* MONTH SECTION */
+  .month-section { margin-bottom: 40px; }
+  .month-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .month-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    min-width: 80px;
+  }
+  .month-count {
+    font-size: 11px;
+    color: var(--muted);
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-weight: 600;
+  }
+  .month-line { flex: 1; height: 1px; background: var(--border); }
+  .month-past-label { font-size: 11px; color: var(--past); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* EVENT CARDS */
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 10px;
+  }
+  .event-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    border-left: 4px solid transparent;
+    transition: box-shadow 0.15s, transform 0.1s;
+    cursor: default;
+  }
+  .event-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
+  .event-card.cat-adobe { border-left-color: var(--adobe); }
+  .event-card.cat-competitor { border-left-color: var(--competitor); }
+  .event-card.cat-industry { border-left-color: var(--industry); }
+  .event-card.cat-earnings { border-left-color: var(--earnings); }
+  .event-card.cat-apac { border-left-color: var(--apac); }
+  .event-card.is-past { opacity: 0.5; background: #fafafa; }
+  .event-card.is-upcoming-soon { box-shadow: 0 0 0 2px rgba(235,16,0,0.2); border-left-width: 4px; }
+  .event-card.hidden { display: none; }
+
+  .event-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+  .event-name { font-weight: 700; font-size: 13.5px; color: var(--text); line-height: 1.3; }
+  .event-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-adobe { background: var(--adobe-light); color: var(--adobe); }
+  .badge-competitor { background: var(--competitor-light); color: var(--competitor); }
+  .badge-industry { background: var(--industry-light); color: var(--industry); }
+  .badge-earnings { background: var(--earnings-light); color: var(--earnings); }
+  .badge-apac { background: var(--apac-light); color: var(--apac); }
+
+  .event-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .event-meta span { display: flex; align-items: center; gap: 3px; }
+  .event-notes { font-size: 12px; color: #4b5563; margin-top: 6px; line-height: 1.4; border-top: 1px solid #f3f4f6; padding-top: 6px; }
+  .tag-soon {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--adobe);
+    background: var(--adobe-light);
+    border-radius: 10px;
+    padding: 2px 8px;
+    margin-left: 6px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+    font-size: 14px;
+    grid-column: 1 / -1;
+  }
+
+  .month-hidden { display: none; }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 12px 40px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* FOOTER */
+  .footer {
+    padding: 20px 40px;
+    color: var(--muted);
+    font-size: 11px;
+    border-top: 1px solid var(--border);
+    background: white;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 700px) {
+    .header, .controls, .main, .stats, .legend, .footer { padding-left: 16px; padding-right: 16px; }
+    .events-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>2026 Industry Events Calendar</h1>
+      <div class="header-sub">Adobe APAC Executive OS — Intelligence Layer</div>
+    </div>
+    <div class="header-date">
+      <strong>Last updated: April 2026</strong>
+      Markets: US · UK · DE · JP · IN · AU/NZ · SG
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--adobe)"></div> Adobe Events</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--competitor)"></div> Competitor Events</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--industry)"></div> Industry Events</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--earnings)"></div> Earnings Releases</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--apac)"></div> APAC-specific</div>
+</div>
+
+<div class="controls">
+  <span class="controls-label">Filter:</span>
+  <div class="filter-group">
+    <button class="filter-btn" data-filter="all" onclick="setFilter('all')">All Events</button>
+    <button class="filter-btn" data-filter="adobe" onclick="setFilter('adobe')">Adobe</button>
+    <button class="filter-btn" data-filter="competitor" onclick="setFilter('competitor')">Competitors</button>
+    <button class="filter-btn" data-filter="industry" onclick="setFilter('industry')">Industry</button>
+    <button class="filter-btn" data-filter="earnings" onclick="setFilter('earnings')">Earnings</button>
+    <button class="filter-btn" data-filter="apac" onclick="setFilter('apac')">APAC</button>
+  </div>
+  <div class="divider"></div>
+  <button class="toggle-past showing" onclick="togglePast()" id="pastToggle">Showing past events</button>
+</div>
+
+<div class="stats" id="statsBar">
+  <span>Loading...</span>
+</div>
+
+<div class="main" id="mainContent">
+</div>
+
+<div class="footer">
+  Adobe APAC Executive OS · Intelligence Layer · Earnings dates are approximate based on historical filing patterns — verify against investor relations pages before use · Events subject to change
+</div>
+
+<script>
+// =============================================
+// EVENT DATA
+// =============================================
+const TODAY = new Date('2026-04-14');
+
+const events = [
+
+  // ── JANUARY ──────────────────────────────────────────────
+  {
+    name: "CES 2026",
+    start: "2026-01-06", end: "2026-01-09",
+    cat: "industry",
+    location: "Las Vegas, USA",
+    type: "Conference",
+    markets: ["US"],
+    notes: "World's largest consumer tech show. Signals hardware, AI, and connected device direction. Watch for AI creative tool demos and platform integrations."
+  },
+  {
+    name: "World Economic Forum (Davos)",
+    start: "2026-01-20", end: "2026-01-24",
+    cat: "industry",
+    location: "Davos, Switzerland",
+    type: "Summit",
+    markets: ["Global"],
+    notes: "Global executive and policy forum. Key for AI regulation signals, digital economy direction, and enterprise tech narratives."
+  },
+  {
+    name: "Microsoft Q2 FY2026 Earnings",
+    start: "2026-01-28",
+    cat: "earnings",
+    location: "Redmond, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Microsoft fiscal year ends June 30. Q2 covers Oct–Dec 2025. Watch: Copilot adoption metrics, Azure AI growth, M365 seat expansion."
+  },
+  {
+    name: "Salesforce Q4 FY2026 Earnings",
+    start: "2026-03-05",
+    cat: "earnings",
+    location: "San Francisco, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Salesforce fiscal year ends Jan 31. Watch: Agentforce traction, Marketing Cloud positioning, Einstein AI metrics."
+  },
+  {
+    name: "IAB Annual Leadership Meeting",
+    start: "2026-01-25", end: "2026-01-28",
+    cat: "industry",
+    location: "Palm Desert, USA",
+    type: "Conference",
+    markets: ["US"],
+    notes: "Sets digital advertising agenda for the year. Privacy, identity, and measurement standards discussions are key signals."
+  },
+
+  // ── FEBRUARY ──────────────────────────────────────────────
+  {
+    name: "MWC Barcelona 2026",
+    start: "2026-02-23", end: "2026-02-26",
+    cat: "industry",
+    location: "Barcelona, Spain",
+    type: "Conference",
+    markets: ["DE", "UK", "Global"],
+    notes: "Mobile World Congress. Key for connectivity, AI on device, enterprise mobility. Strong European / emerging market lens."
+  },
+  {
+    name: "Snap Q4 2025 Earnings",
+    start: "2026-02-04",
+    cat: "earnings",
+    location: "Los Angeles, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Watch: AR/Spectacles traction, creator economy metrics, APAC user growth, and advertising revenue trajectory."
+  },
+  {
+    name: "Alphabet / Google Q4 2025 Earnings",
+    start: "2026-02-04",
+    cat: "earnings",
+    location: "Mountain View, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Watch: Gemini AI adoption, Workspace AI features, Search AI Overviews monetisation, YouTube ad recovery."
+  },
+  {
+    name: "Meta Q4 2025 Earnings",
+    start: "2026-02-05",
+    cat: "earnings",
+    location: "Menlo Park, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Watch: AI creative tools adoption, Ray-Ban smart glasses traction, ad targeting changes post-ATT, APAC engagement."
+  },
+
+  // ── MARCH ──────────────────────────────────────────────
+  {
+    name: "SXSW 2026",
+    start: "2026-03-13", end: "2026-03-22",
+    cat: "industry",
+    location: "Austin, Texas, USA",
+    type: "Festival / Conference",
+    markets: ["US"],
+    notes: "Key for emerging tech, creative AI, and cultural/brand narrative. Watch for early-stage AI creative tools getting buzz."
+  },
+  {
+    name: "Adobe Q1 FY2026 Earnings",
+    start: "2026-03-12",
+    cat: "earnings",
+    location: "San Jose, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Adobe fiscal year ends Nov 30. Q1 covers Dec–Feb. Watch: Firefly usage metrics, GenStudio traction, AEP ARR, subscription growth."
+  },
+  {
+    name: "Advertising Week Europe 2026",
+    start: "2026-03-23", end: "2026-03-26",
+    cat: "industry",
+    location: "London, UK",
+    type: "Conference",
+    markets: ["UK", "DE"],
+    notes: "Major European marketing and media event. Key for brand strategy, programmatic, and creative AI adoption signals in EMEA."
+  },
+  {
+    name: "Adobe Q1 FY2026 Earnings + CEO Transition",
+    start: "2026-03-12",
+    cat: "adobe",
+    location: "San Jose, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Revenue $6.4B (+12% YoY, beat). Firefly ARR +75% QoQ. Freemium MAU 80M (+50% YoY). SAME DAY: Shantanu Narayen announced CEO transition after 18 years — will remain Chair. Succession search underway (internal + external). Adobe shares down ~23% YTD as of announcement."
+  },
+  {
+    name: "Adobe / NVIDIA Strategic Partnership",
+    start: "2026-03-16",
+    cat: "adobe",
+    location: "Announced",
+    type: "Partnership",
+    markets: ["Global"],
+    notes: "Strategic partnership to deliver next-gen Firefly models and agentic workflows. NVIDIA compute + AI to accelerate Photoshop, Premiere Pro, Frame.io, Firefly Foundry, GenStudio, and AEP. Jensen Huang keynoting Adobe Summit one month later."
+  },
+  {
+    name: "SAP Q1 2026 Earnings",
+    start: "2026-04-22",
+    cat: "earnings",
+    location: "Walldorf, Germany",
+    type: "Earnings",
+    markets: ["DE", "Global"],
+    notes: "Watch: Business AI traction, CX cloud positioning, European enterprise digital spend signals."
+  },
+
+  // ── APRIL ──────────────────────────────────────────────
+  {
+    name: "NAB Show 2026",
+    start: "2026-04-05", end: "2026-04-09",
+    cat: "industry",
+    location: "Las Vegas, USA",
+    type: "Conference",
+    markets: ["US"],
+    notes: "National Association of Broadcasters. Key for video, streaming, and media production technology. Adobe Premiere and After Effects positioned here."
+  },
+  {
+    name: "Adobe Summit 2026",
+    start: "2026-04-19", end: "2026-04-22",
+    cat: "adobe",
+    location: "The Venetian, Las Vegas, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Adobe's flagship customer and partner event. Pre-conference April 19, main event April 20–22. Keynote: Shantanu Narayen + Jensen Huang (Nvidia). Theme: Agentic AI for marketing workflows. 200+ sessions, 13 tracks. Context: first major event since Narayen's CEO transition announcement. CRITICAL — capture all keynotes and product announcements.",
+    highlight: true
+  },
+  {
+    name: "Adobe MAX London 2026",
+    start: "2026-04-24",
+    cat: "adobe",
+    location: "London, UK (venue TBC)",
+    type: "Conference",
+    markets: ["UK", "DE"],
+    notes: "Date TBC — 2025 edition was April 24 at The Magazine, SE London. 2026 date not yet officially confirmed. Watch: adobe.com/uk/events for announcement. Creative-focused companion to the US MAX event."
+  },
+  {
+    name: "Google Cloud Next 2026",
+    start: "2026-04-09", end: "2026-04-11",
+    cat: "competitor",
+    location: "Las Vegas, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Google Cloud's annual flagship. Watch for Workspace AI features, Gemini integrations, and creative/productivity tool announcements that compete with Adobe."
+  },
+  {
+    name: "Microsoft Q3 FY2026 Earnings",
+    start: "2026-04-29",
+    cat: "earnings",
+    location: "Redmond, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q3 covers Jan–Mar 2026. Watch: Copilot for M365 adoption, Designer usage, Azure OpenAI growth, LinkedIn revenue."
+  },
+  {
+    name: "Alphabet / Google Q1 2026 Earnings",
+    start: "2026-04-28",
+    cat: "earnings",
+    location: "Mountain View, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q1 covers Jan–Mar 2026. Watch: Gemini integration pace, Workspace AI seat growth, YouTube Shorts monetisation."
+  },
+  {
+    name: "Meta Q1 2026 Earnings",
+    start: "2026-04-29",
+    cat: "earnings",
+    location: "Menlo Park, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q1 covers Jan–Mar 2026. Watch: AI Studio adoption, Meta AI usage, creator monetisation tools, APAC ad spend."
+  },
+  {
+    name: "Snap Q1 2026 Earnings",
+    start: "2026-04-30",
+    cat: "earnings",
+    location: "Los Angeles, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Watch: Gen Z creative tools, Spotlight content, AR commerce adoption, APAC DAU."
+  },
+  {
+    name: "Canva Create 2026",
+    start: "2026-04-16",
+    cat: "competitor",
+    location: "SoFi Stadium / Hollywood Park, Los Angeles, USA",
+    type: "Product Event",
+    markets: ["US", "AU"],
+    notes: "CRITICAL WATCH — April 16, 2 days from now. Canva acquired Simtheory (AI agent platform) and Ortto (CDP + marketing automation) on April 9. Billing this as 'the biggest transformation in Canva's history.' Creative Operating System launched Oct 2025. Canva is pivoting from design platform to AI platform with full marketing automation stack — direct attack on both Creative Cloud and Experience Cloud. Free online stream available."
+  },
+
+  // ── MAY ──────────────────────────────────────────────
+  {
+    name: "Microsoft Build 2026",
+    start: "2026-05-19", end: "2026-05-21",
+    cat: "competitor",
+    location: "Seattle, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Microsoft's developer and AI conference. Watch for Copilot Studio updates, M365 AI expansion, and Designer / creative tool announcements."
+  },
+  {
+    name: "Google Marketing Live 2026",
+    start: "2026-05-14",
+    cat: "competitor",
+    location: "Mountain View, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Google's annual advertising and marketing platform showcase. Watch for AI-driven campaign tools, Performance Max updates, and GA4 evolution."
+  },
+  {
+    name: "IAB NewFronts 2026",
+    start: "2026-05-04", end: "2026-05-07",
+    cat: "industry",
+    location: "New York, USA",
+    type: "Conference",
+    markets: ["US"],
+    notes: "Digital media industry's annual content marketplace. Streaming, video, creator economy signals. Key for Adobe's media and entertainment vertical."
+  },
+  {
+    name: "Salesforce Connections 2026",
+    start: "2026-05-20", end: "2026-05-21",
+    cat: "competitor",
+    location: "Chicago, USA",
+    type: "Conference",
+    markets: ["US"],
+    notes: "Salesforce's marketing and commerce event. Direct competitive overlap with Adobe Experience Cloud. Watch for Marketing Cloud / Data Cloud announcements."
+  },
+  {
+    name: "Salesforce Q1 FY2027 Earnings",
+    start: "2026-05-28",
+    cat: "earnings",
+    location: "San Francisco, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q1 FY2027 covers Feb–Apr 2026. Watch: Agentforce customer count, Data Cloud growth,marketing automation competitive positioning."
+  },
+
+  // ── JUNE ──────────────────────────────────────────────
+  {
+    name: "Adobe Q2 FY2026 Earnings",
+    start: "2026-06-11",
+    cat: "earnings",
+    location: "San Jose, USA",
+     type: "Earnings",
+    markets: ["US"],
+    notes: "Q2 covers Mar–May. Watch: Firefly API adoption, GenStudio enterprise contracts, Document Cloud ARR, AEP pipeline."
+  },
+  {
+    name: "Cannes Lions International Festival of Creativity 2026",
+    start: "2026-06-15", end: "2026-06-19",
+    cat: "industry",
+    location: "Cannes, France",
+    type: "Festival",
+    markets: ["UK", "DE", "Global"],
+    notes: "The world's leading creative and advertising festival. Key for brand narrative, AI in creativity discourse, and partnership announcements. Adobe typically sponsors and presents. High signal event."
+  },
+  {
+    name: "Figma Config 2026",
+    start: "2026-06-25", end: "2026-06-26",
+    cat: "competitor",
+    location: "San Francisco, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Figma's annual design and collaboration conference. Now an Adobe subsidiary but maintains independent roadmap. Watch for AI design features, enterprise expansions, and dev-design workflow tools."
+  },
+  {
+    name: "Microsoft Q4 FY2026 Earnings",
+    start: "2026-07-29",
+    cat: "earnings",
+    location: "Redmond, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q4 covers Apr–Jun 2026. Full-year results. Watch: Copilot revenue contribution, M365 commercial growth, Azure AI services ARR."
+  },
+  {
+    name: "Mumbrella360 2026",
+    start: "2026-06-10", end: "2026-06-11",
+    cat: "apac",
+    location: "Sydney, Australia",
+    type: "Conference",
+    markets: ["AU"],
+    notes: "Australia's leading media, marketing, and advertising conference. Key for ANZ market intelligence, local agency landscape, and digital marketing trends."
+  },
+  {
+    name: "SAP Sapphire 2026",
+    start: "2026-06-03", end: "2026-06-05",
+    cat: "competitor",
+    location: "Orlando, USA / Barcelona",
+    type: "Conference",
+    markets: ["DE", "US"],
+    notes: "SAP's flagship enterprise event. Watch for CX and marketing technology announcements that affect Adobe's enterprise positioning in European markets."
+  },
+
+  // ── JULY ──────────────────────────────────────────────
+  {
+    name: "Alphabet / Google Q2 2026 Earnings",
+    start: "2026-07-28",
+    cat: "earnings",
+    location: "Mountain View, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q2 covers Apr–Jun 2026. Watch: AI Overviews impact on search ad revenue, Workspace seat growth, YouTube creator tool adoption."
+  },
+  {
+    name: "Meta Q2 2026 Earnings",
+    start: "2026-07-29",
+    cat: "earnings",
+    location: "Menlo Park, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q2 covers Apr–Jun 2026. Watch: Llama AI enterprise adoption, Creator cools ecosystem, WhatsApp Business growth in APAC."
+  },
+  {
+    name: "Adobe Experience Makers APAC",
+    start: "2026-07-15",
+    cat: "apac",
+    location: "Singapore / Tokyo / Sydney (TBC)",
+    type: "Conference",
+    markets: ["SG", "JP", "AU"],
+    notes: "Adobe's APAC-focused customer and partner events (dates approximate). Key for regional customer intelligence, AEP adoption, and competitive positioning in JAPAC markets."
+  },
+
+  // ── AUGUST ──────────────────────────────────────────────
+  {
+    name: "Salesforce Q2 FY2027 Earnings",
+    start: "2026-08-26",
+    cat: "earnings",
+    location: "San Francisco, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q2 FY2027 covers May–Jul 2026. Watch: Marketing Cloud ARR, Agentforce deployment scale, Data Cloud competitive wins."
+  },
+  {
+    name: "Gartner Marketing Symposium 2026",
+    start: "2026-08-10", end: "2026-08-12",
+    cat: "industry",
+    location: "USA (TBC)",
+    type: "Conference",
+    markets: ["US"],
+    notes: "Key analyst event for CMOs. Gartner research on marketing tech stacks, AI in marketing, and budget allocation signals."
+  },
+  {
+    name: "Campaign Asia-Pacific Awards",
+    start: "2026-08-01",
+    cat: "apac",
+    location: "Singapore",
+    type: "Awards / Event",
+    markets: ["SG", "AU", "JP", "IN"],
+    notes: "Premier APAC advertising awards. Key for understanding competitive agency landscape, brand campaigns, and regional creative trends."
+  },
+  {
+    name: "Snap Q2 2026 Earnings",
+    start: "2026-07-28",
+    cat: "earnings",
+    location: "Los Angeles, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Watch: AR glasses progress, APAC user metrics, creator monetisation, ad revenue recovery."
+  },
+
+  // ── SEPTEMBER ──────────────────────────────────────────────
+  {
+    name: "Adobe Q3 FY2026 Earnings",
+    start: "2026-09-10",
+    cat: "earnings",
+    location: "San Jose, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q3 covers Jun–Aug 2026. Watch: GenStudio contract pipeline, Firefly commercial content volume, AEP net new logos, APAC regional growth."
+  },
+  {
+    name: "Salesforce Dreamforce 2026",
+    start: "2026-09-15", end: "2026-09-17",
+    cat: "competitor",
+    location: "San Francisco, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Salesforce's flagship event — one of the world's largest enterprise tech conferences. Expect major Agentforce and Marketing Cloud announcements. Direct competitive read for Adobe."
+  },
+  {
+    name: "DMEXCO 2026",
+    start: "2026-09-09", end: "2026-09-10",
+    cat: "industry",
+    location: "Cologne, Germany",
+    type: "Conference",
+    markets: ["DE", "UK"],
+    notes: "Europe's largest digital marketing and adtech conference. Critical for European market signals — data privacy, programmatic, and AI in marketing."
+  },
+  {
+    name: "Spikes Asia 2026",
+    start: "2026-09-22", end: "2026-09-24",
+    cat: "apac",
+    location: "Singapore",
+    type: "Festival",
+    markets: ["SG", "AU", "JP", "IN"],
+    notes: "APAC's leading creative and advertising festival. Creative campaign trends, brand strategy, and AI in creativity from the regional lens."
+  },
+  {
+    name: "Alphabet / Google Q3 2026 Earnings",
+    start: "2026-10-27",
+    cat: "earnings",
+    location: "Mountain View, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q3 covers Jul–Sep 2026. Watch: AI product monetisation, Search generative experience impact, Cloud AI enterprise deals."
+  },
+  {
+    name: "Meta Q3 2026 Earnings",
+    start: "2026-10-28",
+    cat: "earnings",
+    location: "Menlo Park, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q3 covers Jul–Sep 2026. Watch: Meta AI adoption numbers, Reality Labs investment level, Instagram creative tools."
+  },
+  {
+    name: "Gartner IT Symposium / Xpo APAC",
+    start: "2026-09-07", end: "2026-09-10",
+    cat: "apac",
+    location: "Gold Coast / Sydney, Australia",
+    type: "Conference",
+    markets: ["AU", "SG"],
+    notes: "Key APAC analyst event for CIOs and CTOs. Digital transformation signals, enterprise cloud, and AI investment directions from the APAC market."
+  },
+
+  // ── OCTOBER ──────────────────────────────────────────────
+  {
+    name: "Adobe MAX 2026",
+    start: "2026-11-10", end: "2026-11-12",
+    cat: "adobe",
+    location: "Miami Beach Convention Center, Miami, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Adobe's creative industry flagship. 12,000+ in-person attendees expected. Miami Beach Convention Center. Major product launches across Creative Cloud, Firefly, Premiere Pro, After Effects. Context: first MAX post-CEO transition — new leader may be announced. Watch: Firefly full revenue contribution, AI creative tools, subscription model evolution."
+  },
+  {
+    name: "Advertising Week New York 2026",
+    start: "2026-10-05", end: "2026-10-08",
+    cat: "industry",
+    location: "New York, USA",
+    type: "Conference",
+    markets: ["US"],
+    notes: "Major marketing and advertising industry event. Brand strategy, media buying, creative AI, and measurement. Adobe frequently presents."
+  },
+  {
+    name: "Microsoft Q1 FY2027 Earnings",
+    start: "2026-10-28",
+    cat: "earnings",
+    location: "Redmond, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q1 FY2027 covers Jul–Sep 2026. Watch: Copilot revenue line items, M365 Copilot seat conversion, Azure OpenAI deals."
+  },
+  {
+    name: "Snap Q3 2026 Earnings",
+    start: "2026-10-27",
+    cat: "earnings",
+    location: "Los Angeles, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q3 covers Jul–Sep 2026. Watch: APAC growth, AR creator tools, Spotlight monetisation."
+  },
+  {
+    name: "Salesforce Q3 FY2027 Earnings",
+    start: "2026-11-18",
+    cat: "earnings",
+    location: "San Francisco, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q3 FY2027 covers Aug–Oct 2026. Watch: Marketing Cloud competitive positioning vs Adobe, Agentforce enterprise scale."
+  },
+  {
+    name: "ADMA Forum 2026",
+    start: "2026-10-14", end: "2026-10-15",
+    cat: "apac",
+    location: "Sydney, Australia",
+    type: "Conference",
+    markets: ["AU"],
+    notes: "Association for Data-driven Marketing & Advertising. Key for ANZ data, privacy, and martech signals."
+  },
+
+  // ── NOVEMBER ──────────────────────────────────────────────
+  {
+    name: "Microsoft Ignite 2026",
+    start: "2026-11-09", end: "2026-11-13",
+    cat: "competitor",
+    location: "Chicago, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Microsoft's enterprise and developer conference. Major Copilot and M365 product announcements. Key for tracking Microsoft's creative and productivity AI encroachment on Adobe territory."
+  },
+  {
+    name: "Adobe Q4 FY2026 Earnings",
+    start: "2026-12-10",
+    cat: "earnings",
+    location: "San Jose, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q4 and full-year FY2026 results. Ends Nov 30. Full picture of Firefly revenue contribution, GenStudio scale, AEP ARR, and FY2027 guidance. High importance."
+  },
+  {
+    name: "Advertising Week APAC 2026",
+    start: "2026-11-03", end: "2026-11-05",
+    cat: "apac",
+    location: "Sydney, Australia",
+    type: "Conference",
+    markets: ["AU", "SG"],
+    notes: "APAC edition of Advertising Week. Brand strategy, media, and creative technology signals from the region."
+  },
+  {
+    name: "IAB Australia Leadership Summit",
+    start: "2026-11-18",
+    cat: "apac",
+    location: "Sydney, Australia",
+    type: "Conference",
+    markets: ["AU"],
+    notes: "ANZ digital advertising policy and measurement forum. Privacy, identity resolution, and media measurement signals for Australia."
+  },
+  {
+    name: "Web Summit 2026",
+    start: "2026-11-02", end: "2026-11-05",
+    cat: "industry",
+    location: "Lisbon, Portugal",
+    type: "Conference",
+    markets: ["UK", "DE", "Global"],
+    notes: "Europe's largest tech conference. AI startup and enterprise narrative. Good read on European AI regulatory climate and emerging competitive tools."
+  },
+
+  // ── DECEMBER ──────────────────────────────────────────────
+  {
+    name: "AWS re:Invent 2026",
+    start: "2026-11-30", end: "2026-12-04",
+    cat: "competitor",
+    location: "Las Vegas, USA",
+    type: "Conference",
+    markets: ["US", "Global"],
+    notes: "Amazon's flagship cloud event. AI services, ML infrastructure, and enterprise platform announcements. Watch for creative AI services and Adobe / AWS partnership developments."
+  },
+  {
+    name: "Salesforce Q4 FY2027 Earnings",
+    start: "2026-03-04",
+    cat: "earnings",
+    location: "San Francisco, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "FY2027 Q4 ends Jan 31 2027. Full year results."
+  },
+  {
+    name: "Snap Q4 2026 Earnings",
+    start: "2027-02-04",
+    cat: "earnings",
+    location: "Los Angeles, USA",
+    type: "Earnings",
+    markets: ["US"],
+    notes: "Q4 covers Oct–Dec 2026. Full year APAC and creator tool results."
+  },
+  {
+    name: "Gartner Magic Quadrant — Digital Experience Platforms",
+    start: "2026-12-01",
+    cat: "industry",
+    location: "Published",
+    type: "Analyst Report",
+    markets: ["Global"],
+    notes: "Annual Gartner DXP MQ typically published late in year. Adobe Experience Platform positioning vs Sitecore, Optimizely, Salesforce is critical to monitor."
+  },
+  {
+    name: "SAP Q4 2026 Earnings",
+    start: "2027-01-28",
+    cat: "earnings",
+    location: "Walldorf, Germany",
+    type: "Earnings",
+    markets: ["DE", "Global"],
+    notes: "Q4 / full year SAP results. CX and Cloud revenue signal for European enterprise markets."
+  },
+
+];
+
+// =============================================
+// RENDER
+// =============================================
+let activeFilter = 'all';
+let showPast = true;
+
+function isPast(dateStr) {
+  return new Date(dateStr) < TODAY;
+}
+
+function isUpcomingSoon(dateStr) {
+  const d = new Date(dateStr);
+  const diff = (d - TODAY) / (1000 * 60 * 60 * 24);
+  return diff >= 0 && diff <= 14;
+}
+
+function formatDateRange(start, end) {
+  const s = new Date(start);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  if (!end) return `${months[s.getMonth()]} ${s.getDate()}`;
+  const e = new Date(end);
+  if (s.getMonth() === e.getMonth()) return `${months[s.getMonth()]} ${s.getDate()}–${e.getDate()}`;
+  return `${months[s.getMonth()]} ${s.getDate()} – ${months[e.getMonth()]} ${e.getDate()}`;
+}
+
+function setFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('inactive', btn.dataset.filter !== f);
+  });
+  render();
+}
+
+function togglePast() {
+  showPast = !showPast;
+  const btn = document.getElementById('pastToggle');
+  btn.textContent = showPast ? 'Showing past events' : 'Past events hidden';
+  btn.classList.toggle('showing', showPast);
+  render();
+}
+
+function render() {
+  const months = [
+    { num: 0, name: 'January' }, { num: 1, name: 'February' }, { num: 2, name: 'March' },
+    { num: 3, name: 'April' }, { num: 4, name: 'May' }, { num: 5, name: 'June' },
+    { num: 6, name: 'July' }, { num: 7, name: 'August' }, { num: 8, name: 'September' },
+    { num: 9, name: 'October' }, { num: 10, name: 'November' }, { num: 11, name: 'December' }
+  ];
+
+  let totalVisible = 0;
+  let html = '';
+
+  months.forEach(({ num, name }) => {
+    const monthEvents = events.filter(e => {
+      const d = new Date(e.start);
+      const year = d.getFullYear();
+      const month = d.getMonth();
+      if (year !== 2026 && !(year === 2027 && num === 11)) {
+        // Allow Jan 2027 events in December view
+      }
+      return month === num && (year === 2026 || year === 2027);
+    }).sort((a, b) => new Date(a.start) - new Date(b.start));
+
+    const filtered = monthEvents.filter(e => {
+      if (activeFilter !== 'all' && e.cat !== activeFilter) return false;
+      if (!showPast && isPast(e.start)) return false;
+      return true;
+    });
+
+    if (filtered.length === 0) return;
+    totalVisible += filtered.length;
+
+    const allPast = monthEvents.every(e => isPast(e.start));
+
+    html += `
+      <div class="month-section">
+        <div class="month-header">
+          <div class="month-name">${name}</div>
+          <div class="month-count">${filtered.length} event${filtered.length !== 1 ? 's' : ''}</div>
+          ${allPast ? '<div class="month-past-label">Past</div>' : ''}
+          <div class="month-line"></div>
+        </div>
+        <div class="events-grid">
+          ${filtered.map(e => {
+            const past = isPast(e.start);
+            const soon = isUpcomingSoon(e.start);
+            const dateStr = formatDateRange(e.start, e.end);
+            return `
+              <div class="event-card cat-${e.cat} ${past ? 'is-past' : ''} ${soon && !past ? 'is-upcoming-soon' : ''}">
+                <div class="event-top">
+                  <div class="event-name">
+                    ${e.name}
+                    ${soon && !past ? '<span class="tag-soon">● Soon</span>' : ''}
+                  </div>
+                  <span class="event-badge badge-${e.cat}">${e.cat === 'adobe' ? 'Adobe' : e.cat === 'competitor' ? 'Competitor' : e.cat === 'earnings' ? 'Earnings' : e.cat === 'apac' ? 'APAC' : 'Industry'}</span>
+                </div>
+                <div class="event-meta">
+                  <span>📅 ${dateStr}</span>
+                  <span>📍 ${e.location}</span>
+                  <span>🏷 ${e.type}</span>
+                  ${e.markets && e.markets.length > 0 ? `<span>🌏 ${e.markets.join(' · ')}</span>` : ''}
+                </div>
+                ${e.notes ? `<div class="event-notes">${e.notes}</div>` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById('mainContent').innerHTML = html;
+  updateStats(totalVisible);
+}
+
+function updateStats(visible) {
+  const total = events.length;
+  const upcoming = events.filter(e => !isPast(e.start)).length;
+  const soon = events.filter(e => isUpcomingSoon(e.start)).length;
+  document.getElementById('statsBar').innerHTML = `
+    <span><strong>${visible}</strong> events shown</span>
+    <span><strong>${upcoming}</strong> upcoming</span>
+    <span><strong>${soon}</strong> within 14 days</span>
+    <span><strong>${total}</strong> total tracked</span>
+  `;
+}
+
+// Init
+render();
+setFilter('all');
+</script>
+
+</body>
+</html>

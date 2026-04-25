@@ -138,6 +138,11 @@
       color: var(--faint);
     }
 
+    /* Fix: prevent long titles from breaking grid */
+    .file-row > div:nth-child(2) {
+      min-width: 0;
+    }
+
     .file-name {
       font-size: 13px;
       font-weight: 500;
@@ -244,7 +249,7 @@
 
       <a href="/files/adobe/adobe-google-publicis-partnership-brief.html" class="file-row">
         <div class="file-icon">&#128251;</div>
-  2     <div>
+        <div>
           <div class="file-name">Adobe x Google x Publicis - Creative Performance Partnership Brief <span class="badge badge-final">Live</span></div>
           <div class="file-path">/files/adobe/adobe-google-publicis-partnership-brief.html</div>
         </div>

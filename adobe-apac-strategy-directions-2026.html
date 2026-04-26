@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adobe APAC &middot; Strategic Directions Q2 2026</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f10;
+      --surface: #161618;
+      --surface2: #1c1c1e;
+      --border: #2a2a2e;
+      --text: #f0f0f2;
+      --muted: #8888a0;
+      --faint: #3a3a44;
+      --accent: #eb1000;
+      --accent-lo: rgba(235,16,0,0.08);
+      --gold: #d4a840;
+      --gold-lo: rgba(212,168,64,0.08);
+      --blue: #5b9cf6;
+      --blue-lo: rgba(91,156,246,0.08);
+      --green: #4ec994;
+      --green-lo: rgba(78,201,148,0.08);
+      --purple: #a78bfa;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    header { border-bottom: 1px solid var(--border); padding: 0 32px; }
+    .header-inner {
+      max-width: 1020px; margin: 0 auto; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; }
+    .brand .dot { color: var(--accent); }
+    .header-meta { font-size: 11px; color: var(--muted); }
+
+    /* Hero */
+    .hero { border-bottom: 1px solid var(--border); padding: 64px 32px 56px; }
+    .hero-inner { max-width: 1020px; margin: 0 auto; }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: 42px; font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 20px; max-width: 760px;
+    }
+    .hero-sub {
+      font-size: 16px; color: var(--muted); max-width: 640px;
+      line-height: 1.6; margin-bottom: 32px;
+    }
+    .hero-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .meta-pill {
+      font-size: 11px; font-weight: 500; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px;
+    }
+
+    /* Main */
+    .main-wrap { max-width: 1020px; margin: 0 auto; padding: 0 32px 80px; }
+
+    /* Section */
+    .section { padding: 56px 0 0; }
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .section-intro {
+      font-size: 15px; color: var(--muted); max-width: 700px;
+      margin-bottom: 36px; line-height: 1.7;
+    }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 56px 0 0; }
+
+    /* Stats */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; background: var(--border); border-radius: 12px;
+      overflow: hidden; margin-bottom: 2px;
+    }
+    .stat-card { background: var(--surface); padding: 24px 20px; }
+    .stat-value {
+      font-size: 28px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .stat-value.accent { color: var(--accent); }
+    .stat-value.gold { color: var(--gold); }
+    .stat-value.blue { color: var(--blue); }
+    .stat-label { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+    /* Situation grid */
+    .situation-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; background: var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .sit-card { background: var(--surface); padding: 24px 28px; }
+    .sit-card h3 {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+    .sit-card p { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+    /* Forces */
+    .forces-list {
+      display: flex; flex-direction: column; gap: 2px;
+      background: var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .force-row {
+      background: var(--surface); padding: 22px 28px;
+      display: grid; grid-template-columns: 40px 200px 1fr; gap: 20px; align-items: start;
+    }
+    .force-num {
+      font-size: 18px; font-weight: 800; color: var(--faint); line-height: 1; padding-top: 3px;
+    }
+    .force-name { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; padding-top: 3px; }
+    .force-detail { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* Tensions */
+    .tension-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; background: var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .tension-card { background: var(--surface); padding: 26px 28px; }
+    .tension-vs {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .tension-vs .a { color: var(--accent); }
+    .tension-vs .sep { color: var(--faint); margin: 0 8px; }
+    .tension-vs .b { color: var(--blue); }
+    .tension-q {
+      font-size: 15px; font-weight: 600; color: var(--text);
+      margin-bottom: 10px; letter-spacing: -0.01em; line-height: 1.4;
+    }
+    .tension-detail { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* Direction cards */
+    .direction-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 32px 36px; margin-top: 2px;
+      position: relative; overflow: hidden;
+    }
+    .direction-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .direction-card.dir-1::before { background: var(--accent); }
+    .direction-card.dir-2::before { background: var(--gold); }
+    .direction-card.dir-3::before { background: var(--blue); }
+    .direction-card.dir-4::before { background: var(--green); }
+    .direction-card.dir-5::before { background: var(--purple); }
+    .dir-number {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+    }
+    .dir-name {
+      font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 6px; line-height: 1.2; color: var(--text);
+    }
+    .dir-tagline {
+      font-size: 14px; font-weight: 400; color: var(--muted);
+      margin-bottom: 4px; font-style: italic; line-height: 1.5;
+    }
+    .dir-body {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;
+    }
+    .dir-col h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+    }
+    .dir-col p { font-size: 14px; color: var(--text); line-height: 1.7; }
+    .dir-signals {
+      margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);
+    }
+    .dir-signals h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+    }
+    .signal-list {
+      list-style: none; display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .signal-list li {
+      font-size: 12px; color: var(--muted); background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 6px; padding: 4px 12px;
+    }
+
+    /* Recommendations */
+    .reco-list {
+      display: flex; flex-direction: column; gap: 2px;
+      background: var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .reco-row {
+      background: var(--surface); padding: 22px 28px;
+      display: grid; grid-template-columns: 130px 1fr auto; gap: 20px; align-items: start;
+    }
+    .reco-timing {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; padding-top: 3px;
+    }
+    .reco-timing.now { color: var(--accent); }
+    .reco-timing.q2 { color: var(--gold); }
+    .reco-timing.q3 { color: var(--blue); }
+    .reco-timing.ongoing { color: var(--green); }
+    .reco-text { font-size: 14px; color: var(--text); line-height: 1.6; }
+    .reco-text strong { font-weight: 600; }
+    .reco-text .sub {
+      display: block; font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.6;
+    }
+    .reco-dir { font-size: 11px; color: var(--faint); white-space: nowrap; padding-top: 4px; }
+
+    /* Agency angle */
+    .agency-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .agency-card { background: var(--surface); padding: 26px 24px; }
+    .agency-icon { font-size: 20px; margin-bottom: 12px; }
+    .agency-card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .agency-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* Disclaimer */
+    .disclaimer {
+      margin-top: 60px; padding-top: 28px; border-top: 1px solid var(--border);
+      font-size: 11px; color: var(--faint); line-height: 1.7;
+    }
+    .disclaimer strong { color: var(--muted); font-weight: 600; }
+    .disclaimer p + p { margin-top: 10px; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 24px 32px; margin-top: 40px; }
+    .footer-inner {
+      max-width: 1020px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; color: var(--faint);
+    }
+
+    @media (max-width: 720px) {
+      .hero-title { font-size: 28px; }
+      .situation-grid, .tension-grid, .dir-body, .agency-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .force-row { grid-template-columns: 32px 1fr; }
+      .force-detail { grid-column: 1 / -1; padding-left: 52px; }
+      .reco-row { grid-template-columns: 1fr; }
+      .reco-dir { display: none; }
+      .direction-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">Matt<span class="dot">.</span>Kain</div>
+    <div class="header-meta">Adobe APAC &nbsp;&middot;&nbsp; Strategic Directions &nbsp;&middot;&nbsp; Q2 2026</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Group Strategy Director &nbsp;&middot;&nbsp; Adobe APAC</div>
+    <h1 class="hero-title">Five Strategic Directions for Adobe APAC</h1>
+    <p class="hero-sub">A synthesis of Q1 FY2026 earnings, Adobe Summit 2026 announcements, Canva competitive intelligence, and APAC market dynamics. Developed for Publicis strategy team review and Adobe APAC client discussion.</p>
+    <div class="hero-meta">
+      <span class="meta-pill">April 2026</span>
+      <span class="meta-pill">Publicis &nbsp;&middot;&nbsp; SMG &nbsp;&middot;&nbsp; Adobe APAC</span>
+      <span class="meta-pill">Independent analysis &mdash; Matt Kain</span>
+      <span class="meta-pill">Not for public distribution</span>
+    </div>
+  </div>
+</div>
+
+<div class="main-wrap">
+
+  <!-- ââ SITUATION ââ -->
+  <div class="section">
+    <div class="section-label">Situation Analysis</div>
+    <h2 class="section-title">Where we are</h2>
+    <p class="section-intro">Adobe enters the middle of 2026 in a structurally strong but narratively challenged position. The business is growing, AI monetisation is real, and the enterprise moat is intact &mdash; but the market is pricing in existential risk that has not yet materialised in the financials. That disconnect is a strategic opportunity, not a problem to wait out.</p>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value">$6.4B</div>
+        <div class="stat-label">Q1 FY2026 revenue<br>+12% year on year</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value accent">&minus;29%</div>
+        <div class="stat-label">Adobe stock YTD 2026<br>vs +12% earnings growth</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value gold">$250M+</div>
+        <div class="stat-label">AI-first ARR<br>tripled year on year</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value blue">$4B</div>
+        <div class="stat-label">Canva estimated ARR<br>B2B ARR +100% YoY</div>
+      </div>
+    </div>
+
+    <div class="situation-grid">
+      <div class="sit-card">
+        <h3>The good news</h3>
+        <p>Adobe's core business is performing. Q1 FY2026 revenue of $6.4B grew 12% year on year. Operating cash flow hit a record $2.96B. AI-first ARR has tripled in a year. GenStudio ARR is up 30%. Firefly is deployed across 75% of Fortune 500 companies. Generative credit consumption grew 45% in a single quarter. The NVIDIA partnership announced in March 2026 signals genuine commitment to next-generation AI infrastructure. This is not a company in distress &mdash; it is a company with a narrative problem.</p>
+      </div>
+      <div class="sit-card">
+        <h3>The complication</h3>
+        <p>The stock is down 29% year to date despite record guidance. The market fears AI commoditisation that has not yet arrived in the financials. Canva's B2B push is structural &mdash; $500M B2B ARR growing at 100% is not a blip. Figma is emboldened post-IPO and accelerating. Adobe's CDP was downgraded in Gartner's latest rankings. And Shantanu Narayen &mdash; the architect of Adobe's modern era &mdash; has announced his departure. The window between now and new leadership is a strategic variable that no one is managing clearly.</p>
+      </div>
+      <div class="sit-card">
+        <h3>The APAC lens</h3>
+        <p>APAC adds further texture. Canva is a Sydney company &mdash; it has home-ground trust and cultural familiarity in ANZ that no amount of Adobe advertising can manufacture. Australia's Privacy Act reform is reshaping first-party data strategy for every enterprise client. Retail media is exploding across the region (Cartology, Coles360, OnePass). And APAC enterprise buyers &mdash; particularly in Japan, India, and Southeast Asia &mdash; are more cost-conscious and less loyal to US software incumbents than their North American counterparts.</p>
+      </div>
+      <div class="sit-card">
+        <h3>The opportunity</h3>
+        <p>Three converging conditions make this a genuinely important strategic moment: the Narayen transition creates a vacuum that smart advisors can fill; the AI narrative gap between financial reality and market perception can be closed with the right APAC proof points; and Canva's bottoms-up enterprise motion is visible but not yet won &mdash; the marketing manager layer is still in play. The question is whether Adobe APAC, and Publicis as its agency partner, moves fast enough to capitalise on all three simultaneously.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ââ FORCES ââ -->
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">Market Forces</div>
+    <h2 class="section-title">Six forces reshaping the game</h2>
+    <p class="section-intro">These are not trends to monitor &mdash; they are structural forces that will determine the competitive outcome over the next 12 months. Adobe APAC's strategy needs to take a clear position on each one.</p>
+
+    <div class="forces-list">
+      <div class="force-row">
+        <div class="force-num">01</div>
+        <div class="force-name">AI commoditisation vs AI integration</div>
+        <div class="force-detail">The market fears that generative AI tools (open-source, Canva Magic AI, Midjourney) will undercut Adobe's pricing power. The counter-argument &mdash; which is better supported by the evidence &mdash; is that enterprise-grade AI requires copyright indemnity, data governance, brand consistency, and workflow integration. Firefly has all four. The commoditisation narrative is a perception problem, not yet a revenue problem. But perception becomes reality if left uncontested.</div>
+      </div>
+      <div class="force-row">
+        <div class="force-num">02</div>
+        <div class="force-name">Bottoms-up procurement displacing top-down sales</div>
+        <div class="force-detail">Canva's growth model is explicit: free account &rarr; feature discovery &rarr; team upgrade &rarr; enterprise procurement. It bypasses the CMO and goes straight to the marketing manager and designer. In a budget-constrained environment, the person who already uses the tool has enormous influence over the purchase decision. Adobe's sales motion is the inverse &mdash; C-suite first, team-level second. In APAC enterprise, where procurement is increasingly driven by demonstrated usage rather than vendor presentations, this is a structural disadvantage that will compound if not addressed.</div>
+      </div>
+      <div class="force-row">
+        <div class="force-num">03</div>
+        <div class="force-name">Platform consolidation under cost pressure</div>
+        <div class="force-detail">APAC CFOs are rationalising software spend. The question for every enterprise is: do we buy best-of-breed point solutions or consolidate onto a platform? Adobe's answer &mdash; AEP as the data spine, Creative plus Document plus Experience as the bundle &mdash; is compelling when the commercial case is made well. But the default in a cost-cutting environment is to protect existing spend and defer new platform decisions. Adobe's renewal cycle is therefore both the greatest risk and the greatest commercial opportunity in the region right now.</div>
+      </div>
+      <div class="force-row">
+        <div class="force-num">04</div>
+        <div class="force-name">Privacy regulation accelerating first-party data urgency</div>
+        <div class="force-detail">Australia's Privacy Act reform, Singapore's PDPA evolution, and Japan's APPI amendments are forcing enterprise marketing teams to rebuild their data infrastructure. This is precisely the moment Adobe's Real-Time CDP and AEP identity resolution capability should be winning new business. The complication: Adobe was downgraded in Gartner's CDP rankings from Leader to Visionary. Segment, Tealium, and Treasure Data are winning on developer-friendliness and integration depth. Adobe needs to close this credibility gap in APAC enterprise conversations before these decisions lock in for three-year cycles.</div>
+      </div>
+      <div class="force-row">
+        <div class="force-num">05</div>
+        <div class="force-name">Retail media as a new premium channel</div>
+        <div class="force-detail">Cartology, Coles360, and Wesfarmers OnePass are building closed-loop retail media networks across ANZ. Similar dynamics are emerging in Japan (Rakuten) and Southeast Asia (Lazada, Shopee). These networks require clean room-compatible audience activation, first-party data management, and measurement infrastructure &mdash; all areas where Adobe's stack (AEP, Mix Modeler, Real-Time CDP Collaboration) has a genuine answer. But Adobe is not yet visibly present in the retail media conversation in APAC, and the window to own that space is narrowing.</div>
+      </div>
+      <div class="force-row">
+        <div class="force-num">06</div>
+        <div class="force-name">Leadership transitions creating strategic uncertainty</div>
+        <div class="force-detail">Narayen's departure is the most underappreciated variable in the market right now. Internal Adobe decision-making will slow during the succession period. Major platform investments, APAC headcount decisions, and partner relationship reviews may all be deferred. For the agency, this is a window to deepen the advisory relationship before new leadership arrives with a potentially different view of APAC priorities &mdash; and a potentially different view of which agency partners add genuine strategic value.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ââ TENSIONS ââ -->
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">Strategic Tensions</div>
+    <h2 class="section-title">The real choices Adobe APAC faces</h2>
+    <p class="section-intro">Strategy is fundamentally about choices. These are not problems to solve &mdash; they are tensions to navigate. How Adobe APAC resolves each one will determine its competitive position by year end.</p>
+
+    <div class="tension-grid">
+      <div class="tension-card">
+        <div class="tension-vs"><span class="a">AI leader</span><span class="sep">vs</span><span class="b">AI perception lag</span></div>
+        <div class="tension-q">Does Adobe APAC own the AI narrative or cede it to the market's fear?</div>
+        <div class="tension-detail">Adobe has the strongest enterprise AI story in its category &mdash; copyright indemnity, multi-model architecture, NVIDIA partnership, GenStudio content supply chain. But the &minus;29% stock tells you the market is not buying it yet. The choice: invest aggressively in APAC AI proof points now, or wait for the North American narrative to trickle down and hope the perception gap closes on its own.</div>
+      </div>
+      <div class="tension-card">
+        <div class="tension-vs"><span class="a">C-suite relationships</span><span class="sep">vs</span><span class="b">Team-level adoption</span></div>
+        <div class="tension-q">Who does Adobe APAC actually sell to &mdash; the CMO or the marketing manager?</div>
+        <div class="tension-detail">Adobe's paid media targets CMOs. Canva targets marketing managers. Both are right for their respective products. But in a world where Canva is standardising teams on free accounts before the CMO is even aware of the conversation, Adobe's top-down model starts from behind. The choice: add a bottoms-up motion alongside the enterprise sales approach, or bet that C-suite relationships hold the line against grassroots Canva adoption.</div>
+      </div>
+      <div class="tension-card">
+        <div class="tension-vs"><span class="a">Platform consolidation</span><span class="sep">vs</span><span class="b">Point solution drift</span></div>
+        <div class="tension-q">Does the integrated Adobe ecosystem create enough value to justify the premium over best-of-breed?</div>
+        <div class="tension-detail">Adobe's strongest commercial argument is bundling &mdash; Creative plus Document plus Experience on AEP creates lock-in and value that no single point solution replicates. But that argument only works if it is made actively. In a cost-rationalisation environment, clients default to defending existing spend, not expanding it. The play requires proactive bundling conversations, not reactive renewal defence.</div>
+      </div>
+      <div class="tension-card">
+        <div class="tension-vs"><span class="a">Global playbook</span><span class="sep">vs</span><span class="b">APAC-native strategy</span></div>
+        <div class="tension-q">Is the North American GTM model fit for APAC, or does the region need its own strategic logic?</div>
+        <div class="tension-detail">Canva is a Sydney company. Privacy law reform is APAC-specific. Retail media networks here are structurally different from those in the US. The Japanese enterprise buying process is fundamentally different from ANZ. Adobe's APAC strategy cannot simply be the US playbook with different logos. The question is whether the agency relationship can become the vehicle for genuine APAC market intelligence &mdash; or whether it remains a delivery function.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ââ DIRECTIONS ââ -->
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">Strategic Directions</div>
+    <h2 class="section-title">Five directions for the next six months</h2>
+    <p class="section-intro">These are not campaign territories or media channels &mdash; they are strategic postures. Each represents a choice about where Adobe APAC invests its attention, budget, and relationship capital. They are designed to be discussed, debated, and prioritised. Not adopted wholesale.</p>
+
+    <!-- D1 -->
+    <div class="direction-card dir-1" style="margin-top:0;">
+      <div class="dir-number">Direction 01</div>
+      <div class="dir-name">Close the AI Credibility Gap</div>
+      <div class="dir-tagline">The market has priced in an AI threat that has not appeared in Adobe's financials. APAC should make the counter-case &mdash; with evidence that is local, specific, and impossible to dismiss.</div>
+      <div class="dir-body">
+        <div class="dir-col">
+          <h4>The strategic logic</h4>
+          <p>Adobe's AI story is the most substantive in its category. Firefly is copyright-indemnified &mdash; a genuine differentiator for enterprise legal and procurement teams who cannot afford AI-generated content liability. AI-first ARR has tripled in a year. GenStudio is running in Fortune 500 marketing operations. The NVIDIA partnership signals next-generation AI infrastructure, not marginal feature updates. None of this is reflected in the stock price or in how competitors and media currently characterise Adobe in APAC. The narrative gap is not an Adobe corporate problem to fix &mdash; it is an APAC opportunity to lead.</p>
+        </div>
+        <div class="dir-col">
+          <h4>The strategic play</h4>
+          <p>Develop an APAC AI proof point programme &mdash; three industries (Financial Services, Retail, Government), three markets (AU, SG, JP), real Firefly and GenStudio workflow ROI &mdash; and make Adobe APAC the region that demonstrates what enterprise AI actually looks like in practice. The goal is not to run more awareness advertising. It is to make the Adobe APAC team the most credible voice on enterprise AI adoption in the region, with content and case evidence that the North American team cannot produce for this market and that competitors cannot replicate.</p>
+        </div>
+      </div>
+      <div class="dir-signals">
+        <h4>Supporting signals</h4>
+        <ul class="signal-list">
+          <li>Firefly generative credit consumption +45% QoQ</li>
+          <li>AI-influenced ARR exceeds $5B globally</li>
+          <li>75% Fortune 500 Firefly adoption</li>
+          <li>NVIDIA partnership &mdash; next-gen model infrastructure (Mar 2026)</li>
+          <li>GenStudio ARR +30% year on year</li>
+          <li>Market narrative: AI commoditisation risk &mdash; uncontested in APAC</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- D2 -->
+    <div class="direction-card dir-2">
+      <div class="dir-number">Direction 02</div>
+      <div class="dir-name">Win the Middle Floor</div>
+      <div class="dir-tagline">Canva is winning the marketing manager and design team layer &mdash; the people who actually choose tools. Adobe needs to contest this floor before it becomes a procurement default across APAC enterprise.</div>
+      <div class="dir-body">
+        <div class="dir-col">
+          <h4>The strategic logic</h4>
+          <p>Canva's LinkedIn ad presence is 53% larger than Adobe's in Australia, and it is specifically targeting the marketing manager and team designer &mdash; not the CMO. Its employee advocacy programme (promoted posts from actual Canva sales reps at Canva Create 2026) builds trust at the human scale. Its "anyone can design on-brand" narrative directly addresses the practical reality of resource-constrained marketing teams. Adobe's paid media response is almost entirely C-suite focused. In bottoms-up enterprise procurement &mdash; which is increasingly how software decisions are made in APAC &mdash; Canva is winning the influential middle floor before Adobe even has the executive meeting.</p>
+        </div>
+        <div class="dir-col">
+          <h4>The strategic play</h4>
+          <p>Develop a team-level activation programme for APAC targeting marketing managers, design leads, and content teams below the CMO. The core of this programme is not advertising &mdash; it is demonstration. Adobe has tools at this level (Express, GenStudio for teams, Brand Kit and Creative Cloud team features) that are not being surfaced to the people who would use them. A programme of targeted webinars, hands-on sessions, and peer-led advocacy starting in ANZ then extending to SG and JP would directly contest Canva's bottoms-up motion with Adobe's genuine team product depth. The agency is the natural vehicle for this.</p>
+        </div>
+      </div>
+      <div class="dir-signals">
+        <h4>Supporting signals</h4>
+        <ul class="signal-list">
+          <li>Canva LinkedIn AU: 23,647 ads vs Adobe 15,453 (+53%)</li>
+          <li>Canva B2B ARR: $500M growing at +100% year on year</li>
+          <li>"Anyone can design on-brand" narrative &mdash; unopposed at team level</li>
+          <li>Canva employee advocacy on LinkedIn &mdash; no Adobe equivalent visible</li>
+          <li>Adobe Express: team AI tool absent from paid media rotation</li>
+          <li>Canva Create 2026 &mdash; L.A., SoFi Stadium &mdash; category presence building</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- D3 -->
+    <div class="direction-card dir-3">
+      <div class="dir-number">Direction 03</div>
+      <div class="dir-name">The Succession Window</div>
+      <div class="dir-tagline">Narayen's departure is the most underutilised strategic variable in this market right now. The window between announcement and a new CEO's first 100 days is time-limited &mdash; and not yet owned by anyone.</div>
+      <div class="dir-body">
+        <div class="dir-col">
+          <h4>The strategic logic</h4>
+          <p>CEO transitions at major software companies follow a predictable pattern: internal decision-making slows; major commitments are deferred; incoming leadership looks for external proof points to define their strategic agenda; and relationships that were assumed get re-evaluated from first principles. Narayen built Adobe's modern era over 18 years. The next CEO &mdash; whether internal or external &mdash; will arrive with a different set of priorities and a genuine appetite for intelligence about what the business looks like from the outside. In APAC specifically, that means new conversations about regional relevance, competitive position, and which agency partners add genuine strategic value beyond media delivery.</p>
+        </div>
+        <div class="dir-col">
+          <h4>The strategic play</h4>
+          <p>Develop an "Adobe APAC at the succession" brief &mdash; a structured point of view on what Adobe's competitive position in the region looks like as new leadership steps in. This is not a pitch document. It is a genuine strategic intelligence package: where Adobe leads in APAC, where it is exposed, what enterprise clients in the region need over the next 24 months, and where the agency relationship adds value that is genuinely irreplaceable. Delivered to Pete Nagy and Lara Balazs before a new CEO is announced, this positions Publicis as the strategic partner that helps Adobe think about its own future &mdash; not just the agency executing against a brief that anyone could deliver.</p>
+        </div>
+      </div>
+      <div class="dir-signals">
+        <h4>Supporting signals</h4>
+        <ul class="signal-list">
+          <li>Narayen stepping down &mdash; announced March 2026</li>
+          <li>Board conducting internal + external candidate search</li>
+          <li>No formal timeline announced &mdash; active decision window open</li>
+          <li>Internal strategy slowdown likely during transition period</li>
+          <li>New CEO: APAC typically under-resourced in succession briefings</li>
+          <li>Lara Balazs: CMO &mdash; high trust, established relationship</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- D4 -->
+    <div class="direction-card dir-4">
+      <div class="dir-number">Direction 04</div>
+      <div class="dir-name">Bundle or Bleed</div>
+      <div class="dir-tagline">Adobe's commercial moat in APAC is the integrated platform. But it only defends against unbundling if it is actively sold &mdash; not passively renewed one product at a time.</div>
+      <div class="dir-body">
+        <div class="dir-col">
+          <h4>The strategic logic</h4>
+          <p>The structural threat to Adobe is not that a single competitor beats it outright &mdash; it is that enterprise clients assemble best-of-breed point solutions that collectively displace the Adobe stack: Canva for creative teams, Sitecore for CMS (away from AEM), Segment for CDP (away from Real-Time CDP), Salesforce Agentforce for marketing automation (away from Marketo). Each defection is individually rational for a cost-focused CFO. The pending Semrush acquisition &mdash; if approved &mdash; adds a performance marketing measurement layer (SEO plus paid visibility) that makes the full bundle story significantly more compelling for CMOs focused on digital ROI rather than just brand tools.</p>
+        </div>
+        <div class="dir-col">
+          <h4>The strategic play</h4>
+          <p>Identify the top APAC enterprise accounts where Adobe has a single-product footprint &mdash; Creative Cloud only, or Acrobat only &mdash; and build a structured expansion programme. The entry point should be GenStudio or AEM depending on the client's content maturity. The commercial argument: a bundled three-product Adobe deployment reduces total cost of ownership by 15 to 25 percent versus three separate vendor contracts. Time the approach to land before year-end renewal cycles lock in the status quo. Align to the Semrush acquisition close timeline &mdash; if approved, it substantially changes the CMO conversation about what Adobe is actually for.</p>
+        </div>
+      </div>
+      <div class="dir-signals">
+        <h4>Supporting signals</h4>
+        <ul class="signal-list">
+          <li>Semrush acquisition ($1.9B) &mdash; regulatory approvals pending H1 2026</li>
+          <li>Adobe CDP: Gartner downgrade from Leader &rarr; Visionary</li>
+          <li>AEM migration risk to Sitecore &mdash; growing across APAC</li>
+          <li>Salesforce Agentforce gaining on Marketo in B2B automation</li>
+          <li>Bundle discount: 15&ndash;25% at three or more products</li>
+          <li>CFO-level software rationalisation driving consolidation conversations</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- D5 -->
+    <div class="direction-card dir-5">
+      <div class="dir-number">Direction 05</div>
+      <div class="dir-name">Build the APAC Intelligence Advantage</div>
+      <div class="dir-tagline">Adobe's global strategy is written in San Jose. APAC has distinct competitive dynamics, regulatory trajectories, and buyer behaviours that require their own strategic logic &mdash; and the agency can own that intelligence function.</div>
+      <div class="dir-body">
+        <div class="dir-col">
+          <h4>The strategic logic</h4>
+          <p>Adobe's APAC GTM is largely inherited from North American positioning. But in 2026 APAC looks structurally different: Canva's home-ground advantage in ANZ is real and not captured in US-produced competitive analysis; Australia's Privacy Act reform is reshaping first-party data architecture across every enterprise; retail media networks (Cartology, Coles360, OnePass) are building closed-loop measurement infrastructure that intersects directly with Adobe AEP and Mix Modeler capability; and APAC enterprise buyers &mdash; particularly in Japan and Southeast Asia &mdash; have procurement patterns that respond poorly to US-centric case studies and US dollar pricing models. No one is building a genuinely APAC-specific intelligence view for Adobe at the moment. That is a gap.</p>
+        </div>
+        <div class="dir-col">
+          <h4>The strategic play</h4>
+          <p>Develop an APAC market intelligence function &mdash; initially as a quarterly briefing to Pete Nagy's team &mdash; that gives Adobe APAC leadership a view of their market position they cannot get from San Jose. Core inputs: competitor ad intelligence across ANZ, SG, and JP (building on the Canva AU report already produced); Privacy Act reform implications for Adobe's data products in Australia; retail media landscape mapping; and APAC-specific enterprise buyer sentiment. This is not a media report &mdash; it is a market advisory function. The kind of relationship that survives CMO changes, account reviews, and competitive pitches because it adds value no other agency provides.</p>
+        </div>
+      </div>
+      <div class="dir-signals">
+        <h4>Supporting signals</h4>
+        <ul class="signal-list">
+          <li>Canva: Sydney HQ &mdash; ANZ home-ground advantage not addressed in Adobe GTM</li>
+          <li>AU PÂöacy Act reform &mdash; live regulatory variable for Adobe AEP and CDP</li>
+          <li>Retail media: Cartology, Coles360, OnePass &mdash; AEP activation opportunity</li>
+          <li>Adobe global vs APAC: distinct buyer behaviour especially in JP and SEA</li>
+          <li>Canva AU ad intelligence report (Apr 2026) &mdash; not yet briefed to client</li>
+          <li>No APAC-specific competitor intelligence function currently visible at agency</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ââ RECOMMENDATIONS ââ -->
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">Recommendations</div>
+    <h2 class="section-title">Prioritised actions</h2>
+    <p class="section-intro">Not all five directions are equal in urgency. The following prioritisation is based on time-sensitivity, difficulty of reversibility, and proximity to current market conditions.</p>
+
+    <div class="reco-list">
+      <div class="reco-row">
+        <div class="reco-timing now">Now</div>
+        <div class="reco-text">
+          <strong>Begin the Succession Brief</strong>
+          <span class="sub">Brief Lara Balazs and Pete Nagy on an APAC strategic state-of-play before the new CEO is announced. This is the most time-limited action in this document &mdash; once a new CEO is named, the window for pre-boarding narrows rapidly. Structure it as: Adobe APAC's competitive position today, three strategic risks in the region, and Publicis's proposed role in addressing them. Not a pitch &mdash; a gift of genuine strategic intelligence.</span>
+        </div>
+        <div class="reco-dir">Direction 03</div>
+      </div>
+      <div class="reco-row">
+        <div class="reco-timing q2">Q2 2026</div>
+        <div class="reco-text">
+          <strong>Design the Middle Floor activation programme</strong>
+          <span class="sub">Map the team-level Adobe product capability (Express, GenStudio for teams, Creative Cloud team features) against Canva's enterprise offer and identify the gaps in current APAC activation. Develop a demonstration-led programme for ANZ first, then SG. The brief: reach 500 marketing managers and design team leads who have not yet made an enterprise tool decision. Position Adobe as the team-level AI platform, not just the professional design subscription.</span>
+        </div>
+        <div class="reco-dir">Direction 02</div>
+      </div>
+      <div class="reco-row">
+        <div class="reco-timing q2">Q2 2026</div>
+        <div class="reco-text">
+          <strong>Launch the APAC intelligence function</strong>
+          <span class="sub">Formally propose to Pete Nagy a quarterly APAC competitive intelligence briefing. Scope: competitor ad intelligence, regulatory landscape (Privacy Act, PDPA), retail media network mapping, and enterprise buyer sentiment. Deliver the first edition in June, using the existing Canva AU ad intelligence report as proof of concept. Make this a standing agenda item at the quarterly business review.</span>
+        </div>
+        <div class="reco-dir">Direction 05</div>
+      </div>
+      <div class="reco-row">
+        <div class="reco-timing q3">Q3 2026</div>
+        <div class="reco-text">
+          <strong>Develop the APAC AI proof point programme</strong>
+          <span class="sub">Commission three APAC-native Firefly and GenStudio case studies &mdash; Financial Services (ANZ), Government (AU or SG), and Retail (ANZ or JP). These should demonstrate measurable workflow ROI: time-to-content, content variation at scale, brand consistency. Delivered as a co-branded Publicis and Adobe APAC study. The goal: give Pete's team content they can use in enterprise conversations that neither the San Jose team nor any competitor agency can produce for this market.</span>
+        </div>
+        <div class="reco-dir">Direction 01</div>
+      </div>
+      <div class="reco-row">
+        <div class="reco-timing q3">Q3 2026</div>
+        <div class="reco-text">
+          <strong>Identify bundle expansion opportunities in top 10 APAC accounts</strong>
+          <span class="sub">Work with Pete Nagy's team to map the current Adobe product footprint across APAC's top 10 enterprise accounts. Identify single-product clients and model the commercial case for GenStudio or AEM as the expansion entry point. Time this to land before year-end renewal cycles. Monitor Semrush acquisition close timeline &mdash; if approved, the performance marketing measurement story changes the CMO conversation significantly.</span>
+        </div>
+        <div class="reco-dir">Direction 04</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ââ AGENCY ANGLE ââ -->
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">The Agency Angle</div>
+    <h2 class="section-title">What this means for Publicis</h2>
+    <p class="section-intro">These strategic directions are not just client recommendations &mdash; they define how Publicis should position the Adobe APAC relationship going forward. The question is whether we want to be the agency that delivers media, or the agency that shapes strategy.</p>
+
+    <div class="agency-grid">
+      <div class="agency-card">
+        <div class="agency-icon">&#127959;</div>
+        <h3>From media buyer to strategic advisor</h3>
+        <p>Directions 03 and 05 &mdash; the Succession Brief and the APAC Intelligence function &mdash; are not media recommendations. They are advisory relationships. Delivering them positions Publicis as indispensable beyond the media buy: the kind of partner that survives account reviews because it adds value that no one else in the room provides.</p>
+      </div>
+      <div class="agency-card">
+        <div class="agency-icon">&#127919;</div>
+        <h3>The Canva gap is an agency brief</h3>
+        <p>Direction 02 &mdash; the Middle Floor &mdash; is specifically suited to an agency-led motion. Publicis has the channel access, audience targeting capability, and content production relationships to build a team-level activation programme. This is not something Adobe's internal marketing team is set up to run. It is an agency mandate, and Publicis should claim it before the brief goes elsewhere.</p>
+      </div>
+      <div class="agency-card">
+        <div class="agency-icon">&#9201;</div>
+        <h3>The succession window is the most urgent</h3>
+        <p>Of everything in this document, the CEO transition brief is the most time-sensitive. Incoming leadership will receive a hundred internal briefings and almost no external ones. A well-constructed APAC market intelligence package &mdash; delivered through Lara Balazs and Pete Nagy &mdash; is a disproportionate opportunity to shape how the new CEM understands the region and the role of the agency within it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ââ DISCLAIMER ââ -->
+  <div class="disclaimer">
+    <p><strong>About this document</strong></p>
+    <p>This analysis is produced independently by Matt Kain. It is developed for discussion with the Publicis Media strategy team and, where appropriate, with the Adobe APAC client team. It is not for public distribution and should not be shared externally without the author's permission.</p>
+    <p>Adobe, Creative Cloud, Adobe Experience Platform, Adobe Firefly, Adobe Photoshop, Adobe Premiere Pro, GenStudio, Marketo Engage, Adobe Journey Optimizer, and other product names mentioned are either registered trademarks or are trademarks of Adobe in the United States and/or other countries. This content is produced independently by Matt Kain and is not affiliated with or endorsed by Adobe.</p>
+    <p>Canva is a registered trademark of Canva Pty Ltd. Salesforce is a registered trademark of Salesforce, Inc. Figma is a trademark of Figma, Inc. All other company and product names are the property of their respective owners.</p>
+    <p>Financial data sourced from publicly available Adobe Inc. earnings releases (Q1 FY2026, March 2026), analyst reports, and public advertising intelligence platforms. Competitive intelligence sourced from Meta Ad Library, LinkedIn Ad Library, and Google Ads Transparency Centre (April 2026).</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>Matt Kain &nbsp;&middot;&nbsp; kain@mattkain.com</span>
+    <span>Adobe APAC &nbsp;&middot;&nbsp; Strategic Directions &nbsp;&middot;&nbsp; April 2026 &nbsp;&middot;&nbsp; Not for public distribution</span>
+  </div>
+</footer>
+
+</body>
+</html>

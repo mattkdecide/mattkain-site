@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First 90 Days at Adobe APAC · Matt Kain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f10;
+  --bg-elev: #18181a;
+  --bg-elev-2: #1f1f22;
+  --bg-elev-3: #27272b;
+  --line: #2a2a2e;
+  --line-strong: #3a3a40;
+  --text: #f5f5f7;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+  --accent: #eb1000;
+  --accent-soft: rgba(235,16,0,0.08);
+  --accent-glow: rgba(235,16,0,0.28);
+  --p1: #22c55e;
+  --p1-soft: rgba(34,197,94,0.1);
+  --p2: #f59e0b;
+  --p2-soft: rgba(245,158,11,0.1);
+  --p3: #eb1000;
+  --p3-soft: rgba(235,16,0,0.1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ---- TOPBAR ---- */
+.topbar {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,15,16,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-name {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.site-name span { color: var(--accent); }
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--p1);
+  box-shadow: 0 0 8px rgba(34,197,94,0.7);
+  animation: glow 2.5s ease-in-out infinite;
+}
+@keyframes glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(34,197,94,0.7); }
+  50%       { opacity: 0.5; box-shadow: 0 0 4px rgba(34,197,94,0.3); }
+}
+
+/* ---- HERO ---- */
+.hero {
+  padding: 64px 0 56px;
+  border-bottom: 1px solid var(--line);
+}
+.hero-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+}
+.hero-left { flex: 1; min-width: 0; }
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  flex-shrink: 0;
+}
+h1 {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  margin-bottom: 20px;
+}
+h1 .red { color: var(--accent); }
+.tagline {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 400;
+  max-width: 580px;
+  line-height: 1.7;
+}
+
+/* ---- DAY CARD ---- */
+.day-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px 28px;
+  min-width: 210px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.day-card-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.day-number {
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  color: var(--accent);
+}
+.day-of-total {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+  margin-bottom: 14px;
+}
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(235,16,0,0.18);
+  border-radius: 99px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.phase-badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: glow-red 1.8s infinite;
+}
+@keyframes glow-red {
+  0%,100%{ opacity:1; } 50%{ opacity:0.4; }
+}
+.current-week-label {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+/* ---- SECTION HEADER ---- */
+.section-wrap {
+  padding: 56px 0;
+}
+.section-wrap + .section-wrap {
+  border-top: 1px solid var(--line);
+}
+.section-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+/* ---- PHASE ARCS ---- */
+.arcs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.arc-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 32px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.arc-card.is-current.p1 {
+  border-color: rgba(34,197,94,0.35);
+  box-shadow: 0 0 28px rgba(34,197,94,0.07);
+}
+.arc-card.is-current.p2 {
+  border-color: rgba(245,158,11,0.35);
+  box-shadow: 0 0 28px rgba(245,158,11,0.07);
+}
+.arc-card.is-current.p3 {
+  border-color: rgba(235,16,0,0.35);
+  box-shadow: 0 0 28px rgba(235,16,0,0.07);
+}
+.arc-svg-wrap {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  margin-bottom: 22px;
+}
+.arc-svg {
+  width: 148px;
+  height: 148px;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+.arc-track {
+  fill: none;
+  stroke: rgba(255,255,255,0.05);
+  stroke-width: 9;
+}
+.arc-fill {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1);
+}
+.arc-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+.arc-pct-val {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.arc-pct-lbl {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.arc-phase-tag {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.arc-title {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 5px;
+}
+.arc-weeks {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.arc-status {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ---- WEEK TIMELINE ---- */
+.phase-block {
+  margin-bottom: 44px;
+}
+.phase-block:last-child { margin-bottom: 0; }
+.phase-row-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.phase-row-tag {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+.phase-row-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.phase-row-dates {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+.weeks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.week-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 15px;
+  cursor: default;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.week-card:hover {
+  border-color: var(--line-strong);
+  background: var(--bg-elev-2);
+}
+.week-card.is-done {
+  opacity: 0.45;
+}
+.week-card.is-current {
+  background: var(--bg-elev-2);
+}
+.week-card.is-current::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--phase-c);
+  border-radius: 0;
+}
+.week-card .cur-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--accent-soft);
+  border: 1px solid rgba(235,16,0,0.2);
+  color: var(--accent);
+  margin-bottom: 9px;
+}
+.cur-tag-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: glow-red 1.5s infinite;
+}
+.wk-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.wk-dates {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.wk-theme {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+.wk-objective {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  display: none;
+}
+.week-card:hover .wk-objective,
+.week-card.expanded .wk-objective {
+  display: block;
+}
+
+/* ---- FOOTER ---- */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 36px 0 48px;
+}
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+.footer-left {
+  flex: 1;
+}
+.footer-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.footer-disclaimer {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.65;
+  max-width: 640px;
+}
+.footer-trademark {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 320px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 820px) {
+  h1 { font-size: 36px; }
+  .hero-inner { flex-direction: column; gap: 32px; }
+  .day-card { width: 100%; }
+  .arcs-grid { grid-template-columns: 1fr; gap: 16px; }
+  .arc-card { flex-direction: row; align-items: center; text-align: left; padding: 20px; gap: 20px; }
+  .arc-svg-wrap { width: 100px; height: 100px; flex-shrink: 0; }
+  .arc-svg { width: 100px; height: 100px; }
+  .arc-pct-val { font-size: 20px; }
+  .weeks-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-row { flex-direction: column; gap: 16px; }
+  .footer-trademark { text-align: left; }
+}
+@media (max-width: 480px) {
+  .container { padding: 0 18px; }
+  h1 { font-size: 28px; }
+  .weeks-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="site-name">Matt Kain &nbsp;·&nbsp; <span>mattkain.com</span></div>
+      <div class="live-badge"><span class="live-dot"></span> Live</div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>APAC Executive Transition</div>
+        <h1>First 90 Days<br>at <span class="red">Adobe APAC</span></h1>
+        <p class="tagline">A structured 12-week framework for listening deeply, diagnosing clearly, and leading with conviction across Asia Pacific.</p>
+      </div>
+      <div class="day-card">
+        <div class="day-card-label">Day</div>
+        <div class="day-number" id="dayNum">--</div>
+        <div class="day-of-total">of 90</div>
+        <div class="phase-badge">
+          <span class="phase-badge-dot"></span>
+          <span id="phaseBadgeLabel">Loading...</span>
+        </div>
+        <div class="current-week-label" id="curWeekLabel">&nbsp;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE ARCS -->
+<section class="section-wrap">
+  <div class="container">
+    <div class="section-eyebrow">Overview</div>
+    <div class="section-title">Phase Progress</div>
+    <div class="arcs-grid">
+
+      <!-- Phase 1 -->
+      <div class="arc-card p1" id="arcCard1">
+        <div class="arc-svg-wrap">
+          <svg class="arc-svg" viewBox="0 0 148 148">
+            <circle class="arc-track" cx="74" cy="74" r="62"/>
+            <circle class="arc-fill" id="arcFill1" cx="74" cy="74" r="62"
+              stroke="var(--p1)"
+              stroke-dasharray="389.6"
+              stroke-dashoffset="389.6"/>
+          </svg>
+          <div class="arc-center">
+            <div class="arc-pct-val" id="arcPct1" style="color:var(--p1)">0%</div>
+            <div class="arc-pct-lbl">done</div>
+          </div>
+        </div>
+        <div class="arc-phase-tag">Phase 1</div>
+        <div class="arc-title">Listen &amp; Map</div>
+        <div class="arc-weeks">Weeks 1–4 &nbsp;·&nbsp; 28 Apr – 23 May</div>
+        <div class="arc-status" id="arcStatus1" style="color:var(--text-dim)">Upcoming</div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="arc-card p2" id="arcCard2">
+        <div class="arc-svg-wrap">
+          <svg class="arc-svg" viewBox="0 0 148 148">
+            <circle class="arc-track" cx="74" cy="74" r="62"/>
+            <circle class="arc-fill" id="arcFill2" cx="74" cy="74" r="62"
+              stroke="var(--p2)"
+              stroke-dasharray="389.6"
+              stroke-dashoffset="389.6"/>
+          </svg>
+          <div class="arc-center">
+            <div class="arc-pct-val" id="arcPct2" style="color:var(--p2)">0%</div>
+            <div class="arc-pct-lbl">done</div>
+          </div>
+        </div>
+        <div class="arc-phase-tag">Phase 2</div>
+        <div class="arc-title">Diagnose &amp; Align</div>
+        <div class="arc-weeks">Weeks 5–8 &nbsp;·&nbsp; 26 May – 20 Jun</div>
+        <div class="arc-status" id="arcStatus2" style="color:var(--text-dim)">Upcoming</div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="arc-card p3" id="arcCard3">
+        <div class="arc-svg-wrap">
+          <svg class="arc-svg" viewBox="0 0 148 148">
+            <circle class="arc-track" cx="74" cy="74" r="62"/>
+            <circle class="arc-fill" id="arcFill3" cx="74" cy="74" r="62"
+              stroke="var(--p3)"
+              stroke-dasharray="389.6"
+              stroke-dashoffset="389.6"/>
+          </svg>
+          <div class="arc-center">
+            <div class="arc-pct-val" id="arcPct3" style="color:var(--p3)">0%</div>
+            <div class="arc-pct-lbl">done</div>
+          </div>
+        </div>
+        <div class="arc-phase-tag">Phase 3</div>
+        <div class="arc-title">Lead &amp; Deliver</div>
+        <div class="arc-weeks">Weeks 9–12 &nbsp;·&nbsp; 23 Jun – 18 Jul</div>
+        <div class="arc-status" id="arcStatus3" style="color:var(--text-dim)">Upcoming</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WEEK TIMELINE -->
+<section class="section-wrap">
+  <div class="container">
+    <div class="section-eyebrow">Detail</div>
+    <div class="section-title">Week-by-Week Plan</div>
+    <div id="timeline"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <div class="footer-left">
+        <div class="footer-name">Matt Kain &nbsp;·&nbsp; mattkain.com</div>
+        <div class="footer-disclaimer">This analysis is produced independently by Matt Kain. This page is not affiliated with, sponsored by, or endorsed by Adobe.</div>
+      </div>
+      <div class="footer-trademark">Adobe, Creative Cloud, Adobe Experience Platform, and other product names mentioned are either registered trademarks or trademarks of Adobe in the United States and/or other countries.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+const OB_WEEKS = [
+  { id:'w1',  num:1,  dates:'28 Apr - 2 May',  phase:1,
+    theme:'Welcome &amp; Orientation',
+    objective:'Establish foundations across Publicis and Adobe; understand agency structure, client context, and account scope.' },
+  { id:'w2',  num:2,  dates:'5 May - 9 May',    phase:1,
+    theme:'Operating Model &amp; Governance',
+    objective:'Understand Publicis global vs regional model, Adobe ways of working, and internal collaboration dynamics.' },
+  { id:'w3',  num:3,  dates:'12 May - 16 May',  phase:1,
+    theme:'Adobe Business Deep Dive (Part I)',
+    objective:"Build deep understanding of Adobe's business objectives, KPIs, and regional priorities." },
+  { id:'w4',  num:4,  dates:'19 May - 23 May',  phase:1,
+    theme:'Adobe Business Deep Dive (Part II)',
+    objective:'Gain practical understanding of tooling, delivery ecosystem, and partner dependencies.' },
+  { id:'w5',  num:5,  dates:'26 May - 30 May',  phase:2,
+    theme:'Account Governance &amp; Commercials',
+    objective:'Understand contractual scope, commercials, governance, and delivery obligations.' },
+  { id:'w6',  num:6,  dates:'2 Jun - 6 Jun',    phase:2,
+    theme:'Delivery Immersion',
+    objective:'Build confidence in current delivery priorities and pressure points across the region.' },
+  { id:'w7',  num:7,  dates:'9 Jun - 13 Jun',   phase:2,
+    theme:'Stakeholder Management &amp; Relationships',
+    objective:'Establish trusted relationships with Adobe and Publicis leadership across markets.' },
+  { id:'w8',  num:8,  dates:'16 Jun - 20 Jun',  phase:2,
+    theme:'Strategic Planning &amp; Regional Roadmap',
+    objective:'Contribute to regional strategy, priorities, and the APAC forward plan.' },
+  { id:'w9',  num:9,  dates:'23 Jun - 27 Jun',  phase:3,
+    theme:'Innovation &amp; Transformation',
+    objective:'Identify innovation, transformation, and differentiation opportunities across markets.' },
+  { id:'w10', num:10, dates:'30 Jun - 4 Jul',   phase:3,
+    theme:'Executive Storytelling &amp; Client Narrative',
+    objective:'Strengthen executive-level communication and refine the APAC client narrative.' },
+  { id:'w11', num:11, dates:'7 Jul - 11 Jul',   phase:3,
+    theme:'Leadership, Ownership &amp; Influence',
+    objective:'Begin operating as full APAC Client Lead and strategic partner to Adobe.' },
+  { id:'w12', num:12, dates:'14 Jul - 18 Jul',  phase:3,
+    theme:'Close-Out &amp; 90-Day Review',
+    objective:'Reflect on onboarding, confirm priorities, and set the plan for the next quarter.' }
+];
+
+const PHASES = {
+  1: { label:'Listen &amp; Map',     title:'Listen &amp; Map',     color:'#22c55e', dates:'28 Apr – 23 May' },
+  2: { label:'Diagnose &amp; Align', title:'Diagnose &amp; Align', color:'#f59e0b', dates:'26 May – 20 Jun' },
+  3: { label:'Lead &amp; Deliver',   title:'Lead &amp; Deliver',   color:'#eb1000', dates:'23 Jun – 18 Jul' }
+};
+
+/* ============================================================
+   CALCULATIONS
+   ============================================================ */
+const START = new Date('2026-04-28T00:00:00');
+const CIRC  = 2 * Math.PI * 62; // r=62, ~389.6
+
+function todayDayNum() {
+  const now   = new Date();
+  const diff  = Math.floor((now - START) / 86400000);
+  return Math.max(1, Math.min(90, diff + 1));
+}
+
+function weekStartDay(w) { return (w.num - 1) * 7 + 1; }
+function weekEndDay(w)   { return w.num * 7; }
+
+function currentWeek(d) {
+  for (let i = OB_WEEKS.length - 1; i >= 0; i--) {
+    if (d >= weekStartDay(OB_WEEKS[i])) return OB_WEEKS[i];
+  }
+  return OB_WEEKS[0];
+}
+
+function phaseProgress(phase, d) {
+  const map = { 1:[1,28], 2:[29,56], 3:[57,84] };
+  const [s, e] = map[phase];
+  if (d < s) return 0;
+  if (d > e) return 1;
+  return (d - s + 1) / (e - s + 1);
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function renderArcs(d) {
+  const curPhase = currentWeek(d).phase;
+
+  [1, 2, 3].forEach(p => {
+    const pct    = phaseProgress(p, d);
+    const offset = CIRC * (1 - pct);
+    const pctInt = Math.round(pct * 100);
+
+    document.getElementById('arcFill' + p).style.strokeDashoffset = offset;
+    document.getElementById('arcPct'  + p).textContent = pctInt + '%';
+
+    const statusEl = document.getElementById('arcStatus' + p);
+    const cardEl   = document.getElementById('arcCard'   + p);
+    const color    = PHASES[p].color;
+
+    if (p === curPhase) {
+      cardEl.classList.add('is-current');
+      statusEl.textContent  = 'In progress';
+      statusEl.style.color  = color;
+    } else if (pct >= 1) {
+      statusEl.textContent = 'Complete';
+      statusEl.style.color = '#22c55e';
+    } else {
+      statusEl.textContent = 'Upcoming';
+      statusEl.style.color = 'var(--text-dim)';
+    }
+  });
+}
+
+function renderHero(d) {
+  const cur = currentWeek(d);
+  document.getElementById('dayNum').textContent        = d;
+  document.getElementById('phaseBadgeLabel').innerHTML = 'Phase ' + cur.phase + ': ' + PHASES[cur.phase].label;
+  document.getElementById('curWeekLabel').innerHTML    = 'Week ' + cur.num + ' · ' + cur.dates;
+}
+
+function renderTimeline(d) {
+  const container = document.getElementById('timeline');
+  const cur       = currentWeek(d);
+
+  [1, 2, 3].forEach(phase => {
+    const ph    = PHASES[phase];
+    const weeks = OB_WEEKS.filter(w => w.phase === phase);
+
+    const block = document.createElement('div');
+    block.className = 'phase-block';
+
+    const header = document.createElement('div');
+    header.className = 'phase-row-header';
+    header.innerHTML =
+      '<span class="phase-row-tag">Phase ' + phase + '</span>' +
+      '<span class="phase-row-title" style="color:' + ph.color + '">' + ph.title + '</span>' +
+      '<span class="phase-row-dates">' + ph.dates + '</span>';
+    block.appendChild(header);
+
+    const grid = document.createElement('div');
+    grid.className = 'weeks-grid';
+
+    weeks.forEach(w => {
+      const isCur  = w.id === cur.id;
+      const isDone = weekEndDay(w) < d;
+
+      const card = document.createElement('div');
+      card.className = 'week-card' +
+        (isCur  ? ' is-current' : '') +
+        (isDone ? ' is-done'    : '');
+      card.style.setProperty('--phase-c', ph.color);
+
+      let inner = '';
+      if (isCur) {
+        inner += '<div class="cur-tag"><span class="cur-tag-dot"></span>Current</div>';
+      }
+      inner +=
+        '<div class="wk-label">Week ' + w.num + '</div>' +
+        '<div class="wk-dates">' + w.dates + '</div>' +
+        '<div class="wk-theme">' + w.theme + '</div>' +
+        '<div class="wk-objective">' + w.objective + '</div>';
+
+      card.innerHTML = inner;
+
+      // Touch / click toggle for mobile
+      card.addEventListener('click', function() {
+        this.classList.toggle('expanded');
+      });
+
+      grid.appendChild(card);
+    });
+
+    block.appendChild(grid);
+    container.appendChild(block);
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', function () {
+  const d = todayDayNum();
+  renderHero(d);
+  renderTimeline(d);
+
+  // Arcs start at 0 and animate in after a brief delay
+  [1,2,3].forEach(p => {
+    document.getElementById('arcFill' + p).style.strokeDashoffset = CIRC;
+    document.getElementById('arcPct'  + p).textContent = '0%';
+  });
+
+  setTimeout(function() { renderArcs(d); }, 150);
+});
+</script>
+</body>
+</html>

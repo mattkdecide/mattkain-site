@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First 90 Days at Adobe APAC — Matt Kain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+  body {
+    background: #0f0f10;
+    color: #fff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 1020px; margin: 0 auto; padding: 0 28px; }
+
+  /* HEADER */
+  header { border-bottom: 1px solid rgba(255,255,255,0.07); padding: 36px 0 30px; }
+  .header-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #eb1000; margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(26px, 4.5vw, 42px); font-weight: 800;
+    letter-spacing: -0.025em; line-height: 1.15; color: #fff;
+  }
+  .header-meta {
+    margin-top: 10px; font-size: 13px; color: rgba(255,255,255,0.4);
+    display: flex; flex-wrap: wrap; gap: 0;
+  }
+  .header-meta span::after { content: ' · '; }
+  .header-meta span:last-child::after { content: ''; }
+
+  /* COUNTER */
+  .counter-section { padding: 40px 0 36px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .counter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  @media (max-width: 640px) { .counter-grid { grid-template-columns: repeat(2, 1fr); } }
+  .counter-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .counter-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 7px;
+  }
+  .counter-value {
+    font-size: 38px; font-weight: 800; letter-spacing: -0.04em;
+    line-height: 1; color: #fff;
+  }
+  .counter-value.accent { color: #eb1000; }
+  .counter-sub { font-size: 11px; color: rgba(255,255,255,0.28); margin-top: 5px; }
+
+  /* PHASE BAR */
+  .phase-bar-container { position: relative; }
+  .phase-bar-labels {
+    display: flex; justify-content: space-between; margin-bottom: 8px;
+  }
+  .pbl {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: rgba(255,255,255,0.25);
+    flex: 1; text-align: center;
+  }
+  .pbl:first-child { text-align: left; }
+  .pbl:last-child { text-align: right; }
+  .pbl.active { color: #eb1000; }
+  .phase-track {
+    position: relative; height: 5px;
+    background: rgba(255,255,255,0.07); border-radius: 3px;
+  }
+  .phase-fill {
+    position: absolute; left: 0; top: 0; height: 100%;
+    background: linear-gradient(90deg, #c50e00 0%, #eb1000 60%, #ff4433 100%);
+    border-radius: 3px; transition: width 1s cubic-bezier(0.4,0,0.2,1);
+  }
+  .phase-milestone {
+    position: absolute; top: 50%; transform: translate(-50%, -50%);
+    width: 9px; height: 9px; border-radius: 50%;
+    border: 2px solid #0f0f10; background: rgba(255,255,255,0.18);
+    transition: background 0.4s;
+  }
+  .phase-milestone.reached { background: #eb1000; }
+  .phase-cursor {
+    position: absolute; top: 50%; transform: translate(-50%, -50%);
+    width: 13px; height: 13px; border-radius: 50%;
+    background: #fff; border: 2px solid #eb1000;
+    box-shadow: 0 0 0 4px rgba(235,16,0,0.22);
+    transition: left 1s cubic-bezier(0.4,0,0.2,1);
+  }
+  .phase-end-labels {
+    display: flex; justify-content: space-between; margin-top: 9px;
+  }
+  .pel { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+  /* INTRO */
+  .intro-section { padding: 44px 0 8px; }
+  .intro-text {
+    font-size: 16px; font-weight: 400; line-height: 1.75;
+    color: rgba(255,255,255,0.65); max-width: 680px;
+  }
+
+  /* WEEKS */
+  .weeks-section { padding: 52px 0 56px; }
+  .section-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 28px;
+  }
+  .phase-group { margin-bottom: 44px; }
+  .phase-group-header {
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 14px; margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .ph-dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(255,255,255,0.15);
+  }
+  .ph-dot.active { background: #eb1000; }
+  .ph-dot.complete { background: rgba(255,255,255,0.5); }
+  .ph-name {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+  .ph-name.active { color: #eb1000; }
+  .ph-name.complete { color: rgba(255,255,255,0.7); }
+  .ph-wks { font-size: 11px; color: rgba(255,255,255,0.2); margin-left: auto; }
+
+  .weeks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  @media (max-width: 680px) { .weeks-grid { grid-template-columns: 1fr; } }
+
+  /* WEEK CARD */
+  .week-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; overflow: hidden; cursor: pointer;
+    background: rgba(255,255,255,0.02);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .week-card:hover { border-color: rgba(255,255,255,0.13); background: rgba(255,255,255,0.04); }
+  .week-card.past { opacity: 0.5; }
+  .week-card.past:hover { opacity: 0.7; }
+  .week-card.current {
+    border-color: rgba(235,16,0,0.6);
+    background: rgba(235,16,0,0.05);
+    opacity: 1;
+  }
+  .week-card.current:hover { background: rgba(235,16,0,0.08); }
+  .week-card.future { opacity: 0.38; }
+  .week-card.future:hover { opacity: 0.6; }
+
+  .week-head {
+    display: flex; align-items: center; gap: 13px; padding: 14px 16px;
+  }
+  .wk-num {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.25);
+    width: 36px; flex-shrink: 0;
+  }
+  .week-card.current .wk-num { color: #eb1000; }
+  .wk-info { flex: 1; min-width: 0; }
+  .wk-theme {
+    font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .week-card.current .wk-theme { color: #fff; }
+  .wk-dates { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 2px; }
+  .wk-chevron {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, transform 0.22s;
+  }
+  .week-card.open .wk-chevron { transform: rotate(180deg); background: rgba(235,16,0,0.18); }
+  .wk-chevron svg {
+    width: 11px; height: 11px; fill: none;
+    stroke: rgba(255,255,255,0.35); stroke-width: 2.2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .week-card.current .wk-chevron svg { stroke: rgba(255,255,255,0.65); }
+
+  .now-badge {
+    display: inline-block; margin-left: 7px;
+    background: rgba(235,16,0,0.22); color: #ff6355;
+    font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 4px;
+    vertical-align: middle;
+  }
+
+  .week-body {
+    display: none; padding: 4px 16px 16px 65px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .week-card.open .week-body' + ' { display: block�B��؋[X�[�۝\�^�N�L��۝]�ZY��
+��]\�\�X�[�Έ�Y[N^]�[�ٛܛN�\\��\�N���܎��ؘJ�MK�MK�MK���N�X\��[��L�
+\B��؋]^��۝\�^�N�L����܎��ؘJ�MK�MK�MK�MJN�[�KZZY��K��N�B��ʈ���T�
+����\���ܙ\�]��\��Y�ؘJ�MK�MK�MK�
+�N�Y[�Έ�
+
+�B��\��Z[Y\��۝\�^�N�L����܎��ؘJ�MK�MK�MK���N[�KZZY��K���X^]�Y�
+�B�����\�XܙY]�X\��[�]��M��۝\�^�N�L\���܎��ؘJ�MK�MK�MK�MJNB���[O���XY����O���XY\���]��\��H��۝Z[�\����]��\��H�XY\�Y^YX���ȏ�YؙHTP�0���Y[�XY�]���O��\��L^\��O��]��\��H�XY\�[Y]H����[��X]�Z[���[����[���\�Y�\�[�����[����[��L�]�YZ�ۘ��\�[����ܘ[[YO��[����]����]����XY\����XZ[����X�[ۈ�\��H���[�\�\�X�[ۈ���]��\��H��۝Z[�\����]��\��H���[�\�YܚY�YH���[�\�ܚY���]���]��\��H�\�KX�\�X�۝Z[�\����]��\��H�\�KX�\�[X�[ȏ���[��\��H���YH��H����[����[��\��H���YH�������[����[��\��H���YH��ȏ���[����]���]��\��H�\�K]�X�ȏ��]��\��H�\�KY�[�YH�\�Q�[��[OH��Y�	H���]���]��\��H�\�K[Z[\�ۙH�YH�LH��[OH�Y���ˌ��H���]���]��\��H�\�K[Z[\�ۙH�YH�L���[OH�Y�������H���]���]��\��H�\�KX�\��܈�YH�\�P�\��܈��[OH�Y��	H���]����]���]��\��H�\�KY[�[X�[ȏ���[��\��H�[���\���[����[��\��H�[����X^O��[����[��\��H�[�����[���[����[��\��H�[��N�[��[����]����]����]�����X�[ۏ����X�[ۈ�\��H�[���\�X�[ۈ���]��\��H��۝Z[�\�����\��H�[���]^���H��[�YYؙH\�TP��Y[�XYۈ�\�[����H�\��L^\�\�H��X�\�Y\��[��YH\�\Έ\�[�[��[�X\[��H[���\KXYۛ��[��H�\�[�[Yۚ[���]HX[K[�XY[��[�[]�\�[��]�[X�K�\�Y�H�X����\�HH[H[�]\�˂�����]�����X�[ۏ����X�[ۈ�\��H��YZ��\�X�[ۈ���]��\��H��۝Z[�\����]��\��H��X�[ۋY^YX���ȏ�L�U�YZ���ܘ[[YO�]���]�YH��YZ���۝Z[�\����]����]�����X�[ۏ���XZ[�������\���]��\��H��۝Z[�\�����\��H�\��Z[Y\���\�[�[\�\�\���X�Y[�\[�[�H�HX]�Z[��\�Y�H\���Y��[X]Y�]�ۜ�ܙY�K܈[�ܜ�Y�HYؙK�����\��H����\�XܙY]ȏ�X]�Z[����H0��\]\�[�[ZX�[H�\�Yۈ�^I��]O����]���ٛ��\�����ܚ\����OOOOOOOOOOOHUHOOOOOOOOOOOB��ۜ��T�H�]�]J�����
+N���\�[������ۜ��SH
+���L�0��
+��[[�\�^\��ۜ��QR��H�Y���I��[N�K]\Ή̎\�8�$��X^I�\�N�K�[YN���[��YH	�ܚY[�][ۉ��ؚ���\�X�\���[�][ۜ�Xܛ���X�X�\�[�YؙK�[�\��[�Y�[��H��X�\�K�Y[��۝^[�X���[����K��K��Y��̉��[N��]\Ή�HX^H8�$�HX^I�\�N�K�[YN��X�X�\��Q�	��\�][��[�[	��ؚ���[�\��[�HX�X�\��ؘ[���Y�[ۘ[[�[YؙH�^\�و�ܚ�[��[�[�\��[��X�ܘ][ۈ��[Y]�ܚ�ˉ�K��Y������[N��]\Ή�L�X^H8�$�M�X^I�\�N�K�[YN��YؙH�\�[�\��Y\]�H
+\�JI��ؚ����Z[Y\[�\��[�[��وYؙI���\�[�\��ؚ�X�]�\��\�[��Y�[ۘ[�[ܚ]Y\�Xܛ���TPˈ�K��Y���	��[N�]\Ή�NHX^H8�$���X^I�\�N�K�[YN��YؙH�\�[�\��Y\]�H
+\�RJI��ؚ����Z[��X�X�[[�\��[�[��و��[��[]�\�HX���\�[K[�\��\�\[�[��Y\�Xܛ���YYXK]K[�X�����K��K��Y���I��[N�K]\Ή̍�X^H8�$��X^I�\�N���[YN��X���[��ݙ\��[��H	���[Y\��X[���ؚ���[�\��[��۝�X�X[���K��[Y\��X[��ݙ\��[��H��X�\�\�[�[]�\�H؛Y�][ۜ�[��[��K��Y��͉��[N��]\Ή̈�[�8�$�
+��[��\�N���[YN��[�Q�Y��ܚ���X[\�	�[]�\�I��ؚ��НZ[�ۙ�Y[��H[��\��[�[]�\�H�[ܚ]Y\�[�Y�Y�[�]X]]�\�[��\��\�H�[��Xܛ���X\��]ˉ�K��Y������[N��]\Ή�H�[�8�$�L��[��\�N���[YN���Z�Z�\�X[�Y�[Y[�	��[][ۜ�\���ؚ���\�X�\��\�Y�[][ۜ�\��]YؙH[�X�X�\�XY\��\��[Y]H�X��\��^X�][ۜ�[��Z[[�[��Y�[Y[�[���K��Y���	��[N�]\Ή�M��[�8�$���[��\�N���[YN����]Y�X�[��[��	��Y�[ۘ[��YX\	��ؚ����۝�X�]H��Y�[ۘ[��]Y�H[��[ܚ]Y\ˈ�\HHTP��\��]]�H[�\�X�\]H[��ܝ�\�[��[���X�\ˉ�K��Y���I��[N�K]\Ή̌��[�8�$����[��\�N���[YN��[��ݘ][ۋ�[�ٛܛX][ۈ	��[YI��ؚ���Y[�Y�H[��ݘ][ۋ�[�ٛܛX][ۋ[�Y��\�[�X][ۈ�ܝ[�]Y\�Xܛ���X\��]�[�\��\[�\ˉ�K��Y���L	��[N�L]\Ή���[�8�$�
+�[	�\�N���[YN��^X�]]�H�ܞ][[��	��Y[��\��]]�I��ؚ�����[��[�^X�]]�K[]�[��[][�X�][ۋ��Y�[�HH�Y[�Y�X�[��Ո[�XY\��\[]�[�\�[�][ۈX]\�X[ˉ�K��Y���LI��[N�LK]\Ή���[8�$�LH�[	�\�N���[YN��XY\��\�ۙ\��\	�[��Y[��I��ؚ��ЙY�[��\�][��\��[TP��Y[�XY��\�[�HTP���YX\[�[Yۈۈ�L���[ܚ]Y\��]�[�[܈XY\��\��K��Y���L���[N�L�]\Ή�M�[8�$�N�[	�\�N���[YN�����KS�]	�LQ^H�]�Y]���ؚ����ۙX��ܛX[LY^H�]�Y]ˈ�ۙ�\�H�^\]X\�\�ؚ�X�]�\�[�YܙYH]�[�Y[���[��]�Z�Z�\�ˉ�B�N��ۜ�T�T�H��[N�K�[YN��\�[�	�X\	�X�[��\�HH0��\�[�	�X\	���Ή��YZ��x�$�	��]N��ˌ��K���[N���[YN��XYۛ��H	�[Yۉ�X�[��\�H�0��XYۛ��H	�[Yۉ���Ή��YZ��
+x�$�	��]�������K���[N���[YN��XY	�[]�\��X�[��\�H�0��XY	�[]�\����Ή��YZ��x�$�L���]ΌLB�N���OOOOOOOOOOOH��P�OOOOOOOOOOOB��[��[ۈ^S�[J
+H�ۜ�H�]�]J
+N���]�\��
+N�ۜ��H�]�]J�T�
+N�˜�]�\��
+N�]\��X]���܊
+H�H�
+�
+N���Z[�^Y^\����H�\��B���[��[ۈ�YZӝ[J
+H�ۜ�H^S�[J
+NY�
+
+H�]\��Y�
+�H�S
+H�]\��L��]\��X]���܊�
+�H
+�NB���[��[ۈ��ܙ\���
+
+H�]\��X]�X^
+X]�Z[�L
+^S�[J
+H��S
+H
+�L
+JNB���[��[ۈ\�S�[J
+H�ۜ��H�YZӝ[J
+NY�
+�H
+H�]\��NY�
+�H
+H�]\����]\���B���[��[ۈ�]\�ӝ[JH�ۜ���H�YZӝ[J
+NY�
+���L�H�]\��	�\�	�Y�
+ӝ[H��H�]\��	�\�	�Y�
+ӝ[HOOH��H�]\��	��\��[�	��]\��	ٝ]\�I�B����OOOOOOOOOOOH��S�T�OOOOOOOOOOOB��[��[ۈ�[�\���[�\�
+H�ۜ�H^S�[J
+N�ۜ��H�YZӝ[J
+N�ۜ��H��ܙ\���
+
+N�ۜ�H\�S�[J
+N�ۜ��[Y\�H���	�\�[�	�X\	�	�XYۛ��H	�[Yۉ�	�XY	�[]�\��N��ۜ�^Q\�H�	��%	��
+�H�S�	�
+	����[��
+�JJN�ۜ���\�H�H�	��%	��
+��L��	�L�����[���JN���[Y[���][[Y[��RY
+	���[�\�ܚY	�K�[��\�SH�]��\��H���[�\�X�\����]��\��H���[�\�[X�[��^O�]���]��\��H���[�\�]�[YHX��[����^Q\�O�]���]��\��H���[�\�\�X���و
+�[[�\�^\��]����]���]��\��H���[�\�X�\����]��\��H���[�\�[X�[���YZ��]���]��\��H���[�\�]�[YH�����\�O�]���]��\��H���[�\�\�X���وL��YZ���]����]���]��\��H���[�\�X�\����]��\��H���[�\�[X�[��\�O�]���]��\��H���[�\�]�[YH���O�]���]��\��H���[�\�\�X�����[Y\��_O�]����]���]��\��H���[�\�X�\����]��\��H���[�\�[X�[����ܙ\���]���]��\��H���[�\�]�[YH���X]���[�
+�
+_IO�]���]��\��H���[�\�\�X���وLY^H��ܘ[[YO�]����]�����\�H�\���ۜ��HX]�Z[�N�K�
+N��[Y[���][[Y[��RY
+	�\�Q�[	�K��[K��YH�
+�	�I���[Y[���][[Y[��RY
+	�\�P�\��܉�K��[K�Y�H�
+�	�I��Y�
+��H�ˌ��H��[Y[���][[Y[��RY
+	�LI�K��\��\��Y
+	ܙXX�Y	�NY�
+��H
+�����H��[Y[���][[Y[��RY
+	�L��K��\��\��Y
+	ܙXX�Y	�N����I�	����	����K��ܑXX�
+
+YJHO��ۜ�[H��[Y[���][[Y[��RY
+Y
+N[�^�۝[�HT�T��WK��[YNY�
+H
+�HOOH
+H[��\��\��Y
+	�X�]�I�NJNB����OOOOOOOOOOOH�QR��OOOOOOOOOOOB��[��[ۈ�[�\��YZ��
+H�ۜ��H\�S�[J
+N][H	����K��K��ܑXX�
+O��ۜ�[���HT�T��HWN�ۜ��H��	���\]I��
+OOH��	�X�]�I��	ٝ]\�I�N�ۜ��YZ��\�H�QR�˙�[\��O�˜\�HOOH
+N�[
+�H]��\��H�\�KYܛ�\���]��\��H�\�KYܛ�\ZXY\����]��\��H�Y�	��H���]����[��\��H�[�[YH	��H��\�H	�H8�%	�[��˛�[Y_O��[����[��\��H�]��ȏ��[��˝���O��[����]���]��\��H��YZ��YܚY����YZ��\���ܑXX�
+�O��ۜ��H�]\�˛�[JN�ۜ��Y�HH�OOH	��\��[�	��	��[��\��H����X�Y�H�������[����	��[
+�H]��\��H��YZ�X�\�	��H�ۘ�X��H����P�\�
+\�H���]��\��H��YZ�ZXY���]��\��H���[�[H����	�˛�[_O�]���]��\��H���Z[��ȏ��]��\��H���][YH���˝[Y_IؘY�_O�]���]��\��H���Y]\ȏ��˙]\�O�]����]���]��\��H���X�]��ۈ���ݙ��Y]Л�H�MM���[[�H�[��H��
+H
+�HLH
+H�Ϗ�ݙς��]����]���]��\��H��YZ�X��H���]��\��H�؋[X�[��ؚ�X�]�O�]���]��\��H�؋]^���˛ؚ�O�]����]����]��JN�[
+�H�]���]��JN���[Y[���][[Y[��RY
+	��YZ���۝Z[�\��K�[��\�SH[���]]�[�[��\��[��YZ��[Y[��]Y\�T�[X�ܐ[
+	˝�YZ�X�\���\��[�	�K��ܑXX�
+�O�˘�\��\��Y
+	��[��JNB���[��[ۈ���P�\�
+[
+H�[��\��\�����J	��[��N�B����OOOOOOOOOOOHS�UOOOOOOOOOOOB��[�\���[�\�
+N�[�\��YZ��
+N��ܚ\��؛�O���[�

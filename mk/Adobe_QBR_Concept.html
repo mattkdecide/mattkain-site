@@ -677,7 +677,7 @@ deck-stage > section {
   border: 1px solid var(--rule);
   border-radius: 12px;
   background: #fff;
-  padding: 24px 26px;
+  padding: 24px 42px;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-1);
@@ -725,13 +725,13 @@ deck-stage > section {
   display: grid;
   grid-template-columns: 460px 1fr;
   gap: 56px;
-  height: 480px;
+  height: 395px;
 }
 .corr .left {
   background: var(--pub-ink);
   color: #fff;
   border-radius: 12px;
-  padding: 56px 48px;
+  padding: 32px 44px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -744,13 +744,14 @@ deck-stage > section {
 }
 .corr .left .stat {
   font-family: var(--font-display);
-  font-size: 200px; font-weight: 800;
-  line-height: 0.85;
+  font-size: 148px; font-weight: 800;
+  line-height: 0.88;
   letter-spacing: -0.04em;
   background: linear-gradient(96deg, #FFB39A 0%, #FF8FA3 50%, #C77DFF 100%);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
+  overflow: visible;
 }
 .corr .left .stat-cap {
   font-size: 15px;
@@ -881,6 +882,39 @@ deck-stage > section {
   text-align: center;
 }
 
+
+
+/* ── Animated gradient pulse (section dividers + cover title) ── */
+@keyframes gradPulse {
+  0%   { filter: hue-rotate(0deg)  brightness(1)   saturate(1);   }
+  25%  { filter: hue-rotate(18deg) brightness(1.18) saturate(1.15); }
+  50%  { filter: hue-rotate(32deg) brightness(1.08) saturate(1.2);  }
+  75%  { filter: hue-rotate(10deg) brightness(1.22) saturate(1.1);  }
+  100% { filter: hue-rotate(0deg)  brightness(1)   saturate(1);   }
+}
+.s-divider .num {
+  animation: gradPulse 5s ease-in-out infinite;
+}
+.s-cover .cover-title {
+  animation: gradPulse 6s ease-in-out infinite;
+}
+
+/* ── Rotating sphere on cover ── */
+.cover-sphere-wrap {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 520px;
+  height: 520px;
+  pointer-events: none;
+  z-index: 1;
+}
+canvas.cover-sphere {
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
 
 </style>
 <script>
@@ -1504,6 +1538,121 @@ deck-stage > section {
   }
 })();
 
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   COVER SPHERE – Rotating wireframe sphere with Adobe gradient palette
+───────────────────────────────────────────────────────────────────────────── */
+(function initSphere() {
+  const cvs = document.querySelector('.cover-sphere');
+  if (!cvs) return;
+  const ctx = cvs.getContext('2d');
+  const W = cvs.width, H = cvs.height;
+  const cx = W / 2, cy = H / 2;
+  const R = 205;
+  let rot = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    /* Outer ambient glow */
+    const glow = ctx.createRadialGradient(cx - 70, cy - 70, 20, cx, cy, R + 60);
+    glow.addColorStop(0, 'rgba(255,143,163,0.18)');
+    glow.addColorStop(0.5, 'rgba(199,125,255,0.07)');
+    glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R + 60, 0, Math.PI * 2);
+    ctx.fillStyle = glow;
+    ctx.fill();
+
+    /* Sphere body sheen */
+    const sheen = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.35, R * 0.04, cx, cy, R);
+    sheen.addColorStop(0,  'rgba(255,179,154,0.10)');
+    sheen.addColorStop(0.5,'rgba(255,143,163,0.05)');
+    sheen.addColorStop(1,  'rgba(15,26,42,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = sheen;
+    ctx.fill();
+
+    /* Latitude circles */
+    const LAT_COUNT = 11;
+    for (let li = 0; li <= LAT_COUNT; li++) {
+      const lat = -Math.PI / 2 + (Math.PI * li / LAT_COUNT);
+      const r2 = R * Math.cos(lat);
+      const yp = cy + R * Math.sin(lat);
+      const t = li / LAT_COUNT;
+      ctx.beginPath();
+      let started = false;
+      for (let lon = 0; lon <= Math.PI * 2 + 0.03; lon += 0.03) {
+        const x2 = cx + r2 * Math.cos(lon + rot);
+        if (!started) { ctx.moveTo(x2, yp); started = true; }
+        else ctx.lineTo(x2, yp);
+      }
+      const alpha = 0.08 + 0.22 * Math.abs(Math.sin(lat * 0.9));
+      const rr = Math.round(199 + (255 - 199) * t);
+      const gg = Math.round(125 + (143 - 125) * (1 - t));
+      const bb = Math.round(255 + (163 - 255) * t);
+      ctx.strokeStyle = `rgba(${rr},${gg},${bb},${alpha.toFixed(2)})`;
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    }
+
+    /* Longitude meridians */
+    const LON_COUNT = 16;
+    for (let li = 0; li < LON_COUNT; li++) {
+      const lon = (Math.PI * 2 * li / LON_COUNT) + rot;
+      const sinLon = Math.sin(lon);
+      const cosLon = Math.cos(lon);
+      ctx.beginPath();
+      let started = false;
+      for (let lat = -Math.PI / 2; lat <= Math.PI / 2; lat += 0.03) {
+        const cosLat = Math.cos(lat);
+        const x2 = cx + R * cosLat * cosLon;
+        const y2 = cy + R * Math.sin(lat);
+        if (!started) { ctx.moveTo(x2, y2); started = true; }
+        else ctx.lineTo(x2, y2);
+      }
+      const isFront = sinLon > 0;
+      const facingAlpha = isFront ? 0.12 + 0.30 * sinLon : 0.03 + 0.05 * (1 + sinLon);
+      const t = li / LON_COUNT;
+      const rr = Math.round(255 * (1 - t) + 199 * t);
+      const gg = Math.round(143 * (1 - t) + 125 * t);
+      const bb = Math.round(163 * (1 - t) + 255 * t);
+      ctx.strokeStyle = `rgba(${rr},${gg},${bb},${facingAlpha.toFixed(2)})`;
+      ctx.lineWidth = isFront ? 0.9 : 0.3;
+      ctx.stroke();
+    }
+
+    /* Highlight arc (specular rim) */
+    const rimGrad = ctx.createLinearGradient(cx - R, cy - R * 0.7, cx - R * 0.2, cy + R * 0.1);
+    rimGrad.addColorStop(0, 'rgba(255,179,154,0.55)');
+    rimGrad.addColorStop(1, 'rgba(255,179,154,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, -Math.PI * 0.85, -Math.PI * 0.05);
+    ctx.strokeStyle = rimGrad;
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+
+    /* Equator accent */
+    ctx.beginPath();
+    for (let lon = 0; lon <= Math.PI * 2; lon += 0.025) {
+      const x2 = cx + R * Math.cos(lon + rot);
+      const z2 = Math.sin(lon + rot);
+      if (z2 < 0) continue;
+      if (lon === 0) ctx.moveTo(x2, cy);
+      else ctx.lineTo(x2, cy);
+    }
+    ctx.strokeStyle = 'rgba(255,179,154,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    rot += 0.004;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+})();
+
 </script>
 </head>
 <body style="margin:0;background:#1a1a1a">
@@ -1514,7 +1663,10 @@ deck-stage > section {
      01 · COVER
      ============================================================ -->
 <section class="s-cover" data-screen-label="01 Cover">
-  <svg class="cover-cube" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <div class="cover-sphere-wrap">
+    <canvas class="cover-sphere" width="520" height="520"></canvas>
+  </div>
+  <svg class="cover-cube" style="opacity:0" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="cube-top" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#3A4560"/>

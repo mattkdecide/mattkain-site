@@ -710,11 +710,20 @@ deck-stage > section {
 }
 .compare .card ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .compare .card li {
-  display: grid; grid-template-columns: 14px 1fr;
-  gap: 8px; font-size: 13px;
-  color: var(--ink-2); line-height: 1.45;
+  position: relative;
+  padding-left: 16px;
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-bottom: 2px;
 }
-.compare .card li::before { content: "•"; color: var(--ink-4); }
+.compare .card li::before {
+  content: "•";
+  color: var(--ink-4);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 .compare .card li b { color: var(--ink); }
 .compare .card li .u { text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; }
 
@@ -899,21 +908,17 @@ deck-stage > section {
   animation: gradPulse 6s ease-in-out infinite;
 }
 
-/* ── Rotating sphere on cover ── */
-.cover-sphere-wrap {
+/* ── Animated 3D cube on cover ── */
+canvas#cover-cube-canvas {
   position: absolute;
-  right: 40px;
+  right: -80px;
   top: 50%;
-  transform: translateY(-50%);
-  width: 520px;
-  height: 520px;
+  transform: translateY(-50%) rotate(4deg);
+  width: 700px;
+  height: 700px;
   pointer-events: none;
   z-index: 1;
-}
-canvas.cover-sphere {
-  width: 100%;
-  height: 100%;
-  opacity: 0.9;
+  opacity: 0.88;
 }
 
 </style>
@@ -1540,117 +1545,144 @@ canvas.cover-sphere {
 
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   COVER SPHERE – Rotating wireframe sphere with Adobe gradient palette
+   COVER CUBE – Animated 3-D rotating wireframe cube, Adobe gradient palette
 ───────────────────────────────────────────────────────────────────────────── */
-(function initSphere() {
-  const cvs = document.querySelector('.cover-sphere');
+(function initCube
+/* ─────────────────────────────────────────────────────────────────────────────
+   COVER CUBE – Animated 3-D rotating wireframe cube, Adobe gradient palette
+───────────────────────────────────────────────────────────────────────────── */
+(function initCube() {
+  const cvs = document.getElementById('cover-cube-canvas');
   if (!cvs) return;
+  const SIZE = 700;
+  cvs.width = SIZE; cvs.height = SIZE;
   const ctx = cvs.getContext('2d');
-  const W = cvs.width, H = cvs.height;
-  const cx = W / 2, cy = H / 2;
-  const R = 205;
-  let rot = 0;
+  const cx = SIZE / 2, cy = SIZE / 2;
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
+  /* Unit cube vertices */
+  const V = [
+    [-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],
+    [-1,-1, 1],[1,-1, 1],[1,1, 1],[-1,1, 1]
+  ];
 
-    /* Outer ambient glow */
-    const glow = ctx.createRadialGradient(cx - 70, cy - 70, 20, cx, cy, R + 60);
-    glow.addColorStop(0, 'rgba(255,143,163,0.18)');
-    glow.addColorStop(0.5, 'rgba(199,125,255,0.07)');
-    glow.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.beginPath();
-    ctx.arc(cx, cy, R + 60, 0, Math.PI * 2);
-    ctx.fillStyle = glow;
-    ctx.fill();
+  /* Edges: pairs of vertex indices */
+  const E = [
+    [0,1],[1,2],[2,3],[3,0],  /* back face  */
+    [4,5],[5,6],[6,7],[7,4],  /* front face */
+    [0,4],[1,5],[2,6],[3,7]   /* connectors */
+  ];
 
-    /* Sphere body sheen */
-    const sheen = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.35, R * 0.04, cx, cy, R);
-    sheen.addColorStop(0,  'rgba(255,179,154,0.10)');
-    sheen.addColorStop(0.5,'rgba(255,143,163,0.05)');
-    sheen.addColorStop(1,  'rgba(15,26,42,0)');
-    ctx.beginPath();
-    ctx.arc(cx, cy, R, 0, Math.PI * 2);
-    ctx.fillStyle = sheen;
-    ctx.fill();
+  /* Faces for subtle fill */
+  const F = [
+    [4,5,6,7],[0,1,2,3],
+    [0,1,5,4],[3,2,6,7],
+    [0,3,7,4],[1,2,6,5]
+  ];
 
-    /* Latitude circles */
-    const LAT_COUNT = 11;
-    for (let li = 0; li <= LAT_COUNT; li++) {
-      const lat = -Math.PI / 2 + (Math.PI * li / LAT_COUNT);
-      const r2 = R * Math.cos(lat);
-      const yp = cy + R * Math.sin(lat);
-      const t = li / LAT_COUNT;
-      ctx.beginPath();
-      let started = false;
-      for (let lon = 0; lon <= Math.PI * 2 + 0.03; lon += 0.03) {
-        const x2 = cx + r2 * Math.cos(lon + rot);
-        if (!started) { ctx.moveTo(x2, yp); started = true; }
-        else ctx.lineTo(x2, yp);
-      }
-      const alpha = 0.08 + 0.22 * Math.abs(Math.sin(lat * 0.9));
-      const rr = Math.round(199 + (255 - 199) * t);
-      const gg = Math.round(125 + (143 - 125) * (1 - t));
-      const bb = Math.round(255 + (163 - 255) * t);
-      ctx.strokeStyle = `rgba(${rr},${gg},${bb},${alpha.toFixed(2)})`;
-      ctx.lineWidth = 0.7;
-      ctx.stroke();
-    }
+  const SCALE = 185;
+  const FOV   = 900;
+  const DIST  = 5;   /* camera z distance */
+  const TILT  = 0.38; /* fixed X tilt (rad) */
 
-    /* Longitude meridians */
-    const LON_COUNT = 16;
-    for (let li = 0; li < LON_COUNT; li++) {
-      const lon = (Math.PI * 2 * li / LON_COUNT) + rot;
-      const sinLon = Math.sin(lon);
-      const cosLon = Math.cos(lon);
-      ctx.beginPath();
-      let started = false;
-      for (let lat = -Math.PI / 2; lat <= Math.PI / 2; lat += 0.03) {
-        const cosLat = Math.cos(lat);
-        const x2 = cx + R * cosLat * cosLon;
-        const y2 = cy + R * Math.sin(lat);
-        if (!started) { ctx.moveTo(x2, y2); started = true; }
-        else ctx.lineTo(x2, y2);
-      }
-      const isFront = sinLon > 0;
-      const facingAlpha = isFront ? 0.12 + 0.30 * sinLon : 0.03 + 0.05 * (1 + sinLon);
-      const t = li / LON_COUNT;
-      const rr = Math.round(255 * (1 - t) + 199 * t);
-      const gg = Math.round(143 * (1 - t) + 125 * t);
-      const bb = Math.round(163 * (1 - t) + 255 * t);
-      ctx.strokeStyle = `rgba(${rr},${gg},${bb},${facingAlpha.toFixed(2)})`;
-      ctx.lineWidth = isFront ? 0.9 : 0.3;
-      ctx.stroke();
-    }
+  let angleY = 0.4;
 
-    /* Highlight arc (specular rim) */
-    const rimGrad = ctx.createLinearGradient(cx - R, cy - R * 0.7, cx - R * 0.2, cy + R * 0.1);
-    rimGrad.addColorStop(0, 'rgba(255,179,154,0.55)');
-    rimGrad.addColorStop(1, 'rgba(255,179,154,0)');
-    ctx.beginPath();
-    ctx.arc(cx, cy, R, -Math.PI * 0.85, -Math.PI * 0.05);
-    ctx.strokeStyle = rimGrad;
-    ctx.lineWidth = 1.8;
-    ctx.stroke();
-
-    /* Equator accent */
-    ctx.beginPath();
-    for (let lon = 0; lon <= Math.PI * 2; lon += 0.025) {
-      const x2 = cx + R * Math.cos(lon + rot);
-      const z2 = Math.sin(lon + rot);
-      if (z2 < 0) continue;
-      if (lon === 0) ctx.moveTo(x2, cy);
-      else ctx.lineTo(x2, cy);
-    }
-    ctx.strokeStyle = 'rgba(255,179,154,0.5)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    rot += 0.004;
-    requestAnimationFrame(draw);
+  /* Gradient stops: peach → coral → lilac */
+  const STOPS = [[255,179,154],[255,143,163],[199,125,255]];
+  function gradColor(t) {
+    const i = Math.min(Math.floor(t * (STOPS.length-1)), STOPS.length-2);
+    const f = t * (STOPS.length-1) - i;
+    return STOPS[i].map((c,j) => Math.round(c + f*(STOPS[i+1][j]-c)));
   }
 
-  draw();
+  function rotY(v, a) {
+    return [v[0]*Math.cos(a)-v[2]*Math.sin(a), v[1], v[0]*Math.sin(a)+v[2]*Math.cos(a)];
+  }
+  function rotX(v, a) {
+    return [v[0], v[1]*Math.cos(a)-v[2]*Math.sin(a), v[1]*Math.sin(a)+v[2]*Math.cos(a)];
+  }
+  function project(v) {
+    const pz = v[2] + DIST;
+    return { x: cx + (v[0]*SCALE*FOV)/(pz*FOV), y: cy + (v[1]*SCALE*FOV)/(pz*FOV), z: v[2] };
+  }
+
+  /* Outer ambient glow behind cube */
+  function drawGlow() {
+    const g = ctx.createRadialGradient(cx, cy, 80, cx, cy, 320);
+    g.addColorStop(0, 'rgba(255,143,163,0.09)');
+    g.addColorStop(0.5,'rgba(199,125,255,0.04)');
+    g.addColorStop(1,  'rgba(0,0,0,0)');
+    ctx.beginPath(); ctx.arc(cx, cy, 320, 0, Math.PI*2);
+    ctx.fillStyle = g; ctx.fill();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, SIZE, SIZE);
+    drawGlow();
+
+    const xformed = V.map(v => project(rotX(rotY(v, angleY), TILT)));
+
+    /* Faces — subtle fill, sorted back-to-front by avg z */
+    const facesZ = F.map((face,fi) => {
+      const avgZ = face.reduce((s,i) => s + xformed[i].z, 0) / face.length;
+      return { face, fi, avgZ };
+    }).sort((a,b) => a.avgZ - b.avgZ);
+
+    facesZ.forEach(({ face, fi }) => {
+      ctx.beginPath();
+      face.forEach((vi,i) => {
+        const p = xformed[vi];
+        i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+      });
+      ctx.closePath();
+      const t = fi / F.length;
+      const [r,g,b] = gradColor(t);
+      ctx.fillStyle = `rgba(${r},${g},${b},0.055)`;
+      ctx.fill();
+    });
+
+    /* Edges — gradient colour + depth-faded opacity */
+    E.forEach(([a,b], ei) => {
+      const pa = xformed[a], pb = xformed[b];
+      const avgZ = (pa.z + pb.z) / 2;
+      const depth = (avgZ + 1) / 2; /* 0=back, 1=front */
+
+      const t = ei / E.length;
+      const [r,g,bl] = gradColor(t);
+      const alpha = 0.28 + 0.52 * depth;
+
+      /* Glow pass */
+      ctx.beginPath();
+      ctx.moveTo(pa.x, pa.y);
+      ctx.lineTo(pb.x, pb.y);
+      ctx.strokeStyle = `rgba(${r},${g},${bl},${(alpha*0.35).toFixed(2)})`;
+      ctx.lineWidth = 5;
+      ctx.stroke();
+
+      /* Sharp edge */
+      ctx.beginPath();
+      ctx.moveTo(pa.x, pa.y);
+      ctx.lineTo(pb.x, pb.y);
+      ctx.strokeStyle = `rgba(${r},${g},${bl},${alpha.toFixed(2)})`;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    });
+
+    /* Vertex dots on front-facing verts */
+    xformed.forEach(p => {
+      if (p.z < 0.1) return;
+      const t = (p.z + 1) / 2;
+      const [r,g,b] = gradColor(t);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2.5, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${r},${g},${b},0.7)`;
+      ctx.fill();
+    });
+
+    angleY += 0.006;
+    requestAnimationFrame(frame);
+  }
+
+  frame();
 })();
 
 </script>
@@ -1663,10 +1695,8 @@ canvas.cover-sphere {
      01 · COVER
      ============================================================ -->
 <section class="s-cover" data-screen-label="01 Cover">
-  <div class="cover-sphere-wrap">
-    <canvas class="cover-sphere" width="520" height="520"></canvas>
-  </div>
-  <svg class="cover-cube" style="opacity:0" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <canvas id="cover-cube-canvas" class="cover-cube-canvas"></canvas>
+  <svg class="cover-cube" style="display:none" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="cube-top" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#3A4560"/>

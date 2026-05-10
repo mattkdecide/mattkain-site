@@ -32,7 +32,6 @@
 
     a { color: inherit; text-decoration: none; }
 
-    /* Header */
     header {
       border-bottom: 1px solid var(--border);
       padding: 0 32px;
@@ -60,7 +59,6 @@
       color: var(--faint);
     }
 
-    /* Main */
     main {
       max-width: 960px;
       margin: 0 auto;
@@ -80,35 +78,44 @@
       margin-bottom: 48px;
     }
 
-    /* Client section */
-    .client-section {
-      margin-bottom: 40px;
+    /* SECTION */
+    .section {
+      margin-bottom: 44px;
     }
 
-    .client-header {
+    .section-header {
       display: flex;
       align-items: baseline;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 12px;
       padding-bottom: 10px;
       border-bottom: 1px solid var(--border);
     }
 
-    .client-name {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--accent);
+    .section-icon {
+      font-size: 14px;
     }
 
-    .client-path {
+    .section-name {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .section-desc {
       font-size: 11px;
       color: var(--faint);
-      font-family: 'SF Mono', 'Consolas', monospace;
     }
 
-    /* File list */
+    /* Colour accent per section */
+    .sec-ops    .section-name { color: #eb1000; }
+    .sec-strat  .section-name { color: #3b82f6; }
+    .sec-ind    .section-name { color: #22c55e; }
+    .sec-wip    .section-name { color: #f97316; }
+    .sec-old    .section-name { color: #555566; }
+
+    /* FILE LIST */
     .file-list {
       display: flex;
       flex-direction: column;
@@ -132,13 +139,15 @@
     .file-row:last-child { border-bottom: none; }
     .file-row:hover { background: #1a1a1d; }
 
+    .sec-old .file-row { opacity: 0.55; }
+    .sec-old .file-row:hover { opacity: 0.85; }
+
     .file-icon {
       font-size: 15px;
       text-align: center;
       color: var(--faint);
     }
 
-    /* Fix: prevent long titles from breaking grid */
     .file-row > div:nth-child(2) {
       min-width: 0;
     }
@@ -178,7 +187,6 @@
 
     .file-link:hover { background: var(--accent-lo); }
 
-    /* Badge */
     .badge {
       display: inline-block;
       font-size: 9px;
@@ -191,22 +199,13 @@
       vertical-align: middle;
     }
 
-    .badge-draft   { background: rgba(217,119,87,0.15); color: var(--accent); }
-    .badge-review  { background: rgba(100,160,250,0.12); color: #64a0fa; }
-    .badge-final   { background: rgba(80,200,120,0.12);  color: #50c878; }
+    .badge-new      { background: rgba(235,16,0,0.15);    color: #ff6b6b; }
+    .badge-live     { background: rgba(80,200,120,0.12);  color: #50c878; }
+    .badge-draft    { background: rgba(217,119,87,0.15);  color: var(--accent); }
+    .badge-concept  { background: rgba(249,115,22,0.14);  color: #fb923c; }
+    .badge-conf     { background: rgba(100,160,250,0.12); color: #64a0fa; }
+    .badge-old      { background: rgba(100,100,120,0.15); color: #666680; }
 
-    /* Empty */
-    .empty {
-      padding: 28px 18px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      font-style: italic;
-    }
-
-    /* Footer */
     footer {
       max-width: 960px;
       margin: 0 auto;
@@ -227,21 +226,64 @@
 
 <main>
   <div class="page-title">Private File Index</div>
-  <p class="page-sub">All files at mattkain.com/mk/ - updated each time a file is added. Not publicly linked or indexed.</p>
+  <p class="page-sub">All files at mattkain.com &mdash; updated as files are added. Not publicly linked or indexed.</p>
 
-  <!-- ADOBE -->
-  <div class="client-section">
-    <div class="client-header">
-      <div class="client-name">Adobe</div>
-      <div class="client-path">/mk/</div>
+  <!-- OPERATIONS -->
+  <div class="section sec-ops">
+    <div class="section-header">
+      <span class="section-icon">⚙</span>
+      <span class="section-name">Operations</span>
+      <span class="section-desc">Active planning &middot; 30/60/90 &middot; tracking</span>
+    </div>
+    <div class="file-list">
+
+      <a href="/files/adobe/adobe-aos.html" class="file-row">
+        <div class="file-icon">&#128249;</div>
+        <div>
+          <div class="file-name">Adobe APAC &middot; Account Operating System &middot; 30/60/90 <span class="badge badge-new">New</span></div>
+          <div class="file-path">/files/adobe/adobe-aos.html</div>
+        </div>
+        <div class="file-date">May 2026</div>
+        <span class="file-link">Open &#8599;</span>
+      </a>
+
+      <a href="/files/adobe/90-days-apac.html" class="file-row">
+        <div class="file-icon">&#128203;</div>
+        <div>
+          <div class="file-name">First 90 Days &middot; Adobe APAC &middot; Onboarding Tracker <span class="badge badge-live">Live</span></div>
+          <div class="file-path">/files/adobe/90-days-apac.html</div>
+        </div>
+        <div class="file-date">May 2026</div>
+        <span class="file-link">Open &#8599;</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- STRATEGY -->
+  <div class="section sec-strat">
+    <div class="section-header">
+      <span class="section-icon">◈</span>
+      <span class="section-name">Strategy</span>
+      <span class="section-desc">Frameworks &middot; positioning &middot; partnerships &middot; directions</span>
     </div>
     <div class="file-list">
 
       <a href="/mk/adobe.html" class="file-row">
         <div class="file-icon">&#128251;</div>
         <div>
-          <div class="file-name">Adobe Summit 2026 - APAC Intelligence Brief <span class="badge badge-final">Live</span></div>
+          <div class="file-name">Adobe Summit 2026 &middot; APAC Intelligence Brief <span class="badge badge-live">Live</span></div>
           <div class="file-path">/mk/adobe.html</div>
+        </div>
+        <div class="file-date">Apr 2026</div>
+        <span class="file-link">Open &#8599;</span>
+      </a>
+
+      <a href="/files/adobe/adobe-apac-strategy-directions-2026.html" class="file-row">
+        <div class="file-icon">&#128251;</div>
+        <div>
+          <div class="file-name">Adobe APAC &middot; Five Strategic Directions 2026 <span class="badge badge-live">Live</span></div>
+          <div class="file-path">/files/adobe/adobe-apac-strategy-directions-2026.html</div>
         </div>
         <div class="file-date">Apr 2026</div>
         <span class="file-link">Open &#8599;</span>
@@ -250,7 +292,7 @@
       <a href="/files/adobe/adobe-google-publicis-partnership-brief.html" class="file-row">
         <div class="file-icon">&#128251;</div>
         <div>
-          <div class="file-name">Adobe x Google x Publicis - Creative Performance Partnership Brief <span class="badge badge-final">Live</span></div>
+          <div class="file-name">Adobe &times; Google &times; Publicis &middot; Creative Performance Partnership Brief <span class="badge badge-live">Live</span></div>
           <div class="file-path">/files/adobe/adobe-google-publicis-partnership-brief.html</div>
         </div>
         <div class="file-date">Apr 2026</div>
@@ -260,66 +302,61 @@
       <a href="/files/adobe/adobe-google-publicis-partner-ideas.html" class="file-row">
         <div class="file-icon">&#128251;</div>
         <div>
-          <div class="file-name">Adobe x Google x Publicis - Partner Ideas <span class="badge badge-final">Live</span></div>
+          <div class="file-name">Adobe &times; Google &times; Publicis &middot; Partner Ideas <span class="badge badge-live">Live</span></div>
           <div class="file-path">/files/adobe/adobe-google-publicis-partner-ideas.html</div>
         </div>
         <div class="file-date">Apr 2026</div>
         <span class="file-link">Open &#8599;</span>
       </a>
 
-      <a href="/files/adobe/adobe-summit-2026-session-tracker.html" class="file-row">
-        <div class="file-icon">&#128251;</div>
+    </div>
+  </div>
+
+  <!-- INDUSTRY -->
+  <div class="section sec-ind">
+    <div class="section-header">
+      <span class="section-icon">◎</span>
+      <span class="section-name">Industry</span>
+      <span class="section-desc">Events &middot; market intelligence &middot; sector calendars</span>
+    </div>
+    <div class="file-list">
+
+      <a href="/files/adobe/2026-industry-events-calendar.html" class="file-row">
+        <div class="file-icon">&#128197;</div>
         <div>
-          <div class="file-name">Adobe Summit 2026 - Session Tracker <span class="badge badge-final">Live</span></div>
-          <div class="file-path">/files/adobe/adobe-summit-2026-session-tracker.html</div>
+          <div class="file-name">2026 Industry Events Calendar <span class="badge badge-live">Live</span></div>
+          <div class="file-path">/files/adobe/2026-industry-events-calendar.html</div>
         </div>
         <div class="file-date">Apr 2026</div>
         <span class="file-link">Open &#8599;</span>
       </a>
+
+    </div>
+  </div>
+
+  <!-- WORKING -->
+  <div class="section sec-wip">
+    <div class="section-header">
+      <span class="section-icon">&#9998;</span>
+      <span class="section-name">Working</span>
+      <span class="section-desc">Drafts &middot; concepts &middot; not ready for sharing</span>
+    </div>
+    <div class="file-list">
+
       <a href="/files/adobe/apac-sow-renewal-brief.html" class="file-row">
-        <div class="file-icon">&#128251;</div>
+        <div class="file-icon">&#128274;</div>
         <div>
-          <div class="file-name">APAC SOW Renewal &#8212; Commercial Opportunity Brief v0.2 <span class="badge badge-draft">Confidential</span></div>
+          <div class="file-name">APAC SOW Renewal &mdash; Commercial Opportunity Brief v0.2 <span class="badge badge-conf">Confidential</span></div>
           <div class="file-path">/files/adobe/apac-sow-renewal-brief.html</div>
         </div>
         <div class="file-date">May 2026</div>
         <span class="file-link">Open &#8599;</span>
       </a>
 
-      <a href="/files/adobe/2026-industry-events-calendar.html" class="file-row">
-        <div class="file-icon">&#128251;</div>
-        <div>
-          <div class="file-name">2026 Industry Events Calendar <span class="badge badge-final">Live</span></div>
-          <div class="file-path">/files/adobe/2026-industry-events-calendar.html</div>
-        </div>
-        <div class="file-date">Apr 2026</div>
-        <span class="file-link">Open &#8599;</span>
-      </a>
-      <a href="/files/adobe/adobe-apac-strategy-directions-2026.html" class="file-row">
-        <div class="file-icon">&#128251;</div>
-        <div>
-          <div class="file-name">Adobe APAC - Five Strategic Directions 2026 <span class="badge badge-final">Live</span></div>
-          <div class="file-path">/files/adobe/adobe-apac-strategy-directions-2026.html</div>
-        </div>
-        <div class="file-date">Apr 2026</div>
-        <span class="file-link">Open &#8599;</span>
-      </a>
-
-      <a href="/files/adobe/90-days-apac.html" class="file-row">
-        <div class="file-icon">&#128251;</div>
-        <div>
-          <div class="file-name">First 90 Days &middot; Adobe APAC &middot; Onboarding Tracker <span class="badge badge-final">Live</span></div>
-          <div class="file-path">/files/adobe/90-days-apac.html</div>
-        </div>
-        <div class="file-date">May 2026</div>
-        <span class="file-link">Open &#8599;</span>
-      </a>
-
-
       <a href="/mk/Adobe_QBR_Concept.html" class="file-row">
         <div class="file-icon">&#127917;</div>
         <div>
-          <div class="file-name">Adobe APAC &middot; Q1 FY26 QBR Concept Deck <span class="badge badge-draft">Concept</span></div>
+          <div class="file-name">Adobe APAC &middot; Q1 FY26 QBR Concept Deck <span class="badge badge-concept">Concept</span></div>
           <div class="file-path">/mk/Adobe_QBR_Concept.html</div>
         </div>
         <div class="file-date">May 2026</div>
@@ -329,7 +366,27 @@
     </div>
   </div>
 
-  <!-- ADD NEW CLIENT SECTIONS BELOW THIS LINE -->
+  <!-- OLD -->
+  <div class="section sec-old">
+    <div class="section-header">
+      <span class="section-icon">◷</span>
+      <span class="section-name">Old</span>
+      <span class="section-desc">Not accessed in 7+ days &middot; kept for reference</span>
+    </div>
+    <div class="file-list">
+
+      <a href="/files/adobe/adobe-summit-2026-session-tracker.html" class="file-row">
+        <div class="file-icon">&#128251;</div>
+        <div>
+          <div class="file-name">Adobe Summit 2026 &middot; Session Tracker <span class="badge badge-old">Archived</span></div>
+          <div class="file-path">/files/adobe/adobe-summit-2026-session-tracker.html</div>
+        </div>
+        <div class="file-date">Apr 2026</div>
+        <span class="file-link">Open &#8599;</span>
+      </a>
+
+    </div>
+  </div>
 
 </main>
 

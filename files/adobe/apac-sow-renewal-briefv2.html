@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>APAC SOW Renewal — Commercial Opportunity Brief v0.2 | COMMERCIAL IN CONFIDENCE</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; background: #f5f5f5; color: #1a1a1a; }
+
+  .conf-banner {
+    background: #8B0000; color: #fff; text-align: center;
+    padding: 8px; font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .draft-strip {
+    background: #fff0f0; border-bottom: 2px solid #c0392b;
+    text-align: center; padding: 6px; font-size: 11px; font-weight: 700;
+    color: #c0392b; letter-spacing: 1px;
+  }
+
+  .header { background: #1c2b3a; color: #fff; padding: 32px 48px 28px; }
+  .header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .header .sub { font-size: 13px; color: #8ea8c0; margin-bottom: 20px; }
+  .header .meta { display: flex; gap: 32px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .header .meta-item .label { font-size: 10px; color: #8ea8c0; text-transform: uppercase; letter-spacing: 1px; }
+  .header .meta-item .value { color: #fff; font-weight: 600; margin-top: 2px; font-size: 13px; }
+
+  .content { max-width: 1100px; margin: 0 auto; padding: 32px 48px; }
+
+  /* NAV */
+  .nav { background: #fff; border: 1px solid #dde3ea; border-radius: 6px; padding: 16px 20px; margin-bottom: 28px; }
+  .nav-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 8px; }
+  .nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 24px; }
+  .nav ul li a { text-decoration: none; color: #2a5298; font-size: 12px; font-weight: 500; }
+  .nav ul li a:hover { text-decoration: underline; }
+
+  /* SECTION */
+  .section { background: #fff; border: 1px solid #dde3ea; border-radius: 6px; margin-bottom: 24px; overflow: hidden; }
+  .section-header { background: #1c2b3a; color: #fff; padding: 14px 20px; display: flex; align-items: center; gap: 10px; }
+  .section-header h2 { font-size: 14px; font-weight: 700; }
+  .section-header .badge { background: #2a5298; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.5px; }
+  .section-body { padding: 20px; }
+
+  /* ALERT */
+  .alert { border-radius: 4px; padding: 12px 16px; margin-bottom: 16px; font-size: 12px; line-height: 1.5; }
+  .alert-red   { background: #fff5f5; border-left: 4px solid #c0392b; }
+  .alert-amber { background: #fffbf0; border-left: 4px solid #e67e22; }
+  .alert-blue  { background: #f0f6ff; border-left: 4px solid #2a5298; }
+  .alert-green { background: #f0fff4; border-left: 4px solid #27ae60; }
+  .alert strong { display: block; margin-bottom: 3px; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead th { background: #2c3e50; color: #fff; padding: 9px 10px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: 0.3px; }
+  tbody tr:nth-child(even) { background: #f8f9fb; }
+  tbody tr:hover { background: #eef3fb; }
+  td { padding: 8px 10px; border-bottom: 1px solid #eee; vertical-align: top; line-height: 1.5; }
+  td strong { display: block; margin-bottom: 2px; }
+  td.tag-cell { white-space: nowrap; }
+
+  /* OPP CARDS */
+  .opp-list { display: flex; flex-direction: column; gap: 16px; margin-top: 4px; }
+  .opp-card { border: 1px solid #dde3ea; border-radius: 6px; overflow: hidden; }
+  .opp-card-header { padding: 14px 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .opp-card-header-left { display: flex; align-items: flex-start; gap: 14px; }
+  .opp-num { font-size: 28px; font-weight: 800; color: #c8d4e0; line-height: 1; min-width: 36px; padding-top: 2px; }
+  .opp-card-header h3 { font-size: 14px; font-weight: 700; color: #1c2b3a; line-height: 1.3; }
+  .opp-card-header .opp-sub { font-size: 11px; color: #666; margin-top: 3px; }
+  .opp-priority { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 10px; white-space: nowrap; }
+  .p1-red    { background: #c0392b; color: #fff; }
+  .p1-blue   { background: #2a5298; color: #fff; }
+  .p2-amber  { background: #e67e22; color: #fff; }
+  .opp-card-body { padding: 14px 16px; background: #fafbfc; border-top: 1px solid #eee; }
+  .opp-card-body p { font-size: 12px; line-height: 1.6; margin-bottom: 10px; color: #333; }
+  .opp-card-body p:last-child { margin-bottom: 0; }
+  .opp-card-body .position { font-size: 12px; line-height: 1.6; background: #eef4ff; border-left: 3px solid #2a5298; padding: 10px 12px; border-radius: 0 4px 4px 0; margin-bottom: 10px; }
+  .opp-data-req { background: #fffbf0; border-top: 1px solid #f0e6cc; padding: 10px 16px; font-size: 11px; color: #7d4e00; }
+  .opp-data-req strong { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: inline; margin-right: 4px; }
+
+  /* REALLOCATION CARDS */
+  .realloc-list { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+  .realloc-card { border: 1px solid #dde3ea; border-radius: 6px; overflow: hidden; }
+  .realloc-card-header { background: #f5f5f5; padding: 10px 16px; border-bottom: 1px solid #dde3ea; display: flex; align-items: center; justify-content: space-between; }
+  .realloc-card-header h3 { font-size: 13px; font-weight: 700; color: #1c2b3a; }
+  .realloc-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+  .tag-internal { background: #e0f0ff; color: #1a5276; }
+  .tag-external { background: #fde8e8; color: #7d1a1a; }
+  .realloc-card-body { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+  .realloc-col { padding: 12px 14px; border-right: 1px solid #eee; font-size: 12px; line-height: 1.5; }
+  .realloc-col:last-child { border-right: none; }
+  .realloc-col-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #888; margin-bottom: 6px; font-weight: 600; }
+
+  /* DATA REQ TABLE */
+  td.req-action { font-size: 11px; color: #555; font-style: italic; }
+
+  /* MISC */
+  p.body { font-size: 12px; line-height: 1.6; margin-bottom: 10px; color: #333; }
+  h3.inline { font-size: 13px; font-weight: 700; margin: 16px 0 8px; color: #1c2b3a; }
+  .footnote { font-size: 10px; color: #888; margin-top: 10px; font-style: italic; border-top: 1px solid #eee; padding-top: 8px; }
+  .divider { height: 1px; background: #eee; margin: 16px 0; }
+
+  @media (max-width: 768px) {
+    .header { padding: 20px 20px; }
+    .content { padding: 16px 20px; }
+    .realloc-card-body { grid-template-columns: 1fr; }
+    .realloc-col { border-right: none; border-bottom: 1px solid #eee; }
+  }
+</style>
+</head>
+<body>
+
+<div class="conf-banner">DRAFT v0.2 &nbsp;|&nbsp; COMMERCIAL IN CONFIDENCE &nbsp;|&nbsp; NOT FOR DISTRIBUTION &nbsp;|&nbsp; ZENITH MEDIA / adobe.pub</div>
+<div class="draft-strip">DRAFT &nbsp;—&nbsp; FOR INTERNAL REVIEW ONLY &nbsp;—&nbsp; NOT FOR EXTERNAL DISTRIBUTION</div>
+
+<div class="header">
+  <h1>APAC SOW Renewal &mdash; Commercial Opportunity Brief</h1>
+  <div class="sub">Zenith Media / adobe.pub &nbsp;&nbsp;|&nbsp;&nbsp; May 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Internal Use Only</div>
+  <div class="meta">
+    <div class="meta-item"><div class="label">Version</div><div class="value">v0.2 DRAFT</div></div>
+    <div class="meta-item"><div class="label">CW2661158 Expiry</div><div class="value" style="color:#ff6b6b">1 June 2026</div></div>
+    <div class="meta-item"><div class="label">CW2744905 Expiry</div><div class="value" style="color:#ff6b6b">30 May 2026</div></div>
+    <div class="meta-item"><div class="label">Prepared by</div><div class="value">APAC Client Lead</div></div>
+    <div class="meta-item"><div class="label">Distribution</div><div class="value">APAC Client Lead, APAC Strategy Lead, Executive Sponsor</div></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav-title">Jump to section</div>
+    <ul>
+      <li><a href="#s1">1. Contract Overview</a></li>
+      <li><a href="#s2">2. Upside Opportunities</a></li>
+      <li><a href="#s3">3. Fee Reallocation</a></li>
+      <li><a href="#s4">4. Data Requirements</a></li>
+    </ul>
+  </div>
+
+  <div class="alert alert-blue">
+    <strong>Purpose of this document</strong>
+    This brief identifies and frames commercial upside opportunities for the APAC SOW rollover, and notes proposed fee reallocations. It is not a complete financial model. Figures cited from contracts are confirmed from signed originals. All other figures are directional and must be verified before use in any external communication or negotiation.
+    No individual names appear in this document. Role titles and functional descriptions only.
+  </div>
+
+  <!-- ── SECTION 1: CONTRACT OVERVIEW ──────────────────────────────────── -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <h2>1. Contract Overview</h2>
+      <span class="badge">2 active SOWs</span>
+    </div>
+    <div class="section-body">
+
+      <div class="alert alert-red">
+        <strong>Expiry Alert</strong>
+        Both active APAC SOWs expire within 26&ndash;28 days. CW2744905 expires <strong>30 May 2026</strong>. CW2661158 expires <strong>1 June 2026</strong>. Renewal positions must be confirmed urgently. Adobe procurement contact to be confirmed (see Section 4).
+      </div>
+
+      <p class="body">Two separate signed contracts are currently in effect for APAC, both executed under Master Agreement CW2657028. The base position for renewal is a 12-month like-for-like rollover of current scope and fee. This brief identifies where Zenith should seek variance from that base position.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Contract</th>
+            <th>CLM Reference</th>
+            <th>APAC Scope</th>
+            <th>Confirmed Annual Value</th>
+            <th>Expiry</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>2023 Master SOW</strong></td>
+            <td>CW2661158<br><span style="font-size:11px;color:#666">Master: CW2657028</span></td>
+            <td>ANZ / Singapore / Korea / India Ad Ops<br><span style="font-size:11px;color:#666">Also covers EMEA, Japan, Global COE</span></td>
+            <td><strong>$4,041,780 USD</strong><br><span style="font-size:11px;color:#666">42.6 FTEs / 82,840 hrs</span></td>
+            <td style="color:#c0392b;font-weight:700">1 June 2026</td>
+          </tr>
+          <tr>
+            <td><strong>FY2026 India SOW</strong></td>
+            <td>CW2744905<br><span style="font-size:11px;color:#666">Master: CW2657028</span></td>
+            <td>Att. A: India Hub (Go Big India 2.0)<br>Att. B: APAC Expansion (ANZ demand + Mobile App)</td>
+            <td><strong>$965,467 USD</strong> (H1 contract value)<br><span style="font-size:11px;color:#666">Full-year rate subject to TBH fill status</span></td>
+            <td style="color:#c0392b;font-weight:700">30 May 2026</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="footnote">The 2023 Master SOW includes several senior leadership roles provided at $0/hr. These are addressed as a specific opportunity in Section 2.</p>
+
+      <div class="divider"></div>
+
+      <div class="alert alert-blue">
+        <strong>Approach</strong>
+        All positions below are framed to ensure fair compensation for the work delivered and to bring the contract into alignment with current resourcing reality. Variance should be presented as contract alignment &mdash; not as a fee increase request. <strong>P1 positions</strong> are led in the initial renewal conversation. <strong>P2 positions</strong> are pursued once P1 positions have traction.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: UPSIDE OPPORTUNITIES ───────────────────────────────── -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <h2>2. Upside Opportunities</h2>
+      <span class="badge">6 positions</span>
+    </div>
+    <div class="section-body">
+
+      <div class="opp-list">
+
+        <!-- OPP 01 -->
+        <div class="opp-card">
+          <div class="opp-card-header">
+            <div class="opp-card-header-left">
+              <div class="opp-num">01</div>
+              <div>
+                <h3>Strategy Lead &mdash; Continuation of Existing Funded Role</h3>
+                <div class="opp-sub">The role was funded. The individual changed. The funding should continue.</div>
+              </div>
+            </div>
+            <span class="opp-priority p1-red">P1 &nbsp; HIGH IMPACT</span>
+          </div>
+          <div class="opp-card-body">
+            <p>The 2023 Master SOW includes an EVP Strategy function at 0.75 FTE. This role was funded under the previous incumbent. The current APAC Strategy Lead is stepping directly into that same contracted role &mdash; same function, same scope, same place in the SOW structure.</p>
+            <div class="position"><strong>Position:</strong> There is no basis for this role to become unfunded simply because the individual changed. The rollover should carry forward the existing funded position at the contracted rate. This is a continuation of an existing arrangement, not a new ask.</div>
+            <p>The strategy function has, if anything, become more demanding since 2023: the account now spans two contracts, a new India Hub, APAC Expansion scope, Firefly, and AEP. Continuity of funding is the expected and appropriate outcome.</p>
+          </div>
+          <div class="opp-data-req"><strong>Data needed:</strong> Confirm contracted rate and FTE allocation for the EVP Strategy role in the 2023 Master SOW staffing tables to establish the rollover baseline.</div>
+        </div>
+
+        <!-- OPP 02 -->
+        <div class="opp-card">
+          <div class="opp-card-header">
+            <div class="opp-card-header-left">
+              <div class="opp-num">02</div>
+              <div>
+                <h3>Regional Lead &mdash; Overhead Allocation for Multi-Market Coordination</h3>
+                <div class="opp-sub">The account has grown materially since 2023. A full-time coordinator is now required.</div>
+              </div>
+            </div>
+            <span class="opp-priority p1-red">P1 &nbsp; HIGH IMPACT</span>
+          </div>
+          <div class="opp-card-body">
+            <p>At the time of the 2023 Master SOW, the APAC account operated as a single contract across a defined set of markets. It now spans two separate SOWs, four markets, a newly established India Hub, APAC Expansion scope, and multi-product complexity across Firefly, AEP, and Creative Cloud. The Regional Lead function is a full-time, multi-market coordination role not referenced in either current contract.</p>
+            <div class="position"><strong>Position:</strong> Introduce partial funding via a pro-rata overhead allocation across markets, consistent with standard practice for retained multi-market accounts at this scale. Proposed allocation: <strong>50% ANZ / 20% Korea / 15% Singapore-SEA / 15% India.</strong></div>
+          </div>
+          <div class="opp-data-req"><strong>Data needed:</strong> Confirm applicable rate card for the Regional Lead function. Confirm prior renewal cycle history &mdash; was this raised before, and what was Adobe's response?</div>
+        </div>
+
+        <!-- OPP 03 -->
+        <div class="opp-card">
+          <div class="opp-card-header">
+            <div class="opp-card-header-left">
+              <div class="opp-num">03</div>
+              <div>
+                <h3>Korea &mdash; Introduce Management and Coordination Fee</h3>
+                <div class="opp-sub">No management fee mechanism exists in the current contract.</div>
+              </div>
+            </div>
+            <span class="opp-priority p1-red">P1 &nbsp; REVENUE</span>
+          </div>
+          <div class="opp-card-body">
+            <p>Korea is delivered via a local subcontracted partner agency. The 2023 Master SOW bills Adobe at Seoul rate card but contains no management fee schedule or markup provision governing Zenith's position on the subcontract. The absence of a documented margin mechanism on a market of this scale is a structural gap in the contract.</p>
+            <div class="position"><strong>Position:</strong> Introduce an explicit management and coordination fee for the Korea subcontract in the rolled-over agreement. Industry standard for subcontracted delivery at this scale is 12&ndash;15% on the annual pass-through value. The exact ask depends on the current subcontractor margin.</div>
+          </div>
+          <div class="opp-data-req"><strong>Data needed:</strong> Pull Korea subcontractor P&amp;L from Finance <em>before</em> tabling this position. The direction of the ask &mdash; and whether it is framed as a new fee or a margin formalisation &mdash; depends entirely on the current margin. Do not proceed without this data.</div>
+        </div>
+
+        <!-- OPP 04 -->
+        <div class="opp-card">
+          <div class="opp-card-header">
+            <div class="opp-card-header-left">
+              <div class="opp-num">04</div>
+              <div>
+                <h3>India Hub &mdash; Rate Uplifts on Confirmed In-Seat Roles</h3>
+                <div class="opp-sub">Agreed rates should apply to roles that are active.</div>
+              </div>
+            </div>
+            <span class="opp-priority p1-red">P1 &nbsp; REVENUE</span>
+          </div>
+          <div class="opp-card-body">
+            <p>The FY2026 SOW contains 5&ndash;6 TBH (to-be-hired) roles, several of which are now filled or in the process of being filled. A revised fee schedule prepared in April 2026 proposed rate increases across a number of India Hub roles, reflecting both market movement and role evolution since the original SOW was signed.</p>
+            <div class="position"><strong>Position:</strong> For any role now confirmed in-seat and performing, the updated rate should apply from the rollover start date. This is not a speculative ask &mdash; it is application of agreed-in-principle rates to roles that are now active.</div>
+          </div>
+          <div class="opp-data-req"><strong>Data needed:</strong> Confirm current India Hub staffing actuals &mdash; which TBH roles are filled, in-seat, and from what date. Cross-reference against the April 2026 revised fee schedule to identify which rate uplifts are immediately applicable.</div>
+        </div>
+
+        <!-- OPP 05 -->
+        <div class="opp-card">
+          <div class="opp-card-header">
+            <div class="opp-card-header-left">
+              <div class="opp-num">05</div>
+              <div>
+                <h3>Flexible Resource Reserve &mdash; Recovery Vehicle for Ad Hoc Demand</h3>
+                <div class="opp-sub">Solves Adobe's stated requirement. Creates a fee recovery mechanism as a structural consequence.</div>
+              </div>
+            </div>
+            <span class="opp-priority p1-blue">P1 &nbsp; STRUCTURAL</span>
+          </div>
+          <div class="opp-card-body">
+            <p>Adobe's stated operational requirement is genuine flexibility &mdash; the ability to redeploy budget across markets, products, or channels without triggering a formal SOW amendment. The current SOW structure, with fixed service categories and planning caps, is structurally incompatible with this requirement.</p>
+            <div class="position"><strong>Position:</strong> Introduce a Flexible Resource Reserve clause in the rolled-over agreement. A defined percentage of total APAC fee (indicatively 8&ndash;10%) becomes redeployable across markets, channels, or functions within defined parameters, subject to quarterly reconciliation. This directly addresses Adobe's stated requirement and simultaneously creates a documented recovery mechanism for ad hoc work that currently proceeds without fee capture.</div>
+            <p>This is a strong P1 position because it is framed as solving a problem for Adobe, not as an additional cost. The fee recovery benefit to Zenith is a structural consequence, not the stated rationale.</p>
+          </div>
+        </div>
+
+        <!-- OPP 06 -->
+        <div class="opp-card">
+          <div class="opp-card-header">
+            <div class="opp-card-header-left">
+              <div class="opp-num">06</div>
+              <div>
+                <h3>India &mdash; Scope Consolidation and Legacy Rate Retirement</h3>
+                <div class="opp-sub">Three fee structures, potential overlap risk, one market.</div>
+              </div>
+            </div>
+            <span class="opp-priority p2-amber">P2 &nbsp; STRUCTURAL</span>
+          </div>
+          <div class="opp-card-body">
+            <p>India currently carries three separate fee structures built at different points in time: the 2023 Master SOW India Ad Ops line (~8 FTEs at $17.19/hr), the FY2026 India Hub (15-role team at Hub rate card), and a Local Integrated Team whose contractual home is unconfirmed. The legacy $17.19/hr rate is materially below the India Hub rate card, and potential functional overlap between the two structures represents a compliance risk.</p>
+            <div class="position"><strong>Position:</strong> Consolidate India under a single contract structure at the rollover. Retire the legacy $17.19/hr Ad Ops line and absorb those hours and functions into the India Hub SOW at current Hub rates. This removes the overlap risk, simplifies contract governance, and produces a modest net fee uplift on re-priced roles.</div>
+          </div>
+          <div class="opp-data-req"><strong>Data needed:</strong> Confirm the contractual home of the India Local Integrated Team before consolidating. Confirm whether legacy Ad Ops roles and Hub roles are performing distinct or overlapping functions.</div>
+        </div>
+
+      </div><!-- /opp-list -->
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: FEE REALLOCATION ───────────────────────────────────── -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <h2>3. Proposed Fee Reallocation</h2>
+      <span class="badge">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="alert alert-blue">
+        The items below do not represent new revenue to the account. They are structural adjustments to how existing contracted fees are allocated or recovered. Progress these in parallel with &mdash; not in place of &mdash; the P1 upside positions above.
+      </div>
+
+      <div class="realloc-list">
+
+        <div class="realloc-card">
+          <div class="realloc-card-header">
+            <h3>H1 FY2026 Proration Reconciliation</h3>
+            <span class="realloc-tag tag-external">Risk management</span>
+          </div>
+          <div class="realloc-card-body">
+            <div class="realloc-col">
+              <div class="realloc-col-label">Current State</div>
+              The FY2026 SOW contains proration provisions &mdash; TBH roles unfilled beyond defined periods attract fee adjustments. H1 reconciliation has not been completed.
+            </div>
+            <div class="realloc-col">
+              <div class="realloc-col-label">Proposed Change</div>
+              Run the H1 reconciliation internally before Adobe does. If credits are owed, quantify and manage proactively. Proactive disclosure on an unavoidable adjustment builds credibility for the P1 upside positions.
+            </div>
+            <div class="realloc-col">
+              <div class="realloc-col-label">Action Required</div>
+              Finance / India Hub account team to run H1 fee reconciliation. Do not enter the renewal conversation without this number.
+            </div>
+          </div>
+        </div>
+
+        <div class="realloc-card">
+          <div class="realloc-card-header">
+            <h3>Singapore &mdash; Internal Margin Optimisation</h3>
+            <span class="realloc-tag tag-internal">Internal only &mdash; no client disclosure</span>
+          </div>
+          <div class="realloc-card-body">
+            <div class="realloc-col">
+              <div class="realloc-col-label">Current State</div>
+              Singapore is billed at APAC activation hub rate card. Internal fulfilment model has evolved since the SOW was signed.
+            </div>
+            <div class="realloc-col">
+              <div class="realloc-col-label">Proposed Change</div>
+              Hold Singapore billing rates to Adobe at contracted levels. Review internal fulfilment model for efficiency gains. This is a Zenith internal margin action &mdash; not a client-facing conversation.
+            </div>
+            <div class="realloc-col">
+              <div class="realloc-col-label">Action Required</div>
+              Internal commercial review by APAC Client Lead and SG market lead. No client disclosure required or appropriate.
+            </div>
+          </div>
+        </div>
+
+        <div class="realloc-card">
+          <div class="realloc-card-header">
+            <h3>APAC Scope and Deliverables Annex</h3>
+            <span class="realloc-tag tag-external">Structural protection</span>
+          </div>
+          <div class="realloc-card-body">
+            <div class="realloc-col">
+              <div class="realloc-col-label">Current State</div>
+              The 2023 Master SOW deferred all market-specific deliverables to post-signing onboarding sessions. Three years of delivery have proceeded without a formal contractual deliverables schedule.
+            </div>
+            <div class="realloc-col">
+              <div class="realloc-col-label">Proposed Change</div>
+              Attach a formal APAC Scope and Deliverables Schedule as an annex to the rolled-over SOW. Documents three years of actual delivery and protects both parties against future scope disputes.
+            </div>
+            <div class="realloc-col">
+              <div class="realloc-col-label">Action Required</div>
+              APAC Strategy Lead to draft scope annex from existing delivery records prior to the renewal conversation.
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /realloc-list -->
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: DATA REQUIREMENTS ──────────────────────────────────── -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <h2>4. Data Requirements Before the Renewal Conversation</h2>
+      <span class="badge">7 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="alert alert-amber">
+        <strong>Do not enter the renewal conversation without these</strong>
+        The positions in Section 2 are directionally sound. The items below are the minimum data required before any external conversation with Adobe. Entering renewal without this data creates risk.
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th width="35%">Required</th>
+            <th width="43%">Why it matters</th>
+            <th width="22%">Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Contracted rate and FTE for EVP Strategy role (2023 Master SOW)</strong></td>
+            <td>Establishes the baseline for Opp 01 &mdash; continuity of funding at the contracted level.</td>
+            <td class="req-action">APAC Client Lead / Finance</td>
+          </tr>
+          <tr>
+            <td><strong>Korea subcontractor P&amp;L &mdash; fee paid vs fee billed to Adobe</strong></td>
+            <td>Determines direction and quantum of Korea management fee ask (Opp 03). Do not table Korea without this.</td>
+            <td class="req-action">Finance / MD ANZ</td>
+          </tr>
+          <tr>
+            <td><strong>India Hub staffing actuals &mdash; which TBH roles are filled and from what date</strong></td>
+            <td>Required to identify which rate uplifts apply immediately (Opp 04) and to quantify H1 proration exposure.</td>
+            <td class="req-action">India Hub account team</td>
+          </tr>
+          <tr>
+            <td><strong>H1 FY2026 proration reconciliation</strong></td>
+            <td>Know the exposure before Adobe names it. If credits are owed, quantify and manage proactively.</td>
+            <td class="req-action">Finance / India Hub account team</td>
+          </tr>
+          <tr>
+            <td><strong>Prior renewal cycle history</strong></td>
+            <td>Was leadership funding raised in a prior renewal? What was Adobe's response? Informs sequencing for Opp 01 and 02.</td>
+            <td class="req-action">APAC Strategy Lead / Zenith archive</td>
+          </tr>
+          <tr>
+            <td><strong>Adobe procurement contact for renewal</strong></td>
+            <td>Required to initiate the formal renewal process for each SOW.</td>
+            <td class="req-action">Adobe client contacts</td>
+          </tr>
+          <tr>
+            <td><strong>India Local Integrated Team contractual home</strong></td>
+            <td>Required for India scope consolidation (Opp 06). Cannot consolidate without knowing the current contractual structure.</td>
+            <td class="req-action">Publicis India / Finance</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center; padding: 24px 0 8px; font-size: 10px; color: #aaa;">
+    DRAFT v0.2 &nbsp;|&nbsp; 5 May 2026 &nbsp;|&nbsp; COMMERCIAL IN CONFIDENCE &nbsp;|&nbsp; Zenith Media / adobe.pub &nbsp;|&nbsp; Not for external distribution
+  </div>
+
+</div><!-- /content -->
+</body>
+</html>

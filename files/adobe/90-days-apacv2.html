@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>AdobeOS · 30-60-90 Day Strategic Initiatives · Matt Kain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f10;
+  --surface: #1a1a1d;
+  --surface2: #222226;
+  --surface3: #28282d;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #ffffff;
+  --text2: rgba(255,255,255,0.55);
+  --text3: rgba(255,255,255,0.35);
+  --red: #eb1000;
+  --red-dim: rgba(235,16,0,0.12);
+  --green: #22c55e;
+  --amber: #f59e0b;
+  --blue: #3b82f6;
+  --grey: rgba(255,255,255,0.22);
+  --radius: 10px;
+}
+
+html { font-size: 15px; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; min-height: 100vh; }
+
+/* TOPBAR */
+.topbar { background: rgba(15,15,16,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 0 28px; }
+.topbar-inner { max-width: 1020px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.logo-mark { width: 28px; height: 28px; background: var(--red); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.topbar-title { font-size: 13px; font-weight: 600; color: var(--text2); letter-spacing: 0.01em; }
+.topbar-title span { color: var(--text); }
+.internal-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 2px 7px; }
+.topbar-day { font-size: 12px; font-weight: 500; color: var(--text3); }
+.topbar-day strong { color: var(--red); font-weight: 700; }
+
+/* STATUS BAR */
+.status-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 28px; }
+.status-bar-inner { max-width: 1020px; margin: 0 auto; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.status-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.status-chips { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.status-chip { font-size: 12px; font-weight: 500; color: var(--text2); background: rgba(255,255,255,0.05); border: 1px solid var(--border2); border-radius: 20px; padding: 3px 10px; }
+.status-chip.active { background: var(--red-dim); border-color: rgba(235,16,0,0.3); color: #ff6b6b; }
+.status-timestamp { font-size: 11px; color: var(--text3); margin-left: auto; }
+
+/* CONTAINER */
+.container { max-width: 1020px; margin: 0 auto; padding: 0 28px; }
+
+/* HERO */
+.hero { padding: 52px 0 44px; }
+.hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 14px; }
+.hero-title { font-size: clamp(28px, 4vw, 40px); font-weight: 800; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.02em; }
+.hero-sub { font-size: 15px; color: var(--text2); max-width: 560px; line-height: 1.7; margin-bottom: 36px; }
+
+/* RINGS */
+.rings-row { display: flex; gap: 24px; flex-wrap: wrap; }
+.ring-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; display: flex; align-items: center; gap: 20px; flex: 1; min-width: 200px; }
+.ring-wrap { position: relative; flex-shrink: 0; }
+.ring-wrap svg { display: block; }
+.ring-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+.ring-pct { font-size: 18px; font-weight: 800; line-height: 1; }
+.ring-pct-label { font-size: 9px; color: var(--text3); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+.ring-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
+.ring-value { font-size: 17px; font-weight: 700; margin-bottom: 3px; }
+.ring-sub { font-size: 12px; color: var(--text2); }
+
+/* SECTIONS */
+.section { padding: 36px 0; border-top: 1px solid var(--border); }
+.section-header { margin-bottom: 22px; }
+.section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.section-title { font-size: 18px; font-weight: 700; }
+
+/* FOCUS */
+.focus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.focus-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: var(--radius); padding: 18px 20px; }
+.focus-card-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+.focus-card-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.focus-card-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+/* STAKEHOLDER */
+.stakeholder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.stakeholder-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; display: flex; align-items: flex-start; gap: 14px; }
+.stakeholder-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--text2); flex-shrink: 0; }
+.stakeholder-info { flex: 1; min-width: 0; }
+.stakeholder-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.stakeholder-role { font-size: 11px; color: var(--text3); margin-bottom: 8px; }
+.status-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; border-radius: 20px; padding: 2px 8px; }
+.status-pill::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.pill-active { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
+.pill-scheduled { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
+.pill-progress { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+.pill-pending { background: rgba(255,255,255,0.05); color: var(--text3); border: 1px solid var(--border); }
+
+/* MARKET */
+.market-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.market-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+.market-flag { font-size: 22px; margin-bottom: 2px; }
+.market-name { font-size: 13px; font-weight: 600; }
+.market-note { font-size: 11px; color: var(--text3); }
+
+/* PHASE STRIP */
+.phase-strip { display: flex; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; }
+.phase-badge { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); color: var(--text3); }
+.phase-badge.pb-active { background: var(--red-dim); border-color: rgba(235,16,0,0.3); color: #ff6b6b; }
+.phase-badge.pb-done { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.2); color: #4ade80; }
+
+/* WEEK CARDS */
+.timeline { display: flex; flex-direction: column; gap: 10px; }
+.week-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.18s; }
+.week-card:hover { border-color: var(--border2); }
+.week-card.active-week { border-color: rgba(235,16,0,0.4); }
+.week-header { padding: 16px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; user-select: none; }
+.week-num { width: 34px; height: 34px; border-radius: 8px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--text2); flex-shrink: 0; }
+.week-card.active-week .week-num { background: var(--red-dim); color: var(--red); }
+.week-card.completed-week .week-num { background: rgba(34,197,94,0.1); color: #22c55e; }
+.week-meta { flex: 1; min-width: 0; }
+.week-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.week-dates { font-size: 11px; color: var(--text3); }
+.week-status-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; }
+.ws-current { background: var(--red-dim); color: var(--red); border: 1px solid rgba(235,16,0,0.25); }
+.ws-done { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
+.ws-upcoming { background: rgba(255,255,255,0.04); color: var(--text3); border: 1px solid var(--border); }
+.week-chevron { color: var(--text3); font-size: 16px; transition: transform 0.2s; flex-shrink: 0; }
+.week-card.open .week-chevron { transform: rotate(90deg); }
+
+/* WEEK BODY */
+.week-body { display: none; border-top: 1px solid var(--border); background: rgba(0,0,0,0.18); }
+.week-card.open .week-body { display: block; }
+
+/* TAB BAR */
+.tab-bar { display: flex; border-bottom: 1px solid var(--border); }
+.tab-btn { flex: 1; padding: 13px 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); background: none; border: none; cursor: pointer; transition: color 0.15s, background 0.15s; text-align: center; }
+.tab-btn:hover { color: var(--text2); background: rgba(255,255,255,0.02); }
+.tab-btn.active { color: var(--text); background: rgba(255,255,255,0.04); border-bottom: 2px solid var(--red); margin-bottom: -1px; }
+.tab-btn.ini-btn.active { border-bottom-color: #60a5fa; }
+
+/* TAB PANELS */
+.tab-panel { display: none; padding: 20px 22px; }
+.tab-panel.visible { display: block; }
+
+/* STATUS INDICATOR (radio button) */
+.status-ind {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.2); background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 800; color: #fff;
+  transition: all 0.15s; user-select: none;
+  margin-top: 2px;
+}
+.status-ind:hover { border-color: rgba(255,255,255,0.4); }
+.status-ind.ip { background: var(--amber); border-color: var(--amber); }
+.status-ind.dn { background: var(--green); border-color: var(--green); }
+.status-ind.bl { background: var(--red); border-color: var(--red); }
+
+/* ACTIVITY ITEMS */
+.item-list { display: flex; flex-direction: column; gap: 10px; }
+.item-row { display: flex; align-items: flex-start; gap: 12px; }
+.item-text { font-size: 13px; color: var(--text2); line-height: 1.55; flex: 1; }
+.item-text strong { color: var(--text); font-weight: 500; }
+
+/* INITIATIVE CARDS */
+.ini-grid { display: flex; flex-direction: column; gap: 10px; }
+.ini-card { background: var(--surface3); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.ini-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
+.ini-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.ini-desc { font-size: 12px; color: var(--text3); line-height: 1.6; padding-left: 30px; }
+
+/* STATUS LEGEND */
+.tab-legend { display: flex; align-items: center; gap: 16px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.leg-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--text3); }
+.leg-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.leg-ns { background: transparent; border: 2px solid rgba(255,255,255,0.2); }
+.leg-ip { background: var(--amber); }
+.leg-dn { background: var(--green); }
+.leg-bl { background: var(--red); }
+.leg-hint { font-size: 10px; color: var(--text3); margin-left: auto; font-style: italic; }
+
+/* OBSERVATIONS */
+.obs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.obs-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.obs-icon { font-size: 20px; margin-bottom: 12px; }
+.obs-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.obs-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.obs-text { font-size: 13px; color: var(--text2); line-height: 1.65; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--border); padding: 28px 0; margin-top: 24px; }
+.footer-inner { max-width: 1020px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.footer-left { font-size: 12px; color: var(--text3); }
+.footer-left a { color: var(--text3); text-decoration: none; }
+.footer-right { font-size: 11px; color: var(--text3); background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.15); border-radius: 5px; padding: 4px 10px; }
+
+/* SYNC BADGE */
+.sync-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text3); padding: 3px 9px; border-radius: 20px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <div class="logo-mark">A</div>
+      <span class="topbar-title"><span>AdobeOS</span> · 30-60-90 Day Strategic Initiatives</span>
+      <span class="internal-badge">Internal · Zenith / Publicis</span>
+    </div>
+    <div class="topbar-day">Day <strong id="topbar-day">—</strong> of 90</div>
+  </div>
+</header>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="status-bar-inner">
+    <span class="status-label">Status</span>
+    <div class="status-chips">
+      <span class="status-chip active" id="sb-phase">Phase 1 · Immersion</span>
+      <span class="status-chip" id="sb-week">Week —</span>
+      <span class="status-chip" id="sb-day">Day — of 90</span>
+    </div>
+    <span class="status-timestamp" id="sb-timestamp">Updated —</span>
+    <span class="sync-badge"><span class="sync-dot"></span>Local · Artifact sync pending</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Adobe APAC · APAC Client Lead · Matt Kain</div>
+    <h1 class="hero-title">AdobeOS · 30-60-90 Day<br>Strategic Initiatives</h1>
+    <p class="hero-sub">Live progress across three phases: Immersion, Momentum, and Acceleration. Each week shows both Activities (day-to-day tasks) and Initiatives (strategic deliverables). For internal use within Zenith and Publicis teams.</p>
+
+    <div class="phase-strip" id="phase-strip">
+      <span class="phase-badge pb-active">Phase 1 · Immersion (Days 1–30)</span>
+      <span class="phase-badge">Phase 2 · Momentum (Days 31–60)</span>
+      <span class="phase-badge">Phase 3 · Acceleration (Days 61–90)</span>
+    </div>
+
+    <div class="rings-row">
+      <div class="ring-card">
+        <div class="ring-wrap">
+          <svg width="76" height="76" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle id="ring-overall" cx="38" cy="38" r="30" fill="none" stroke="#eb1000" stroke-width="6"
+              stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5"
+              transform="rotate(-90 38 38)" style="transition:stroke-dashoffset 1.2s ease"/>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-pct" id="ring-pct-overall" style="color:#eb1000">0%</div>
+            <div class="ring-pct-label">done</div>
+          </div>
+        </div>
+        <div class="ring-info">
+          <div class="ring-label">Overall</div>
+          <div class="ring-value" id="ring-day-val">Day —</div>
+          <div class="ring-sub">of 90 days</div>
+        </div>
+      </div>
+      <div class="ring-card">
+        <div class="ring-wrap">
+          <svg width="76" height="76" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle id="ring-phase" cx="38" cy="38" r="30" fill="none" stroke="#3b82f6" stroke-width="6"
+              stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5"
+              transform="rotate(-90 38 38)" style="transition:stroke-dashoffset 1.2s ease"/>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-pct" id="ring-pct-phase" style="color:#3b82f6">0%</div>
+            <div class="ring-pct-label">done</div>
+          </div>
+        </div>
+        <div class="ring-info">
+          <div class="ring-label">Phase Progress</div>
+          <div class="ring-value" id="ring-phase-val">Phase 1</div>
+          <div class="ring-sub" id="ring-phase-sub">Immersion</div>
+        </div>
+      </div>
+      <div class="ring-card">
+        <div class="ring-wrap">
+          <svg width="76" height="76" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle id="ring-week" cx="38" cy="38" r="30" fill="none" stroke="#22c55e" stroke-width="6"
+              stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5"
+              transform="rotate(-90 38 38)" style="transition:stroke-dashoffset 1.2s ease"/>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-pct" id="ring-pct-week" style="color:#22c55e">0%</div>
+            <div class="ring-pct-label">done</div>
+          </div>
+        </div>
+        <div class="ring-info">
+          <div class="ring-label">This Week</div>
+          <div class="ring-value" id="ring-week-val">Week —</div>
+          <div class="ring-sub" id="ring-week-sub">of 13 weeks</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THIS WEEK FOCUS -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Priority focus</div>
+      <h2 class="section-title" id="focus-section-title">This Week's Focus</h2>
+    </div>
+    <div class="focus-grid" id="focus-grid"></div>
+  </section>
+
+  <!-- STAKEHOLDER TRACKER -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Relationship status</div>
+      <h2 class="section-title">Stakeholder Tracker</h2>
+    </div>
+    <div class="stakeholder-grid">
+      <div class="stakeholder-card">
+        <div class="stakeholder-avatar" style="background:rgba(235,16,0,0.12);color:#ff6b6b;border-color:rgba(235,16,0,0.2)">PN</div>
+        <div class="stakeholder-info"><div class="stakeholder-name">Pete Nagy</div><div class="stakeholder-role">APAC Marketing Lead · Sydney</div><span class="status-pill pill-active">Active</span></div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="stakeholder-avatar" style="background:rgba(59,130,246,0.1);color:#60a5fa;border-color:rgba(59,130,246,0.2)">WL</div>
+        <div class="stakeholder-info"><div class="stakeholder-name">Will Leung</div><div class="stakeholder-role">APAC Acquisition &amp; Performance</div><span class="status-pill pill-active">Active</span></div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="stakeholder-avatar" style="background:rgba(245,158,11,0.1);color:#f59e0b;border-color:rgba(245,158,11,0.2)">MO</div>
+        <div class="stakeholder-info"><div class="stakeholder-name">Mark Oben-Pepra</div><div class="stakeholder-role">Global Client Lead · London</div><span class="status-pill pill-progress">In Progress</span></div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="stakeholder-avatar">LB</div>
+        <div class="stakeholder-info"><div class="stakeholder-name">Lara Balazs</div><div class="stakeholder-role">CMO, Adobe Global</div><span class="status-pill pill-pending">Not yet</span></div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="stakeholder-avatar">JC</div>
+        <div class="stakeholder-info"><div class="stakeholder-name">Jonny Cordony</div><div class="stakeholder-role">Zenith MD · Sydney</div><span class="status-pill pill-progress">In Progress</span></div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="stakeholder-avatar">ANZ</div>
+        <div class="stakeholder-info"><div class="stakeholder-name">ANZ Market Leads</div><div class="stakeholder-role">AU &amp; NZ in-market teams</div><span class="status-pill pill-scheduled">Scheduled</span></div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="stakeholder-avatar">SEA</div>
+        <div class="stakeholder-info"><div class="stakeholder-name">SEA / Singapore</div><div class="stakeholder-role">Southeast Asia hub leads</div><span class="status-pill pill-pending">Pending</span></div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="stakeholder-avatar">JP</div>
+        <div class="stakeholder-info"><div class="stakeholder-name">Japan</div><div class="stakeholder-role">Japan market &amp; agency leads</div><span class="status-pill pill-pending">Pending</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKET COVERAGE -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Geographic scope</div>
+      <h2 class="section-title">Market Coverage</h2>
+    </div>
+    <div class="market-grid">
+      <div class="market-card"><div class="market-flag">🇦🇺</div><div class="market-name">Australia</div><div class="market-note">Primary focus · active</div><span class="status-pill pill-active">Active</span></div>
+      <div class="market-card"><div class="market-flag">🇳🇿</div><div class="market-name">New Zealand</div><div class="market-note">ANZ coverage · active</div><span class="status-pill pill-active">Active</span></div>
+      <div class="market-card"><div class="market-flag">🇸🇬</div><div class="market-name">SEA / Singapore</div><div class="market-note">Hub market · mapping</div><span class="status-pill pill-scheduled">Upcoming</span></div>
+      <div class="market-card"><div class="market-flag">🇯🇵</div><div class="market-name">Japan</div><div class="market-note">Distinct market · scoping</div><span class="status-pill pill-scheduled">Upcoming</span></div>
+      <div class="market-card"><div class="market-flag">🇮🇳</div><div class="market-name">India</div><div class="market-note">Growth market · scoping</div><span class="status-pill pill-scheduled">Upcoming</span></div>
+    </div>
+  </section>
+
+  <!-- WEEK TIMELINE -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Week by week</div>
+      <h2 class="section-title">90-Day Timeline</h2>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- EARLY OBSERVATIONS -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Day 12 read · internal only</div>
+      <h2 class="section-title">Early Observations</h2>
+    </div>
+    <div class="obs-grid">
+      <div class="obs-card">
+        <div class="obs-icon">🏗️</div>
+        <div class="obs-label">Operating Model</div>
+        <div class="obs-title">Regional Layer Clearer Than Expected</div>
+        <div class="obs-text">APAC reporting lines and budget ownership are clearer than expected at market level. The regional layer between Pete and global is now mapped. The key question is brief ownership vs. brief influence — who actually decides when markets disagree.</div>
+      </div>
+      <div class="obs-card">
+        <div class="obs-icon">📐</div>
+        <div class="obs-label">Account Scope</div>
+        <div class="obs-title">Breadth vs Depth Tension Confirmed</div>
+        <div class="obs-text">The APAC mandate is wide — 5+ markets, three product lines, multiple agency relationships. Two weeks in, this tension is confirmed rather than resolved. Weeks 3–4 are about narrowing to the highest-leverage areas before forming a Phase 2 view.</div>
+      </div>
+      <div class="obs-card">
+        <div class="obs-icon">🤝</div>
+        <div class="obs-label">Client Relationships</div>
+        <div class="obs-title">Pete &amp; Will: Strong Start</div>
+        <div class="obs-text">Both Pete and Will have been engaged and open in early sessions. Pete is operating strategically; Will is execution-focused with genuine platform depth. The relationship is warm and the trust foundation is in place. Next step is demonstrating strategic value.</div>
+      </div>
+      <div class="obs-card">
+        <div class="obs-icon">🚀</div>
+        <div class="obs-label">Opportunity</div>
+        <div class="obs-title">COE Activation is the Unlocking Move</div>
+        <div class="obs-text">The Publicis / Zenith network has significant capability — Epsilon, Sapient, PMX — that appears underdeployed on this account. Getting the COE model activated is the highest-leverage move available in Phase 1.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">Matt Kain · mattkain.com · Adobe APAC · <span id="footer-date">2026</span></div>
+    <div class="footer-right">Internal document · Zenith / Publicis use only</div>
+  </div>
+</footer>
+
+<script>
+// ─── STATE ──────────────────────────────────────────────────────────────────
+const STORE_KEY = '90d_apac_v2';
+let S = {};
+try { S = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch(e) { S = {}; }
+if (!S.tabs)   S.tabs   = {};
+if (!S.status) S.status = {};
+
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch(e){} }
+
+// ─── ARTIFACT SYNC HOOK ─────────────────────────────────────────────────────
+// Future: call applyArtifactSync(data) with {status: {'act-1-0': 'dn', 'ini-2-1': 'ip', ...}}
+// to override localStorage status from the live artifact.
+function applyArtifactSync(data) {
+  if (!data || !data.status) return;
+  Object.assign(S.status, data.status);
+  save();
+  // Re-render all visible indicators
+  Object.keys(data.status).forEach(function(key) {
+    applyIndicator(key, data.status[key]);
+  });
+}
+
+// ─── TIME HELPERS ────────────────────────────────────────────────────────────
+const START = new Date('2026-04-28T00:00:00+10:00');
+
+function getDay()   { return Math.max(1, Math.min(90, Math.floor((new Date() - START) / 86400000) + 1)); }
+function getWeek(d) { return Math.min(13, Math.ceil(d / 7)); }
+function getPhase(d) {
+  if (d <= 30) return { num:1, name:'Immersion',    start:1,  end:30 };
+  if (d <= 60) return { num:2, name:'Momentum',     start:31, end:60 };
+  return              { num:3, name:'Acceleration', start:61, end:90 };
+}
+function fmtDate(d) {
+  return d.toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short', year:'numeric',
+    hour:'numeric', minute:'2-digit', hour12:true, timeZone:'Australia/Brisbane' });
+}
+function weekDates(n) {
+  const s = new Date(START); s.setDate(s.getDate() + (n-1)*7);
+  const e = new Date(s);     e.setDate(s.getDate() + 6);
+  const f = d => d.toLocaleDateString('en-AU', {day:'numeric', month:'short'});
+  return f(s) + ' – ' + f(e);
+}
+function setRing(id, pct) {
+  const el = document.getElementById(id); if (!el) return;
+  setTimeout(() => { el.style.strokeDashoffset = 188.5 - (pct/100)*188.5; }, 200);
+}
+
+// ─── STATUS INDICATOR ───────────────────────────────────────────────────────
+const STATUS_CYCLE = ['ns','ip','dn','bl'];
+const STATUS_LABEL = { ns:'Not started', ip:'In progress', dn:'Done', bl:'Blocked' };
+
+function indicatorHTML(key, defaultStatus) {
+  const st = S.status[key] || defaultStatus || 'ns';
+  const cls = st === 'ns' ? '' : ' ' + st;
+  const sym = st === 'dn' ? '✓' : st === 'bl' ? '✕' : st === 'ip' ? '◑' : '';
+  return '<div class="status-ind' + cls + '" id="si-' + key + '" title="' + STATUS_LABEL[st] +
+         '" onclick="cycleStatus(\'' + key + '\',event)">' + sym + '</div>';
+}
+
+function applyIndicator(key, st) {
+  const el = document.getElementById('si-' + key); if (!el) return;
+  el.className = 'status-ind' + (st === 'ns' ? '' : ' ' + st);
+  el.title = STATUS_LABEL[st];
+  el.innerHTML = st === 'dn' ? '✓' : st === 'bl' ? '✕' : st === 'ip' ? '◑' : '';
+}
+
+function cycleStatus(key, e) {
+  e.stopPropagation();
+  const cur = S.status[key] || 'ns';
+  const nxt = STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur) + 1) % 4];
+  S.status[key] = nxt; save();
+  applyIndicator(key, nxt);
+}
+
+const STATUS_LEGEND =
+  '<div class="tab-legend">' +
+    '<div class="leg-item"><div class="leg-dot leg-ns"></div>Not started</div>' +
+    '<div class="leg-item"><div class="leg-dot leg-ip"></div>In progress</div>' +
+    '<div class="leg-item"><div class="leg-dot leg-dn"></div>Done</div>' +
+    '<div class="leg-item"><div class="leg-dot leg-bl"></div>Blocked</div>' +
+    '<span class="leg-hint">Click indicator to cycle status</span>' +
+  '</div>';
+
+// ─── TAB SWITCHING ───────────────────────────────────────────────────────────
+function switchTab(wn, tab, e) {
+  e.stopPropagation();
+  S.tabs[wn] = tab; save();
+  ['activities','initiatives'].forEach(function(t) {
+    const panel = document.getElementById('tab-' + t + '-' + wn);
+    const btn   = document.getElementById('tbtn-' + t + '-' + wn);
+    if (!panel || !btn) return;
+    const active = (t === tab);
+    panel.className = 'tab-panel' + (active ? ' visible' : '');
+    btn.className   = 'tab-btn' + (t === 'initiatives' ? ' ini-btn' : '') + (active ? ' active' : '');
+  });
+}
+
+// ─── DATA: WEEK ACTIVITIES ───────────────────────────────────────────────────
+const weeks = [
+  { title:'Systems & First Contacts', focus:'HR systems, Day 1 orientation, first 1:1s',
+    tasks:[
+      {s:'dn', t:'HR onboarding and systems access'},
+      {s:'dn', t:'Day 1 team introductions — Zenith APAC & Adobe'},
+      {s:'dn', t:'1:1 with Pete Nagy — operating context, priorities, expectations'},
+      {s:'dn', t:'1:1 with Will Leung — performance media landscape and team structure'},
+      {s:'dn', t:'Adobe account structure overview and remit walkthrough'},
+      {s:'dn', t:'Set up weekly cadences and reporting rhythms'},
+      {s:'dn', t:'Map immediate team structure and key internal contacts'}
+    ]
+  },
+  { title:'Operating Model & Stakeholder Mapping', focus:'APAC operating model, DOAG / COE structure, Adobe stakeholder introductions',
+    tasks:[
+      {s:'dn', t:'Deep dive into APAC operating model and governance structure'},
+      {s:'dn', t:'Overview of Global COEs and how they interface with APAC'},
+      {s:'dn', t:'Adobe APAC stakeholder introductions — Pete, Will and extended team'},
+      {s:'dn', t:'Shadow governance forums, WIPs and account cadences'},
+      {s:'dn', t:'Stakeholder map drafted — APAC, global, COE contacts'},
+      {s:'ip', t:'Escalation paths and account rhythms documented'}
+    ]
+  },
+  { title:'Adobe Business & Account Deep Dive (Part I)', focus:"Adobe's business, products, strategy, KPIs, and regional priorities",
+    tasks:[
+      {s:'ns', t:'Adobe onboarding sessions — business, products, and APAC strategy'},
+      {s:'ns', t:'Review KPIs, reporting cycles, and historical performance data'},
+      {s:'ns', t:'Initial account health assessment — risks, dependencies, opportunities'},
+      {s:'ns', t:'Adobe ecosystem and extended stakeholder map'},
+      {s:'ns', t:'Global alignment discussions and regional stakeholder conversations'}
+    ]
+  },
+  { title:'Adobe Business & Account Deep Dive (Part II)', focus:'Tooling, delivery ecosystem, vendor dependencies, and operational landscape',
+    tasks:[
+      {s:'ns', t:'Walkthroughs of media, data, tech and martech landscape'},
+      {s:'ns', t:'Review dashboards and operational tooling (DOT, RTB, CMP, MAP)'},
+      {s:'ns', t:'Understand vendor ecosystem and platform partnerships'},
+      {s:'ns', t:'People / process / platform gap assessment'},
+      {s:'ns', t:'Martech and data ops walkthroughs with delivery team'}
+    ]
+  },
+  { title:'Phase 1 Synthesis', focus:'Consolidate observations, form initial strategic view',
+    tasks:[
+      {s:'ns', t:'Synthesise first 30 days into a written assessment'},
+      {s:'ns', t:'Share initial perspective with Pete — what I am seeing, where I want to focus'},
+      {s:'ns', t:'Identify top 3 opportunities and top 3 risks in current operating model'},
+      {s:'ns', t:'Align on Phase 2 priorities and success metrics'},
+      {s:'ns', t:'Begin drafting 90-day strategic brief'}
+    ]
+  },
+  { title:'Strategic Framework Development', focus:'Move from observation to strategic framing',
+    tasks:[
+      {s:'ns', t:'Draft APAC marketing strategy framework v1'},
+      {s:'ns', t:'Build market-by-market opportunity sizing (AU, NZ, SEA, JP)'},
+      {s:'ns', t:'Define success metrics for FY26 balance and FY27 planning'},
+      {s:'ns', t:'Engage internal stakeholders on framework — challenge and validate'}
+    ]
+  },
+  { title:'Agency Relationship Uplift', focus:'Initiate strategic reset of Zenith / Publicis engagement',
+    tasks:[
+      {s:'ns', t:'Present initial agency relationship assessment to Pete'},
+      {s:'ns', t:'Facilitate structured session with Zenith APAC leadership'},
+      {s:'ns', t:'Define new ways of working framework'},
+      {s:'ns', t:'Align on revised QBR structure and reporting requirements'}
+    ]
+  },
+  { title:'Market Activation', focus:'Drive in-market engagement and local team enablement',
+    tasks:[
+      {s:'ns', t:'Visit or call with ANZ market team — Sydney and Auckland'},
+      {s:'ns', t:'SEA engagement — Singapore hub meeting'},
+      {s:'ns', t:'Understand Japan market dynamics and agency landscape'},
+      {s:'ns', t:'Identify quick wins available in each market for immediate activation'}
+    ]
+  },
+  { title:'Cross-Functional Alignment', focus:'Ensure marketing strategy connects to sales, product, and CS',
+    tasks:[
+      {s:'ns', t:'Joint session with sales leadership on pipeline and marketing contribution'},
+      {s:'ns', t:'Align on lead handoff process and SLA between marketing and sales'},
+      {s:'ns', t:'Review customer success motion and retention risk in APAC base'},
+      {s:'ns', t:'Connect ABM approach with enterprise account team priorities'}
+    ]
+  },
+  { title:'Campaign Architecture', focus:'Shape APAC campaign programme for H2 and beyond',
+    tasks:[
+      {s:'ns', t:'Audit existing APAC campaign calendar and in-flight activity'},
+      {s:'ns', t:'Identify gaps in brand vs. performance investment balance'},
+      {s:'ns', t:'Draft APAC campaign hierarchy — hero, hub, hygiene'},
+      {s:'ns', t:'Confirm media investment parameters with Pete and finance'}
+    ]
+  },
+  { title:'Measurement & Reporting', focus:'Ensure the business is measuring what matters',
+    tasks:[
+      {s:'ns', t:'Audit current attribution and measurement framework'},
+      {s:'ns', t:'Challenge media mix modelling assumptions with Zenith'},
+      {s:'ns', t:'Define APAC marketing dashboard v1 — metrics and reporting cadence'},
+      {s:'ns', t:'Present measurement framework to Pete and senior team'}
+    ]
+  },
+  { title:'Acceleration Planning', focus:'Shift from building to executing at pace',
+    tasks:[
+      {s:'ns', t:'Lock APAC strategy brief — signed off by Pete'},
+      {s:'ns', t:'Confirm H2 campaign activations and budget allocation'},
+      {s:'ns', t:'Finalise agency scope and delivery commitments'},
+      {s:'ns', t:'Begin FY27 planning inputs and market forecasts'}
+    ]
+  },
+  { title:'90-Day Review', focus:'Assess, present, and set the forward agenda',
+    tasks:[
+      {s:'ns', t:'Full 90-day review document for Pete and leadership'},
+      {s:'ns', t:'Present to wider APAC marketing team — what has been established and why'},
+      {s:'ns', t:'Align on FY27 strategy framework and resource model'},
+      {s:'ns', t:'Define Year 1 scorecard and KPIs'},
+      {s:'ns', t:'Celebrate momentum and set the tone for scale'}
+    ]
+  }
+];
+
+// ─── DATA: WEEK INITIATIVES ──────────────────────────────────────────────────
+const initiatives = [
+  // W1 - Phase 1 Immersion
+  [
+    { t:'APAC Stakeholder Map v1', d:'Capture all key Adobe, Zenith, and agency contacts across APAC with roles, relationship status, and engagement priority.' },
+    { t:'Account Access & Systems Setup', d:'Confirm all platform, tool, and reporting system access is in place. Document any gaps for escalation.' },
+    { t:'Day 1 Operating Brief', d:'Initial written record of account scope, team structure, and immediate priorities as understood from Day 1 sessions.' }
+  ],
+  // W2
+  [
+    { t:'APAC Governance Model Documentation', d:'Map the regional operating model — reporting lines, budget ownership, decision rights, and COE interfaces. Written reference for Day 30 onwards.' },
+    { t:'COE Capability Register', d:'Identify which Publicis / Zenith COE capabilities are formally allocated vs. available vs. untapped for this account.' },
+    { t:'Account Cadences & Escalation Paths', d:'Document all standing meetings, WIPs, governance forums, and escalation routes. Shared with relevant team members.' }
+  ],
+  // W3
+  [
+    { t:'Adobe Business Deep Dive Brief', d:'Synthesise product, strategy, KPI, and historical performance into a single internal reference document usable through Phase 2.' },
+    { t:'Account Health Assessment v1', d:'First structured read on risks, dependencies, and opportunities across delivery, relationships, and commercial. Baseline for later comparison.' },
+    { t:'Extended Stakeholder Map (Adobe side)', d:'Extend internal stakeholder map to the full Adobe APAC and global hierarchy — names, roles, influence level, and relationship status.' }
+  ],
+  // W4
+  [
+    { t:'Phase 1 Synthesis Report', d:'30-day written assessment covering key observations, top opportunities, top risks, and recommended Phase 2 priorities. Shared with Pete.' },
+    { t:'30-Day Review Presentation', d:'Structured presentation of Phase 1 findings for Pete — strategic perspective and forward recommendations, not a status update.' },
+    { t:'Phase 2 Roadmap Draft', d:'Outline of Momentum phase focus areas, success metrics, and revised working rhythms. Agreed with Pete before Week 6.' }
+  ],
+  // W5 - Phase 2 Momentum
+  [
+    { t:'APAC Strategy Framework v1', d:'Draft marketing strategy framework covering positioning, market priorities, investment logic, and growth thesis for APAC FY26.' },
+    { t:'Market Opportunity Sizing', d:'AU, NZ, SEA, and JP opportunity sizing — pipeline contribution gap, brand investment shortfalls, and addressable upside per market.' }
+  ],
+  // W6
+  [
+    { t:'Agency Relationship Reset Deck', d:'Assessment of current agency relationship state with recommended reset approach — presented to Pete before any external conversations.' },
+    { t:'New Ways of Working Framework', d:'Revised collaboration model between Zenith, Publicis COEs, and Adobe — roles, accountabilities, meeting cadences, and escalation.' }
+  ],
+  // W7
+  [
+    { t:'Market Activation Plans (ANZ, SEA, JP)', d:'Market-specific activation plans with quick wins, phased priorities, and local enablement requirements for each geography.' },
+    { t:'Local Team Enablement Pack', d:'Briefing materials and strategic context for in-market teams to operate in stronger alignment with the APAC plan.' }
+  ],
+  // W8
+  [
+    { t:'Cross-Functional Alignment Workshops', d:'Structured sessions with sales, product, and CS to align the marketing strategy with the full commercial motion across APAC.' },
+    { t:'ABM Framework Alignment', d:'Connect account-based marketing approach with enterprise account team priorities and pipeline targets. Agreed joint execution model.' }
+  ],
+  // W9
+  [
+    { t:'APAC Campaign Architecture', d:'Define the APAC campaign hierarchy — hero, hub, hygiene — with rationale for investment distribution across phases and markets.' },
+    { t:'H2 Campaign Calendar', d:'Locked calendar of APAC campaign activations for H2 with budget, owner, and market scope per initiative. Shared with Pete for approval.' }
+  ],
+  // W10 - Phase 3 Acceleration
+  [
+    { t:'APAC Campaign Programme v1', d:'Full campaign programme document with creative direction, channel strategy, and success metrics per planned activation.' },
+    { t:'Media Investment Framework', d:'Confirm budget allocation parameters with Pete and finance — brand vs. performance split, market weightings, and COE resourcing.' }
+  ],
+  // W11
+  [
+    { t:'Attribution & Measurement Framework', d:'Audit current attribution model and define a revised framework that accurately reflects APAC media contribution across channels.' },
+    { t:'APAC Marketing Dashboard v1', d:'Build and present the APAC marketing dashboard with agreed KPIs, reporting cadence, and ownership. Live from Week 12 onwards.' }
+  ],
+  // W12
+  [
+    { t:'APAC Strategy Brief (Final)', d:'Final strategy brief — signed off by Pete. Single source of truth for APAC marketing direction through FY26 and into FY27 planning.' },
+    { t:'H2 Activation Plan (Locked)', d:'All H2 activations confirmed with budget, timelines, and agency delivery commitments locked and circulated.' },
+    { t:'FY27 Planning Inputs', d:'First-cut FY27 planning inputs — market forecasts, investment thesis, and capability requirements submitted to planning team.' }
+  ],
+  // W13
+  [
+    { t:'90-Day Review Document', d:'Full 90-day review for Pete and APAC leadership — what was established, what was learned, and what comes next.' },
+    { t:'Year 1 Scorecard & KPIs', d:'Defined Year 1 success metrics, reporting cadence, and accountability structure. Agreed with Pete and distributed to APAC team.' },
+    { t:'FY27 Strategy Framework', d:'Outline of FY27 strategy and resource model — presented to wider APAC marketing team to set the tone for scale.' }
+  ]
+];
+
+// ─── FOCUS DATA ───────────────────────────────────────────────────────────────
+const focusByWeek = [
+  [
+    { label:'Priority 1', title:'Establish Working Relationships', desc:'1:1s with Pete Nagy and Will Leung to calibrate expectations, understand operating model, and identify where I can add immediate value.' },
+    { label:'Priority 2', title:'Map the Account Landscape', desc:'Review existing briefing materials, media plans, and account history across ANZ and key APAC markets. Understand what is working and what is not.' },
+    { label:'Priority 3', title:'Set Up for Week 2', desc:'Systems access, cadence setup, and key contact mapping. Ensure the operational foundation is in place before the strategic work begins in earnest.' }
+  ],
+  [
+    { label:'Priority 1', title:'Operating Model Clarity', desc:'Deep dive into APAC governance, regional vs. global responsibilities, and how the Publicis / Zenith model interfaces with Adobe day-to-day. Map the COE structure.' },
+    { label:'Priority 2', title:'Stakeholder Introductions', desc:'Adobe APAC and global stakeholder introductions. Shadow governance forums and WIPs to understand how decisions actually get made and where influence sits.' },
+    { label:'Priority 3', title:'Document the Account Rhythms', desc:'Escalation paths, reporting cadences, and existing account rituals documented. The foundation for operating with confidence from Week 3.' }
+  ],
+  [
+    { label:'Priority 1', title:'Adobe Business Deep Dive', desc:"Formal onboarding into Adobe's products, strategy, and APAC priorities. Review KPIs and historical performance to build a grounded picture of where the business sits." },
+    { label:'Priority 2', title:'Account Health Assessment', desc:'Initial read on risks, dependencies, and opportunities. What is working, what is not, and what has been tried before. This becomes the foundation for the 30-day synthesis.' },
+    { label:'Priority 3', title:'Stakeholder Map Completion', desc:'Extend the stakeholder map from internal Publicis contacts to include the full Adobe APAC and global hierarchy. Every relevant name, role, and relationship status captured.' }
+  ]
+];
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function init() {
+  const day   = getDay();
+  const week  = getWeek(day);
+  const phase = getPhase(day);
+  const now   = new Date();
+
+  document.getElementById('topbar-day').textContent  = day;
+  document.getElementById('sb-phase').textContent    = 'Phase ' + phase.num + ' · ' + phase.name;
+  document.getElementById('sb-week').textContent     = 'Week ' + week;
+  document.getElementById('sb-day').textContent      = 'Day ' + day + ' of 90';
+  document.getElementById('sb-timestamp').textContent= 'Updated ' + fmtDate(now);
+  document.getElementById('footer-date').textContent = now.getFullYear();
+
+  const overallPct = Math.round((day / 90) * 100);
+  const phasePct   = Math.round(((day - phase.start) / (phase.end - phase.start + 1)) * 100);
+  const weekPct    = Math.round((((day - 1) % 7 + 1) / 7) * 100);
+
+  document.getElementById('ring-pct-overall').textContent  = overallPct + '%';
+  document.getElementById('ring-day-val').textContent      = 'Day ' + day;
+  document.getElementById('ring-pct-phase').textContent    = phasePct + '%';
+  document.getElementById('ring-phase-val').textContent    = 'Phase ' + phase.num;
+  document.getElementById('ring-phase-sub').textContent    = phase.name;
+  document.getElementById('ring-pct-week').textContent     = weekPct + '%';
+  document.getElementById('ring-week-val').textContent     = 'Week ' + week;
+  document.getElementById('ring-week-sub').textContent     = 'of 13 weeks';
+
+  setRing('ring-overall', overallPct);
+  setRing('ring-phase',   phasePct);
+  setRing('ring-week',    weekPct);
+
+  const strips = document.querySelectorAll('.phase-badge');
+  strips.forEach(function(s, i) {
+    s.className = 'phase-badge';
+    if (i + 1 < phase.num)      s.classList.add('pb-done');
+    else if (i + 1 === phase.num) s.classList.add('pb-active');
+  });
+
+  // Focus section
+  const fd = focusByWeek[Math.min(week - 1, focusByWeek.length - 1)];
+  document.getElementById('focus-section-title').textContent = 'Week ' + week + ' Focus';
+  document.getElementById('focus-grid').innerHTML = fd.map(function(f) {
+    return '<div class="focus-card"><div class="focus-card-label">' + f.label + '</div>' +
+           '<div class="focus-card-title">' + f.title + '</div>' +
+           '<div class="focus-card-desc">' + f.desc + '</div></div>';
+  }).join('');
+
+  // Timeline
+  document.getElementById('timeline').innerHTML = weeks.map(function(w, i) {
+    var wn  = i + 1;
+    var act = (wn === week);
+    var dn  = (wn < week);
+    var sc  = dn ? 'ws-done' : (act ? 'ws-current' : 'ws-upcoming');
+    var st  = dn ? 'Complete' : (act ? 'Current' : 'Upcoming');
+    var cc  = 'week-card' + (act ? ' active-week' : dn ? ' completed-week' : '');
+
+    // Activities HTML
+    var actHTML = w.tasks.map(function(task, ti) {
+      var key  = 'act-' + wn + '-' + ti;
+      var defS = task.s;
+      // Only use default if no saved state
+      if (!(key in S.status)) S.status[key] = defS;
+      return '<div class="item-row">' + indicatorHTML(key, S.status[key]) +
+             '<div class="item-text">' + task.t + '</div></div>';
+    }).join('');
+
+    // Initiatives HTML
+    var iniData = initiatives[i] || [];
+    var iniHTML = iniData.map(function(ini, ji) {
+      var key = 'ini-' + wn + '-' + ji;
+      if (!(key in S.status)) S.status[key] = 'ns';
+      return '<div class="ini-card"><div class="ini-header">' +
+             indicatorHTML(key, S.status[key]) +
+             '<div class="ini-title">' + ini.t + '</div></div>' +
+             '<div class="ini-desc">' + ini.d + '</div></div>';
+    }).join('');
+
+    var activeTab = S.tabs[wn] || 'activities';
+
+    return '<div class="' + cc + '" id="week-' + wn + '">' +
+      '<div class="week-header" onclick="toggleWeek(' + wn + ')">' +
+        '<div class="week-num">W' + wn + '</div>' +
+        '<div class="week-meta">' +
+          '<div class="week-title">Week ' + wn + ' · ' + w.title + '</div>' +
+          '<div class="week-dates">' + weekDates(wn) + '</div>' +
+        '</div>' +
+        '<span class="week-status-pill ' + sc + '">' + st + '</span>' +
+        '<span class="week-chevron">›</span>' +
+      '</div>' +
+      '<div class="week-body">' +
+        '<div class="tab-bar">' +
+          '<button id="tbtn-activities-' + wn + '" class="tab-btn' + (activeTab==='activities' ? ' active' : '') +
+            '" onclick="switchTab(' + wn + ',\'activities\',event)">Activities</button>' +
+          '<button id="tbtn-initiatives-' + wn + '" class="tab-btn ini-btn' + (activeTab==='initiatives' ? ' active' : '') +
+            '" onclick="switchTab(' + wn + ',\'initiatives\',event)">Initiatives</button>' +
+        '</div>' +
+        '<div id="tab-activities-' + wn + '" class="tab-panel' + (activeTab==='activities' ? ' visible' : '') + '">' +
+          '<div class="item-list">' + actHTML + '</div>' + STATUS_LEGEND +
+        '</div>' +
+        '<div id="tab-initiatives-' + wn + '" class="tab-panel' + (activeTab==='initiatives' ? ' visible' : '') + '">' +
+          '<div class="ini-grid">' + iniHTML + '</div>' + STATUS_LEGEND +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // Auto-open current week
+  var curr = document.getElementById('week-' + week);
+  if (curr) curr.classList.add('open');
+
+  // Persist default statuses
+  save();
+}
+
+function toggleWeek(n) {
+  var el = document.getElementById('week-' + n);
+  if (el) el.classList.toggle('open');
+}
+
+init();
+</script>
+</body>
+</html>

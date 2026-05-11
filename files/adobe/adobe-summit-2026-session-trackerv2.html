@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adobe Summit 2026  -  Session Tracker</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f11; color: #e8e8ec; min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #1a0a0a 0%, #1c1c24 100%); border-bottom: 1px solid #2a2a38; padding: 24px 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .header-logo { width: 36px; height: 36px; background: #eb1000; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .header-logo svg { width: 22px; height: 22px; fill: white; }
+  .header-title h1 { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
+  .header-title p { font-size: 13px; color: #888; margin-top: 2px; }
+  .header-badge { background: #eb1000; color: white; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px; margin-left: auto; }
+
+  /* STATS BAR */
+  .stats-bar { background: #141418; border-bottom: 1px solid #1e1e2a; padding: 12px 32px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+  .stat { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .stat-num { font-size: 20px; font-weight: 700; color: #fff; }
+  .stat-label { color: #666; font-size: 12px; }
+  .stat-divider { width: 1px; height: 28px; background: #2a2a38; }
+  .progress-bar { flex: 1; min-width: 200px; height: 4px; background: #2a2a38; border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #eb1000; border-radius: 2px; transition: width 0.4s ease; }
+  .last-updated { margin-left: auto; font-size: 11px; color: #555; }
+
+  /* FILTERS */
+  .filters-wrap { background: #141418; border-bottom: 1px solid #1e1e2a; padding: 14px 32px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .filter-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .filter-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.8px; margin-right: 4px; white-space: nowrap; }
+  .filter-btn { background: #1e1e2a; border: 1px solid #2e2e40; color: #aaa; font-size: 12px; padding: 5px 12px; border-radius: 20px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .filter-btn:hover { border-color: #eb1000; color: #fff; }
+  .filter-btn.active { background: #eb1000; border-color: #eb1000; color: #fff; font-weight: 600; }
+  .filter-sep { width: 1px; height: 20px; background: #2a2a38; margin: 0 4px; }
+  .search-wrap { margin-left: auto; }
+  .search-input { background: #1e1e2a; border: 1px solid #2e2e40; color: #e8e8ec; font-size: 13px; padding: 6px 14px; border-radius: 20px; width: 220px; outline: none; transition: border-color 0.15s; }
+  .search-input::placeholder { color: #555; }
+  .search-input:focus { border-color: #eb1000; }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; padding: 24px 32px; }
+  .no-results { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #555; font-size: 15px; }
+
+  /* SESSION CARD */
+  .card { background: #16161e; border: 1px solid #22222e; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px; transition: all 0.2s; position: relative; overflow: hidden; }
+  .card:hover { border-color: #eb1000; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(235,16,0,0.12); }
+  .card.watched { opacity: 0.7; }
+  .card.watched::after { content: ''; position: absolute; inset: 0; border-radius: 12px; border: 2px solid #22a06b; pointer-events: none; }
+  .card.starred { border-color: #f0a500; }
+  .card.starred:hover { border-color: #f0a500; box-shadow: 0 8px 24px rgba(240,165,0,0.12); }
+
+  .card-header { display: flex; align-items: flex-start; gap: 10px; }
+  .card-code { font-size: 10px; font-weight: 700; color: #eb1000; letter-spacing: 1px; background: rgba(235,16,0,0.1); padding: 3px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+  .card-code.keynote { background: rgba(235,16,0,0.15); color: #ff4444; }
+  .card-code.super { background: rgba(138,43,226,0.15); color: #b06fff; }
+  .card-code.special { background: rgba(0,150,255,0.12); color: #4da6ff; }
+  .card-actions { display: flex; gap: 6px; margin-left: auto; flex-shrink: 0; }
+  .action-btn { background: none; border: none; cursor: pointer; font-size: 16px; opacity: 0.4; transition: all 0.15s; padding: 2px 4px; border-radius: 4px; line-height: 1; }
+  .action-btn:hover { opacity: 1; background: #2a2a38; }
+  .action-btn.active { opacity: 1; }
+
+  .card-title { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.4; }
+  .card-title a { color: inherit; text-decoration: none; }
+  .card-title a:hover { color: #eb1000; }
+
+  .card-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .meta-tag { font-size: 11px; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+  .tag-type-keynote { background: rgba(235,16,0,0.12); color: #ff6b6b; }
+  .tag-type-super { background: rgba(138,43,226,0.12); color: #b06fff; }
+  .tag-type-special { background: rgba(0,150,255,0.1); color: #4da6ff; }
+  .tag-type-session { background: rgba(100,100,120,0.2); color: #888; }
+  .tag-track { background: rgba(50,50,70,0.4); color: #aaa; border: 1px solid #2e2e40; }
+  .tag-status { background: rgba(34,160,107,0.15); color: #22a06b; }
+  .tag-status.live { background: rgba(235,16,0,0.15); color: #ff4444; }
+
+  .card-desc { font-size: 12px; color: #666; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .card-footer { margin-top: auto; display: flex; align-items: center; gap: 8px; padding-top: 8px; border-top: 1px solid #1e1e2a; }
+  .card-speakers { font-size: 11px; color: #666; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .watch-btn { background: #1e1e2a; border: 1px solid #2e2e40; color: #aaa; font-size: 11px; padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .watch-btn:hover { border-color: #22a06b; color: #22a06b; }
+  .watch-btn.watched { background: rgba(34,160,107,0.15); border-color: #22a06b; color: #22a06b; }
+  .view-link { font-size: 11px; color: #555; text-decoration: none; padding: 4px 8px; border-radius: 6px; transition: all 0.15s; white-space: nowrap; }
+  .view-link:hover { color: #eb1000; background: rgba(235,16,0,0.08); }
+
+  /* INTEL NOTE */
+  .intel-note { background: rgba(235,16,0,0.06); border: 1px solid rgba(235,16,0,0.2); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #c88; line-height: 1.5; margin-top: auto; }
+  .intel-note strong { color: #ff6b6b; }
+
+  /* FOOTER */
+  .footer { padding: 20px 32px; border-top: 1px solid #1e1e2a; text-align: center; font-size: 12px; color: #444; }
+
+  @media (max-width: 600px) {
+    .header, .stats-bar, .filters-wrap, .grid { padding: 16px; }
+    .search-wrap { width: 100%; }
+    .search-input { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">
+    <svg viewBox="0 0 100 100"><path d="M57.8 13L90 87H68L57 61H44L57.8 13z"/><path d="M42.2 13L10 87H32L43 61H56L42.2 13z"/></svg>
+  </div>
+  <div class="header-title">
+    <h1>Adobe Summit 2026  -  Session Tracker</h1>
+    <p>Las Vegas · April 19 - 22, 2026 · On-demand sessions updated daily</p>
+  </div>
+  <div class="header-badge">LIVE EVENT</div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div>
+      <div class="stat-num" id="stat-total">0</div>
+      <div class="stat-label">Sessions Available</div>
+    </div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div>
+      <div class="stat-num" id="stat-watched">0</div>
+      <div class="stat-label">Watched</div>
+    </div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div>
+      <div class="stat-num" id="stat-starred">0</div>
+      <div class="stat-label">Starred</div>
+    </div>
+  </div>
+  <div class="stat-divider"></div>
+  <div style="flex:1; min-width:160px;">
+    <div style="font-size:11px;color:#555;margin-bottom:5px;">Watch progress</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+  <div class="last-updated">Updated: 24 April 2026 · 31 sessions tracked · No new sessions found in sweep</div>
+</div>
+
+<div class="filters-wrap">
+  <div class="filter-group">
+    <span class="filter-label">Type</span>
+    <button class="filter-btn active" onclick="setTypeFilter('all')">All</button>
+    <button class="filter-btn" onclick="setTypeFilter('keynote')">Keynotes</button>
+    <button class="filter-btn" onclick="setTypeFilter('super')">Super Sessions</button>
+    <button class="filter-btn" onclick="setTypeFilter('session')">On-Demand</button>
+  </div>
+  <div class="filter-sep"></div>
+  <div class="filter-group">
+    <span class="filter-label">Track</span>
+    <button class="filter-btn active" onclick="setTrackFilter('all')">All Tracks</button>
+    <button class="filter-btn" onclick="setTrackFilter('Agentic AI')">Agentic AI</button>
+    <button class="filter-btn" onclick="setTrackFilter('AI Trends')">AI Trends</button>
+    <button class="filter-btn" onclick="setTrackFilter('Analytics')">Analytics</button>
+    <button class="filter-btn" onclick="setTrackFilter('B2B')">B2B</button>
+    <button class="filter-btn" onclick="setTrackFilter('Content Scale')">Content Scale</button>
+    <button class="filter-btn" onclick="setTrackFilter('Customer Data')">Customer Data</button>
+    <button class="filter-btn" onclick="setTrackFilter('Customer Engagement')">Engagement</button>
+    <button class="filter-btn" onclick="setTrackFilter('Developers')">Developers</button>
+    <button class="filter-btn" onclick="setTrackFilter('Workflow')">Workflow</button>
+  </div>
+  <div class="filter-sep"></div>
+  <div class="filter-group">
+    <span class="filter-label">Status</span>
+    <button class="filter-btn" onclick="setStatusFilter('starred')">⭐ Starred</button>
+    <button class="filter-btn" onclick="setStatusFilter('unwatched')">Unwatched</button>
+  </div>
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search-input" placeholder="Search sessions..." oninput="applyFilters()">
+  </div>
+</div>
+
+<div class="grid" id="session-grid"></div>
+<div class="footer">Adobe Summit 2026 · Adobe APAC Executive OS · Session tracker auto-refreshes as content goes on-demand · <a href="https://business.adobe.com/summit/2026/sessions.html" style="color:#555;text-decoration:none;" target="_blank">View on adobe.com ↗</a></div>
+
+<script>
+// ─── SESSION DATA ─────────────────────────────────────────────────────────────
+// [code, title, type, track, path, desc, speakers]
+// type: keynote | super | special | session
+const SESSIONS = [
+  ["GS1","Day One Keynote","keynote","Keynotes","/summit/2026/sessions/day-one-keynote-gs1.html","Exploration of the renewed landscape of digital experience marketing. Top Adobe executives and customers from leading brands share fresh perspectives on accelerating growth, scaling personalisation, and boosting business by combining marketing, creativity, and agentic AI.","Shantanu Narayen · Jensen Huang (NVIDIA) · David Wadhwani · Lara Balazs · Ashish Desai (NBCUniversal) · Jon Gieselman (Comcast)"],
+  ["GS2","Day Two Keynote","keynote","Keynotes","/summit/2026/sessions/day-two-keynote-gs2.html","Leaders from the world's top brands tackle today's biggest business challenges  -  and how Adobe's unified platform is helping them move faster, create smarter, and connect deeper.",""],
+  ["GS3","Summit Sneaks","keynote","Keynotes","/summit/2026/sessions/summit-sneaks-gs3.html","First look at what's being developed inside Adobe Labs  -  demos of experimental features and future-facing innovation from across Adobe.",""],
+  ["SK1","Moving Enterprises From AI Experimentation to Customer Experience Impact","super","AI Trends","/summit/2026/sessions/moving-enterprises-from-ai-experimentation-to-cust-sk1.html","Enterprises are moving past AI experimentation and focusing on what really matters: results. Deep dive into how leading organisations are translating AI investment into measurable customer experience impact.",""],
+  ["SK2","Elevated Brand Experience: Orchestrating Discoverability for the Agentic Web","super","Agentic AI","/summit/2026/sessions/elevated-brand-experience-orchestrating-discoverab-sk2.html","How brands can orchestrate discoverability and brand experience across the emerging agentic web  -  where AI agents are the new gatekeepers of customer attention.",""],
+  ["SK3","From Tools to Teammates: The Agentic Future of Customer Engagement","super","Agentic AI","/summit/2026/sessions/from-tools-to-teammates-the-agentic-future-of-cust-sk3.html","The shift from AI tools to AI teammates  -  how agentic AI is fundamentally changing the architecture of customer engagement and what it means for marketing teams.",""],
+  ["SK4","Transforming your Content Supply Chain for the AI World","super","Content Scale","/summit/2026/sessions/transforming-your-content-supply-chain-for-the-ai-sk4.html","How to transform your content supply chain for an AI-first world  -  covering creation, management, activation, and measurement at scale.",""],
+  ["S815","2026 Trends in AI and Customer Experience","special","AI Trends","/summit/2026/sessions/2026-trends-in-ai-and-customer-experience-s815.html","The definitive look at AI and CX trends shaping 2026  -  what's real, what's hype, and where the smart money is going across the marketing technology landscape.",""],
+  ["S816","Making Agent-to-Agent Marketing Work for Humans","special","Agentic AI","/summit/2026/sessions/making-agenttoagent-marketing-work-for-humans-s816.html","As AI agents start communicating with each other in marketing workflows, how do humans stay in control? Practical frameworks for agent-to-agent marketing that keeps humans in the loop.",""],
+  ["OS754","Maximize AI ROI with Unified Governance","session","AI Trends","/summit/2026/sessions/maximize-ai-roi-with-unified-governance-os754.html","How unified AI governance across your technology stack translates into measurable ROI. Covers frameworks for AI policy, commercial content safety, and scaling responsible AI across the enterprise.",""],
+  ["OS656","Deliver Connected Experiences with Adobe Experience Platform","session","Customer Data","/summit/2026/sessions/deliver-connected-experiences-with-adobe-experienc-os656.html","Practical guide to building connected customer experiences using Adobe Experience Platform  -  real-time CDP, identity resolution, and activation at scale.",""],
+  ["OS337","From Agents to Outcomes: Reimagine Enterprise DAM","session","Content Scale","/summit/2026/sessions/from-agents-to-outcomes-reimagine-enterprise-dam-os337.html","How agentic AI is reshaping Digital Asset Management  -  from passive storage to active, intelligent orchestration of brand assets across the enterprise.",""],
+  ["OS421","Scale On-Brand Content Without Chaos with Adobe Express","session","Content Scale","/summit/2026/sessions/scale-onbrand-content-without-chaos-with-adobe-exp-os421.html","How to scale content production without losing brand control  -  using Adobe Express, brand templates, and governance tools to empower distributed teams.",""],
+  ["OS220","From Batch to Real Time: What You Can Do with Marketo Engage Data Streams","session","Analytics","/summit/2026/sessions/from-batch-to-real-time-what-you-can-do-with-marke-os220.html","Moving from batch data processing to real-time activation with Marketo Engage Data Streams  -  use cases, architecture, and practical implementation guidance.",""],
+  ["OS952","Skill Exchange: See the Full Picture to Optimize Workspace Visualizations","session","Analytics","/summit/2026/sessions/skill-exchange-see-the-full-picture-to-optimize-wo-os952.html","Hands-on skill exchange session focused on optimising Workspace visualisations in Customer Journey Analytics  -  getting the full picture from your data.",""],
+  ["OS751","Speed to Value with Adobe Customer Journey Analytics","session","Analytics","/summit/2026/sessions/speed-to-value-with-adobe-customer-journey-analyti-os751.html","How to accelerate time-to-value with Customer Journey Analytics  -  from implementation shortcuts to advanced analysis techniques that drive faster insights.",""],
+  ["OS410","Scale Growth with Personalized Email in GenStudio for Performance Marketing","session","B2B","/summit/2026/sessions/scale-growth-with-personalized-email-in-genstudio-os410.html","Using GenStudio for Performance Marketing to scale personalised email at enterprise volume  -  templates, AI generation, brand governance, and performance optimisation.",""],
+  ["OS219","How the All-New Email Designer Supercharges Marketo Engage","session","B2B","/summit/2026/sessions/why-the-all-new-marketo-engage-email-designer-is-g-os219.html","The redesigned Marketo Engage Email Designer  -  new capabilities, AI-assisted design, and how it accelerates campaign production without sacrificing deliverability or personalisation.",""],
+  ["OS756","From Touchpoint to Dialog: Account-Based Marketing Gets a Face","session","B2B","/summit/2026/sessions/from-touchpoint-to-dialog-accountbased-marketing-g-os756.html","The next evolution of Account-Based Marketing  -  moving from touchpoint tracking to genuine two-way dialog using AI, real-time data, and personalisation at the account level.",""],
+  ["OS605","Build Fast, Secure AI-Powered Integrations with Adobe App Builder","session","Developers","/summit/2026/sessions/build-fast-secure-aipowered-integrations-with-adob-os605.html","How developers can use Adobe App Builder to build fast, secure, AI-powered integrations  -  patterns, best practices, and live demos.",""],
+  ["OS409","Drive Growth with AI-Enabled Workflows in Adobe GenStudio for Performance Marketing","session","Content Scale","/summit/2026/sessions/drive-growth-with-aienabled-workflows-in-adobe-gen-os409.html","How AI-enabled workflows inside GenStudio for Performance Marketing are cutting campaign production time and improving performance across paid and owned channels.",""],
+  ["OS759","Agentic Web: Design, Automate, Convert with Webflow and Marketo","session","Agentic AI","/summit/2026/sessions/agentic-web-design-automate-convert-with-webflow-m-os759.html","Combining Webflow and Marketo Engage to build agentic web experiences that design, automate, and convert  -  the future of web personalisation without engineering overhead.",""],
+  ["OS510","Unlocking Customer Experience at Scale with Adobe Real-Time CDP","session","Customer Data","/summit/2026/sessions/unlocking-customer-experience-at-scale-with-adobe-os510.html","How Adobe Real-Time CDP enables customer experience at scale  -  unified profiles, real-time segmentation, and cross-channel activation for enterprise brands.",""],
+  ["OS753","AZEK's Adobe-Powered Evolution to Build the Future of Digital Experience","session","Customer Engagement","/summit/2026/sessions/azeks-adobepowered-evolution-to-build-the-future-o-os753.html","Customer success story: how AZEK used Adobe's platform to transform their digital experience  -  from content management through to personalised customer journeys.",""],
+  ["OS532","Scaling Personalized Member Experiences with Agentic AI","session","Customer Engagement","/summit/2026/sessions/scaling-personalized-member-experiences-with-agent-os532.html","How agentic AI is enabling brands to scale truly personalised member experiences  -  moving beyond segment-of-one to genuinely individual interactions at enterprise scale.",""],
+  ["OS116","Checking In to Customer Journey Analytics: Hilton's Evolution Story","session","Analytics","/summit/2026/sessions/checking-in-to-customer-journey-analytics-hiltons-os116.html","Customer success story: Hilton's journey with Customer Journey Analytics  -  from initial adoption through to advanced use cases that are driving measurable business outcomes.",""],
+  ["OS217","How Adobe Reimagined B2B Paid Media with Adobe Journey Optimizer B2B Edition","session","B2B","/summit/2026/sessions/how-adobe-reimagined-b2b-paid-media-with-adobe-jou-os217.html","How Adobe used its own Journey Optimizer B2B Edition to transform its B2B paid media strategy  -  account-level targeting, personalised journeys, and measurable pipeline impact.",""],
+  ["OS807","AI and the Future of Adobe Workfront","session","Workflow","/summit/2026/sessions/ai-and-the-future-of-adobe-workfront-os807.html","The AI-powered roadmap for Adobe Workfront  -  how agentic AI is transforming work management, resource planning, and creative operations at enterprise scale.",""],
+  ["OS407","Top 5 AI Trends and What They Mean for Your Content Supply Chain","session","AI Trends","/summit/2026/sessions/top-5-ai-trends-and-what-they-mean-for-your-conten-os407.html","The five AI trends that every content leader needs to understand right now  -  and concrete actions for adapting your content supply chain to take advantage.",""],
+  ["OS341","Winning in the Agentic Web: Optimizing for LLMs and Human Experiences","session","Agentic AI","/summit/2026/sessions/winning-in-the-agentic-web-optimizing-for-llms-and-os341.html","How to optimise your digital presence for both LLM discovery and human experience  -  the emerging discipline of agentic web optimisation and why it matters now.",""],
+  ["OS336","Adobe Experience Manager Sites Innovations in the AI Era","session","Content Scale","/summit/2026/sessions/adobe-experience-manager-sites-innovations-in-the-os336.html","The latest AEM Sites innovations for the AI era  -  headless, composable architecture, AI-assisted content, and the roadmap for enterprise content management.",""],
+  ["OS216","Turning Reporting Chaos into Clarity with a CEO Dashboard","session","Analytics","/summit/2026/sessions/turning-reporting-chaos-into-clarity-with-a-ceo-da-os216.html","How to bring order to fragmented reporting by building a unified CEO dashboard  -  data architecture, visualisation choices, and getting buy-in from the C-suite.",""]
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let watched = JSON.parse(localStorage.getItem('summit26-watched') || '{}');
+let starred = JSON.parse(localStorage.getItem('summit26-starred') || '{}');
+let typeFilter = 'all';
+let trackFilter = 'all';
+let statusFilter = 'all';
+let searchQuery = '';
+
+// ─── FILTER FUNCTIONS ────────────────────────────────────────────────────────
+function setTypeFilter(val) {
+  typeFilter = val;
+  document.querySelectorAll('.filters-wrap .filter-group:nth-child(1) .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(val) || (val === 'all' && b.textContent === 'All'));
+  });
+  applyFilters();
+}
+
+function setTrackFilter(val) {
+  trackFilter = val;
+  document.querySelectorAll('.filters-wrap .filter-group:nth-child(3) .filter-btn').forEach(b => {
+    b.classList.toggle('active', (val === 'all' && b.textContent === 'All Tracks') || b.textContent === val || b.getAttribute('onclick')?.includes(`'${val}'`));
+  });
+  applyFilters();
+}
+
+function setStatusFilter(val) {
+  if (statusFilter === val) { statusFilter = 'all'; } else { statusFilter = val; }
+  document.querySelectorAll('.filters-wrap .filter-group:nth-child(5) .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick')?.includes(`'${val}'`) && statusFilter === val);
+  });
+  applyFilters();
+}
+
+function applyFilters() {
+  searchQuery = document.getElementById('search-input').value.toLowerCase();
+  const cards = document.querySelectorAll('.card[data-code]');
+  let visible = 0;
+  cards.forEach(card => {
+    const code = card.dataset.code;
+    const type = card.dataset.type;
+    const track = card.dataset.track;
+    const title = card.dataset.title.toLowerCase();
+    let show = true;
+    if (typeFilter !== 'all' && type !== typeFilter) show = false;
+    if (trackFilter !== 'all' && track !== trackFilter) show = false;
+    if (statusFilter === 'starred' && !starred[code]) show = false;
+    if (statusFilter === 'unwatched' && watched[code]) show = false;
+    if (searchQuery && !title.includes(searchQuery) && !code.toLowerCase().includes(searchQuery) && !track.toLowerCase().includes(searchQuery)) show = false;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const noRes = document.getElementById('no-results');
+  if (noRes) noRes.style.display = visible === 0 ? '' : 'none';
+  updateStats();
+}
+
+// ─── TOGGLE FUNCTIONS ────────────────────────────────────────────────────────
+function toggleWatched(code) {
+  watched[code] = !watched[code];
+  if (!watched[code]) delete watched[code];
+  localStorage.setItem('summit26-watched', JSON.stringify(watched));
+  refreshCard(code);
+  updateStats();
+}
+
+function toggleStarred(code) {
+  starred[code] = !starred[code];
+  if (!starred[code]) delete starred[code];
+  localStorage.setItem('summit26-starred', JSON.stringify(starred));
+  refreshCard(code);
+  updateStats();
+}
+
+function refreshCard(code) {
+  const card = document.querySelector(`.card[data-code="${code}"]`);
+  if (!card) return;
+  card.classList.toggle('watched', !!watched[code]);
+  card.classList.toggle('starred', !!starred[code]);
+  const watchBtn = card.querySelector('.watch-btn');
+  if (watchBtn) { watchBtn.textContent = watched[code] ? '✓ Watched' : 'Mark watched'; watchBtn.classList.toggle('watched', !!watched[code]); }
+  const starBtn = card.querySelector('.action-btn[title="Star"]');
+  if (starBtn) { starBtn.style.opacity = starred[code] ? '1' : '0.4'; starBtn.textContent = '⭐'; }
+}
+
+// ─── STATS ───────────────────────────────────────────────────────────────────
+function updateStats() {
+  const total = SESSIONS.length;
+  const watchedCount = Object.keys(watched).length;
+  const starredCount = Object.keys(starred).length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-watched').textContent = watchedCount;
+  document.getElementById('stat-starred').textContent = starredCount;
+  document.getElementById('progress-fill').style.width = (watchedCount / total * 100) + '%';
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function typeLabel(type) {
+  if (type === 'keynote') return '<span class="meta-tag tag-type-keynote">Keynote</span>';
+  if (type === 'super') return '<span class="meta-tag tag-type-super">Super Session</span>';
+  if (type === 'special') return '<span class="meta-tag tag-type-special">Featured</span>';
+  return '<span class="meta-tag tag-type-session">On Demand</span>';
+}
+
+function codeClass(type) {
+  if (type === 'keynote') return 'keynote';
+  if (type === 'super') return 'super';
+  if (type === 'special') return 'special';
+  return '';
+}
+
+function renderSessions() {
+  const grid = document.getElementById('session-grid');
+  grid.innerHTML = '';
+  SESSIONS.forEach(([code, title, type, track, path, desc, speakers]) => {
+    const isWatched = !!watched[code];
+    const isStarred = !!starred[code];
+    const url = 'https://business.adobe.com' + path;
+    const card = document.createElement('div');
+    card.className = `card${isWatched ? ' watched' : ''}${isStarred ? ' starred' : ''}`;
+    card.dataset.code = code;
+    card.dataset.type = type;
+    card.dataset.track = track;
+    card.dataset.title = title;
+    card.innerHTML = `
+      <div class="card-header">
+        <span class="card-code ${codeClass(type)}">${code}</span>
+        <div class="card-actions">
+          <button class="action-btn" title="Star" onclick="toggleStarred('${code}')" style="opacity:${isStarred?'1':'0.4'}">⭐</button>
+        </div>
+      </div>
+      <div class="card-title"><a href="${url}" target="_blank">${title}</a></div>
+      <div class="card-meta">
+        ${typeLabel(type)}
+        <span class="meta-tag tag-track">${track}</span>
+        <span class="meta-tag tag-status">On Demand</span>
+      </div>
+      ${desc ? `<div class="card-desc">${desc}</div>` : ''}
+      <div class="card-footer">
+        <div class="card-speakers">${speakers ? '👤 ' + speakers.substring(0,60) + (speakers.length > 60 ? '…' : '') : ''}</div>
+        <button class="watch-btn ${isWatched ? 'watched' : ''}" onclick="toggleWatched('${code}')">${isWatched ? '✓ Watched' : 'Mark watched'}</button>
+        <a class="view-link" href="${url}" target="_blank">View ↗</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  // No results placeholder
+  const noRes = document.createElement('div');
+  noRes.id = 'no-results';
+  noRes.className = 'no-results';
+  noRes.textContent = 'No sessions match your current filters.';
+  noRes.style.display = 'none';
+  grid.appendChild(noRes);
+  updateStats();
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+renderSessions();
+</script>
+</body>
+</html>

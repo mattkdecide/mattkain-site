@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Canva in APAC: The Enterprise Threat, Adobe's Counter, and What to Do Now</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f10;
+    --surface: #161618;
+    --border: #242428;
+    --text: #ffffff;
+    --muted: #8a8a96;
+    --subtle: #52525e;
+    --accent: #eb1000;
+    --accent-dim: rgba(235,16,0,0.12);
+    --amber: #f59e0b;
+    --amber-dim: rgba(245,158,11,0.10);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.10);
+  }
+
+  html { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+
+  body { min-height: 100vh; }
+
+  .wrap { max-width: 800px; margin: 0 auto; padding: 0 28px; }
+
+  /* ── Header ── */
+  .doc-header {
+    border-bottom: 1px solid var(--border);
+    padding: 56px 0 40px;
+  }
+  .doc-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .doc-title {
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 18px;
+  }
+  .doc-sub {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+  .doc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-size: 12px;
+    color: var(--subtle);
+  }
+  .doc-meta span { display: flex; align-items: center; gap: 6px; }
+  .doc-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--subtle); display: inline-block; }
+
+  /* ── Alert banner ── */
+  .alert {
+    border: 1px solid var(--accent);
+    background: var(--accent-dim);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 40px 0;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.6;
+  }
+  .alert strong { color: var(--accent); }
+
+  /* ── Sections ── */
+  .section {
+    padding: 44px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--subtle);
+    margin-bottom: 14px;
+  }
+  .section-heading {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+  p {
+    color: #d4d4d8;
+    margin-bottom: 18px;
+    font-size: 15px;
+  }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Signal cards ── */
+  .signal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  @media (max-width: 560px) { .signal-grid { grid-template-columns: 1fr; } }
+
+  .signal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .signal-card .label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--subtle);
+    margin-bottom: 8px;
+  }
+  .signal-card .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #e4e4e7;
+    line-height: 1.5;
+  }
+  .signal-card.accent-card { border-color: rgba(235,16,0,0.3); background: var(--accent-dim); }
+  .signal-card.accent-card .label { color: rgba(235,16,0,0.7); }
+  .signal-card.accent-card .value { color: #fff; }
+
+  /* ── Strength / weakness rows ── */
+  .assessment-row {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .assessment-row:last-child { border-bottom: none; }
+  .assessment-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .icon-strong { background: var(--green-dim); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+  .icon-gap { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+  .assessment-content { flex: 1; }
+  .assessment-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 5px; }
+  .assessment-body { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* ── Action items ── */
+  .action-list { margin-top: 8px; }
+  .action-item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 0 14px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .action-item:last-child { border-bottom: none; }
+  .action-num {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent);
+    padding-top: 1px;
+    font-variant-numeric: tabular-nums;
+  }
+  .action-content {}
+  .action-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .action-body {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .action-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid rgba(235,16,0,0.2);
+    border-radius: 3px;
+    padding: 2px 7px;
+    margin-bottom: 8px;
+  }
+
+  /* ── Timeline bar ── */
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 24px 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .tl-item {
+    flex: 1;
+    padding: 14px 16px;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .tl-item:last-child { border-right: none; }
+  .tl-date { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--subtle); margin-bottom: 5px; }
+  .tl-event { font-size: 12.5px; font-weight: 500; color: #e4e4e7; line-height: 1.4; }
+  .tl-item.highlight { background: var(--accent-dim); border-color: rgba(235,16,0,0.25); }
+  .tl-item.highlight .tl-date { color: rgba(235,16,0,0.7); }
+
+  @media (max-width: 600px) {
+    .timeline { flex-direction: column; }
+    .tl-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .tl-item:last-child { border-bottom: none; }
+  }
+
+  /* ── Stat callouts ── */
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 140px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+  .stat-num { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: #fff; line-height: 1.1; margin-bottom: 4px; }
+  .stat-num.red { color: var(--accent); }
+  .stat-label { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+
+  /* ── Footer ── */
+  .doc-footer {
+    border-top: 1px solid var(--border);
+    padding: 36px 0 56px;
+    margin-top: 8px;
+  }
+  .footer-disclaimer {
+    font-size: 11.5px;
+    color: var(--subtle);
+    line-height: 1.7;
+    max-width: 680px;
+  }
+  .footer-disclaimer a { color: var(--subtle); text-decoration: underline; text-underline-offset: 3px; }
+  .footer-byline {
+    font-size: 12px;
+    color: var(--subtle);
+    margin-bottom: 14px;
+  }
+  .footer-byline a { color: var(--muted); text-decoration: none; font-weight: 500; }
+  .footer-byline a:hover { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <header class="doc-header">
+    <div class="doc-eyebrow">Adobe APAC · Strategic Intelligence · April 2026</div>
+    <h1 class="doc-title">Canva in APAC: The Enterprise Threat, Adobe's Counter, and What to Do Now</h1>
+    <p class="doc-sub">The most consequential competitive development for Adobe in April 2026 didn't happen at Summit. It happened the week before. Here's how the threat lands differently in this market - and where the counter needs to be sharpest.</p>
+    <div class="doc-meta">
+      <span>Matt Kain</span>
+      <span class="dot"></span>
+      <span>April 2026</span>
+      <span class="dot"></span>
+      <span>Private · Not for distribution</span>
+    </div>
+  </header>
+
+  <!-- Alert -->
+  <div class="alert">
+    <strong>The critical window:</strong> Canva Create was April 16. Adobe Summit opened April 19. The competitive repositioning happened before the keynote. Most Adobe APAC customers have absorbed Summit messaging. Far fewer have had a clear-eyed account of what Canva announced three days earlier and what it means for their relationship with Adobe.
+  </div>
+
+  <!-- Section 1: What Canva Did -->
+  <section class="section">
+    <div class="section-label">Section 01</div>
+    <h2 class="section-heading">What Canva Actually Did in April - and Why It Matters</h2>
+
+    <p>Between April 9 and April 16, Canva made the clearest statement of competitive intent in its ten-year history. It was not a product update. It was a platform pivot.</p>
+
+    <p>On April 9, Canva acquired both Simtheory and Ortto simultaneously - two companies founded by the same founders (Chris and Michael Sharkey). Simtheory is an AI agent management platform. Ortto (formerly Autopilot) is a full-stack marketing automation and CDP platform. Then on April 16, Canva staged Canva Create at SoFi Stadium in Los Angeles, describing it as "the biggest transformation in our history," and formally repositioned as an AI platform with design tools at its core - not the other way around.</p>
+
+    <p>The combination is specific and deliberate. Ortto gives Canva audience data management, customer journey automation, email and push campaigns, and reporting. Simtheory gives Canva the agentic AI layer to orchestrate those workflows. Canva's existing Creative Operating System (launched October 2025) provides the content creation surface. The three together mean enterprise marketing teams can now ideate, create, distribute, measure, and optimise without leaving a single platform - at entry-level pricing well below Adobe's enterprise tiers.</p>
+
+    <div class="timeline">
+      <div class="tl-item highlight">
+        <div class="tl-date">Apr 9</div>
+        <div class="tl-event">Canva acquires Simtheory + Ortto</div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-date">Apr 16</div>
+        <div class="tl-event">Canva Create - "biggest transformation in our history"</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Apr 19</div>
+        <div class="tl-event">Adobe Summit opens, Las Vegas</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Apr 20</div>
+        <div class="tl-event">CX Enterprise, Firefly $250M ARR announced</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num red">$4B+</div>
+        <div class="stat-label">Canva ARR - design tool market share leader</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num red">$500M</div>
+        <div class="stat-label">Canva B2B ARR, growing 100% year-on-year</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num red">95%</div>
+        <div class="stat-label">Fortune 500 companies with active Canva teams</div>
+      </div>
+    </div>
+
+    <p>Before this move, the counter-positioning was straightforward: Canva is a design tool, not an enterprise platform. That objection no longer holds. The question has shifted from "should we use Canva for team creative?" to "should we use Canva for the whole workflow?"</p>
+  </section>
+
+  <!-- Section 2: APAC Specifics -->
+  <section class="section">
+    <div class="section-label">Section 02</div>
+    <h2 class="section-heading">Why the Threat Lands Differently in APAC</h2>
+
+    <p>Adobe's global competitive response to Canva was built for a market where Canva is an upstart challenger. In APAC - specifically in ANZ - Canva is something else: it is a local success story with the brand equity of a company people genuinely love.</p>
+
+    <p>Canva was founded in Perth. Its primary engineering and design operations are in Sydney. Ortto, the marketing automation company it just acquired, was founded in Sydney by Michael Sharkey as Autopilot, then rebranded. Two Australian companies have combined forces. In the ANZ market, this is not framed as a US disruptor threatening enterprise tools. It is more likely to be framed as an Australian platform maturing into the enterprise space.</p>
+
+    <p>That cultural context matters commercially. The emotional goodwill Canva carries with internal marketing teams, brand managers, and social practitioners in Australian organisations does not automatically translate to procurement-level decisions. But it does accelerate trials, reduce scrutiny at departmental level, and create political capital inside organisations that makes displacement harder to argue once the tool is embedded.</p>
+
+    <div class="signal-grid">
+      <div class="signal-card accent-card">
+        <div class="label">The APAC-specific risk</div>
+        <div class="value">Canva's cultural standing in ANZ means enterprise procurement conversations start with a warmer prior than in the US market. Ortto's Australian origins compound this.</div>
+      </div>
+      <div class="signal-card accent-card">
+        <div class="label">The mid-market gap</div>
+        <div class="value">Canva is not attacking enterprise accounts first. It is consolidating mid-market and team seats - building the installed base from which enterprise decisions eventually grow.</div>
+      </div>
+      <div class="signal-card">
+        <div class="label">Google Workspace pressure</div>
+        <div class="value">High Google Workspace penetration in AU, India, and SEA means Gemini creative AI is already bundled in for many APAC orgs. A two-front cost pressure on Adobe's creative tools argument.</div>
+      </div>
+      <div class="signal-card">
+        <div class="label">No APAC case study at Summit</div>
+        <div class="value">NBCUniversal and Comcast/Xfinity were on the main stage. No APAC enterprise customer. The Summit narrative needs local translation to land with Australian, Japanese, and SEA accounts.</div>
+      </div>
+    </div>
+
+    <p>The structural shift to watch: companies in retail, media, and emerging tech that have not yet committed to the full Adobe Experience Platform stack now have a credible alternative that covers creation, distribution, and measurement. For these accounts, Canva's expanded platform makes the buy-vs-build-on-Adobe question more competitive than it was six months ago.</p>
+  </section>
+
+  <!-- Section 3: Where Adobe is strong -->
+  <section class="section">
+    <div class="section-label">Section 03</div>
+    <h2 class="section-heading">Where Adobe's Counter Is Genuinely Strong</h2>
+
+    <p>The Summit narrative is correct. It is just not yet calibrated for an APAC audience that is hearing it in a different competitive context. Three areas where the counter holds well and should be sharpened, not changed.</p>
+
+    <div class="assessment-row">
+      <div class="assessment-icon icon-strong">&#10003;</div>
+      <div class="assessment-content">
+        <div class="assessment-title">Brand Intelligence is the right counter-narrative</div>
+        <div class="assessment-body">Canva has no enterprise governance story. Adobe Brand Intelligence - ensuring brand consistency across all AI-powered channels - is exactly what regulated industries need and what Canva cannot credibly deliver in 2026. For financial services, government, and healthcare accounts across APAC, governance and compliance are not features. They are disqualifiers for Canva. This argument needs to be the lead in every enterprise conversation where Canva is present, not a footnote after product capability comparisons.</div>
+      </div>
+    </div>
+
+    <div class="assessment-row">
+      <div class="assessment-icon icon-strong">&#10003;</div>
+      <div class="assessment-content">
+        <div class="assessment-title">The holdco channel is a structural advantage that is being underleveraged</div>
+        <div class="assessment-body">All six major holding companies - Publicis, WPP, dentsu, Omnicom, Havas, Stagwell - have publicly standardised on Adobe CX Enterprise. These organisations run the majority of enterprise media and marketing spend across APAC. They have direct relationships inside the accounts Adobe cares about most. The holdco commitments are currently treated as a press release. In APAC they should be treated as an active distribution channel for the competitive counter-narrative - with structured briefings and ready-made one-pagers for agency leads to use in client QBRs.</div>
+      </div>
+    </div>
+
+    <div class="assessment-row">
+      <div class="assessment-icon icon-strong">&#10003;</div>
+      <div class="assessment-content">
+        <div class="assessment-title">Firefly $250M ARR closes the AI credibility gap</div>
+        <div class="assessment-body">Adobe Firefly is now a $250M standalone revenue line, announced at Summit as Adobe's first hard AI revenue number. Commercially safe AI with a $250M ARR figure is a materially different argument than promising future capability. In APAC markets where IP risk is increasingly on CMO and legal team radar - particularly post the wave of AI governance frameworks in Singapore and Australia - Firefly's copyright indemnity and brand governance story is more valuable than most customer conversations have acknowledged yet. This is the number to use when any customer questions Adobe's AI momentum relative to Microsoft's bundling or Canva's speed.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Where counter needs work -->
+  <section class="section">
+    <div class="section-label">Section 04</div>
+    <h2 class="section-heading">Where the Counter Needs Sharpening</h2>
+
+    <p>Three gaps in the current APAC counter-positioning that create exposure before Q3.</p>
+
+    <div class="assessment-row">
+      <div class="assessment-icon icon-gap">!</div>
+      <div class="assessment-content">
+        <div class="assessment-title">The mid-market displacement problem is real and underprioritised</div>
+        <div class="assessment-body">Canva is not attacking Adobe's enterprise accounts directly. It is consolidating mid-market organisations and team-level seats inside enterprise accounts that operate below procurement radar. Adobe's counter-narrative is almost entirely built for enterprise buyers. The argument for customers who are not yet enterprise-sized - but will be, and who are already choosing Canva as their team default - is thin. Canva's installed base in APAC's mid-market is the seedbed for next-generation enterprise accounts. The longer this goes unaddressed, the more difficult displacement becomes.</div>
+      </div>
+    </div>
+
+    <div class="assessment-row">
+      <div class="assessment-icon icon-gap">!</div>
+      <div class="assessment-content">
+        <div class="assessment-title">Google Workspace bundling adds a second front that needs a separate answer</div>
+        <div class="assessment-body">In APAC markets with high Google Workspace penetration - Australia, India, and much of Southeast Asia - Gemini creative AI capabilities are now bundled into existing subscriptions at no additional cost. The question "why pay for Adobe Firefly when Gemini is already in our Google subscription?" will surface more frequently through 2026. Adobe's answer on quality, brand governance, and commercially safe content is correct but needs to be sharper and faster for this specific framing, rather than defaulting to the broader enterprise capability argument.</div>
+      </div>
+    </div>
+
+    <div class="assessment-row">
+      <div class="assessment-icon icon-gap">!</div>
+      <div class="assessment-content">
+        <div class="assessment-title">CX Enterprise needs APAC translation, not just adoption</div>
+        <div class="assessment-body">The Experience Cloud to CX Enterprise rebrand was designed for an audience already familiar with Adobe's product architecture. In APAC markets where the Experience Cloud stack is relatively newer, the rebrand risks creating confusion rather than confidence with accounts still getting familiar with the previous product naming. Every APAC customer-facing team needs a clean, local-language explanation of what CX Enterprise means for them - not a re-transmission of the Summit keynote framing.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Three moves -->
+  <section class="section">
+    <div class="section-label">Section 05</div>
+    <h2 class="section-heading">Three Moves for Adobe APAC in the Next 90 Days</h2>
+
+    <div class="action-list">
+
+      <div class="action-item">
+        <div class="action-num">01</div>
+        <div class="action-content">
+          <div class="action-tag">30 days · Accounts</div>
+          <div class="action-title">Run a Canva displacement audit across the top 20 APAC accounts</div>
+          <div class="action-body">Before building a counter-narrative, understand where Canva already exists inside current Adobe enterprise accounts. In most large APAC organisations, Canva team seats have been adopted below the enterprise procurement radar - used by internal comms, social teams, and brand managers who found it faster than the approved tool. The Ortto acquisition makes those existing Canva seats significantly more valuable as a platform entry point. Knowing where Canva is already present is the precondition for a targeted defence - and it often surfaces account health risks that are not visible through normal QBR cycles. This is a 30-day listening exercise before any competitive campaign goes live.</div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-num">02</div>
+        <div class="action-content">
+          <div class="action-tag">60 days · Agency channel</div>
+          <div class="action-title">Activate the holdco ecosystem as a counter-narrative distribution channel</div>
+          <div class="action-body">The six holdco commitments to CX Enterprise are significant and underleveraged in APAC. Publicis, WPP, and dentsu each have substantial APAC operations with direct relationships inside the accounts that matter most. A structured briefing programme - 90 minutes per holdco APAC leadership team, with a clean one-pager they can use in client QBRs and strategic reviews - turns a global press announcement into active APAC distribution. The agencies are already committed to the platform; they need the language and the confidence to use that commitment in client conversations. This does not require new budget. It requires coordination and a well-built brief.</div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-num">03</div>
+        <div class="action-content">
+          <div class="action-tag">90 days · Thought leadership</div>
+          <div class="action-title">Stage a Brand Intelligence roundtable for APAC enterprise in regulated verticals</div>
+          <div class="action-body">Adobe's sharpest competitive differentiator against Canva in regulated industries is governance: brand consistency at scale, commercially safe AI, and enterprise-grade content provenance. This argument has not yet been packaged for an APAC audience. A focused roundtable - CMOs and heads of brand from financial services, government, and retail, positioned around the question "how do you govern your brand when AI is generating content at every point in the organisation?" - is the right format before Q3. Target six to eight organisations, one city, before the end of June. The goal is not a sales event. It is to position Adobe as the authoritative voice on AI brand governance in APAC before Canva builds a story in this space. Canva will. It does not have one yet.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CEO Transition note -->
+  <section class="section">
+    <div class="section-label">Addendum</div>
+    <h2 class="section-heading">On the CEO Transition</h2>
+    <p>APAC customer conversations will raise the CEO transition as an uncertainty. The right narrative is not reassurance - it is framing. Shantanu Narayen's final keynote handed his successor a $250M AI revenue line, all six major holding companies committed to CX Enterprise, a freshly rebranded platform architecture, and an NVIDIA partnership that gives Adobe genuine credibility in the agentic AI conversation. Adobe's strategy is stronger today than it was when the transition was announced in March. The transition is a strength story if it is told confidently and early - and a distraction story if customer questions are left to accumulate.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="doc-footer">
+    <div class="footer-byline">
+      <a href="https://mattkain.com">Matt Kain</a> · Strategic Intelligence · Adobe APAC Executive OS
+    </div>
+    <div class="footer-disclaimer">
+      This analysis is produced independently by Matt Kain and is not affiliated with, sponsored by, or endorsed by Adobe. Adobe, Creative Cloud, Adobe Experience Platform, Adobe Firefly, Adobe GenStudio, Adobe Photoshop, Adobe Premiere Pro, and other product names mentioned are either registered trademarks or trademarks of Adobe in the United States and/or other countries. Canva, Ortto, and other third-party names are the property of their respective owners. All data points sourced from publicly available information including company press releases, earnings transcripts, and analyst commentary. April 2026.
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

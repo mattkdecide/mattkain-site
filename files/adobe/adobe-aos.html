@@ -1,0 +1,588 @@
+<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Adobe Apac Operating System",
+  "schemaVersion": 1,
+  "description": "Merged 30/60/90 Operating Plan, Activities & Sources, and Shopping List. Three projects: PEOPLE, CLIENT OPERATIONS, GROWTH & CAPABILITIES. Single data source drives all three sections."
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adobe APAC – Operating System</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f4f4; color: #1a1a1a; }
+
+/* ── STICKY NAV ── */
+.sticky-nav { background:#fff; border-bottom:1px solid #e5e5e5; position:sticky; top:0; z-index:200; padding:14px 24px 12px; }
+.nav-top { display:flex; justify-content:space-between; align-items:flex-start; }
+.nav-title h1 { font-size:17px; font-weight:700; letter-spacing:-0.2px; }
+.nav-title .sub { font-size:10px; color:#888; margin-top:2px; }
+.badge { background:#FF0000; color:#fff; font-size:10px; font-weight:700; letter-spacing:0.7px; text-transform:uppercase; padding:4px 10px; border-radius:4px; }
+.nav-row { display:flex; align-items:center; gap:6px; margin-top:10px; flex-wrap:wrap; }
+.nav-sep { color:#ddd; }
+.day-pill { display:flex; flex-direction:column; align-items:center; padding:4px 10px; border-radius:6px; min-width:52px; color:#fff; line-height:1; cursor:default; transition:background 0.3s; }
+.day-pill .dn { font-size:13px; font-weight:800; }
+.day-pill .ds { font-size:8px; opacity:0.7; margin-top:2px; }
+.phase-pill { font-size:9px; font-weight:600; padding:3px 9px; border-radius:12px; cursor:default; border:1px solid transparent; }
+.phase-pill.p30 { background:#fff3e0; color:#E07800; border-color:#ffdda0; }
+.phase-pill.p60 { background:#e3f2fd; color:#1565c0; border-color:#b3d6f5; }
+.phase-pill.p90 { background:#e8f5e9; color:#1A8F3C; border-color:#b2dfbc; }
+.nav-btn { font-size:10px; font-weight:600; padding:4px 10px; border-radius:20px; border:1px solid #e0e0e0; background:#fff; cursor:pointer; color:#777; text-decoration:none; display:inline-flex; align-items:center; gap:3px; text-transform:uppercase; letter-spacing:0.2px; transition:all 0.15s; }
+.nav-btn:hover { background:#f5f5f5; border-color:#ccc; color:#444; }
+.nav-btn.primary { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
+.nav-btn.primary:hover { background:#333; }
+.nav-btn.cart-btn { display:inline-flex; align-items:center; gap:5px; }
+.nav-btn.cart-btn svg { flex-shrink:0; }
+
+/* ── OS CHART ── */
+.plan-wrap { padding:20px 24px 0; }
+.col-headers { display:grid; grid-template-columns:190px 1fr 1fr 1fr; gap:8px; margin-bottom:8px; }
+.col-hd { background:#fff; border:1px solid #e5e5e5; border-radius:6px; padding:9px 12px; text-align:center; }
+.col-hd-phase { font-size:11px; font-weight:700; }
+.col-hd-date  { font-size:10px; color:#FF0000; font-weight:600; margin-top:2px; }
+.col-hd-tag   { font-size:9px; color:#bbb; margin-top:2px; text-transform:uppercase; letter-spacing:0.4px; }
+.os-project { margin-bottom:6px; }
+.os-proj-hdr { display:grid; grid-template-columns:190px 1fr 1fr 1fr; gap:8px; margin-bottom:4px; }
+.os-proj-title { background:#1a1a1a; color:#fff; border-radius:6px 0 0 6px; padding:9px 14px; font-size:12px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; display:flex; align-items:center; justify-content:space-between; text-decoration:none; transition:background 0.15s; }
+.os-proj-title:hover { background:#333; }
+.os-proj-title .hint { font-size:9px; opacity:0.4; }
+.os-proj-span { background:#1a1a1a; border-radius:0 6px 6px 0; grid-column:span 3; padding:9px 14px; font-size:10px; color:rgba(255,255,255,0.38); display:flex; align-items:center; }
+.init-row { display:grid; grid-template-columns:190px 1fr 1fr 1fr; gap:8px; margin-bottom:6px; }
+.init-label { background:#fff; border:1px solid #e5e5e5; border-radius:6px; padding:10px 12px; display:flex; flex-direction:column; justify-content:center; }
+.init-name { font-size:11px; font-weight:600; color:#444; line-height:1.3; }
+.init-meta { font-size:9px; color:#bbb; margin-top:3px; text-transform:uppercase; letter-spacing:0.3px; }
+.action-cell { background:#fff; border:1px solid #e5e5e5; border-radius:6px; padding:10px 12px; min-height:80px; display:flex; flex-direction:column; gap:5px; }
+.action-cell.empty { background:#f9f9f9; border:1px dashed #e2e2e2; align-items:center; justify-content:center; }
+.empty-dash { color:#ddd; font-size:18px; }
+.os-action { display:flex; flex-direction:column; border-left:3px solid #e0e0e0; padding-left:9px; flex:1; min-height:68px; }
+.os-action[data-status="not-started"] { border-left-color:#d8d8d8; }
+.os-action[data-status="on-target"]   { border-left-color:#E07800; }
+.os-action[data-status="slipping"]    { border-left-color:#CC2200; }
+.os-action[data-status="complete"]    { border-left-color:#1A8F3C; background:linear-gradient(90deg,#f4fbf6,transparent); border-radius:0 3px 3px 0; }
+.os-action + .os-action { border-top:1px solid #f0f0f0; padding-top:8px; }
+.action-title { font-size:11px; font-weight:600; color:#222; line-height:1.35; margin-bottom:3px; outline:none; border-radius:2px; padding:1px 2px; cursor:text; }
+.action-title:focus { background:#fffde7; }
+.action-desc  { font-size:10px; color:#aaa; line-height:1.4; flex:1; outline:none; border-radius:2px; padding:1px 2px; cursor:text; }
+.action-desc:focus { background:#fffde7; }
+.mini-prog { height:2px; background:#f0f0f0; border-radius:1px; margin:3px 0; overflow:hidden; }
+.mini-fill { height:100%; background:#1A8F3C; border-radius:1px; width:0%; transition:width 0.3s; }
+.action-footer { display:flex; justify-content:space-between; align-items:center; cursor:pointer; padding-top:4px; border-top:1px solid #f0f0f0; user-select:none; }
+.action-footer:hover .sbadge { opacity:0.75; }
+.due-date { font-size:9px; color:#ccc; }
+.sbadge { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.3px; padding:2px 6px; border-radius:3px; transition:opacity 0.1s; }
+.os-action[data-status="not-started"] .sbadge { background:#f0f0f0; color:#999; }
+.os-action[data-status="on-target"]   .sbadge { background:#fff3e0; color:#E07800; }
+.os-action[data-status="slipping"]    .sbadge { background:#fff0ee; color:#CC2200; }
+.os-action[data-status="complete"]    .sbadge { background:#e8f5e9; color:#1A8F3C; }
+.os-legend { display:flex; gap:12px; flex-wrap:wrap; padding:12px 24px 0; }
+.leg { display:flex; align-items:center; gap:4px; font-size:10px; color:#aaa; }
+.leg-dot { width:6px; height:6px; border-radius:50%; }
+
+/* ── SECTION BREAK ── */
+.section-break { display:flex; align-items:center; gap:20px; margin:32px 0 0; padding:16px 24px; background:#1a1a1a; }
+.sb-line { flex:1; height:1px; background:rgba(255,255,255,0.12); }
+.sb-label { font-size:12px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#fff; white-space:nowrap; }
+
+/* ── ACTIVITIES ── */
+.act-wrap { padding:16px 24px 32px; }
+.act-proj-sec { margin-bottom:24px; }
+.act-proj-hdr { background:#1a1a1a; color:#fff; border-radius:8px 8px 0 0; padding:10px 16px; display:flex; align-items:baseline; justify-content:space-between; }
+.act-proj-info { display:flex; align-items:baseline; gap:10px; }
+.act-proj-name { font-size:12px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; }
+.act-proj-sub  { font-size:10px; color:rgba(255,255,255,0.38); }
+.back-link { font-size:9px; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.15s; }
+.back-link:hover { color:rgba(255,255,255,0.8); }
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:10px; padding-top:10px; }
+.act-card { background:#fff; border:1px solid #e8e8e8; border-radius:8px; overflow:hidden; display:flex; flex-direction:column; }
+.act-card-top { padding:12px 14px 10px; border-bottom:1px solid #f2f2f2; }
+.act-badges { display:flex; gap:5px; margin-bottom:8px; flex-wrap:wrap; }
+.phase-badge { font-size:9px; font-weight:700; letter-spacing:0.4px; text-transform:uppercase; padding:2px 7px; border-radius:3px; }
+.phase-badge.p30 { background:#fff3e0; color:#E07800; }
+.phase-badge.p60 { background:#e3f2fd; color:#1565c0; }
+.phase-badge.p90 { background:#e8f5e9; color:#1A8F3C; }
+.init-badge { font-size:9px; font-weight:600; color:#aaa; background:#f5f5f5; padding:2px 7px; border-radius:3px; }
+.act-card-title { font-size:13px; font-weight:700; color:#1a1a1a; line-height:1.35; }
+.act-prog-wrap { margin-top:10px; }
+.act-prog-meta { display:flex; justify-content:space-between; margin-bottom:4px; }
+.act-prog-meta span { font-size:9px; color:#ccc; text-transform:uppercase; letter-spacing:0.3px; }
+.act-prog-pct { font-weight:600 !important; color:#888 !important; }
+.act-prog-track { height:3px; background:#f0f0f0; border-radius:2px; overflow:hidden; }
+.act-prog-fill { height:100%; background:#1a1a1a; border-radius:2px; width:0%; transition:width 0.3s; }
+.act-card-body { padding:12px 14px 14px; display:flex; flex-direction:column; gap:11px; flex:1; }
+.sec-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#bbb; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+.sec-hr { border:none; border-top:1px solid #f2f2f2; }
+.task-list { display:flex; flex-direction:column; gap:6px; }
+.task-item { display:flex; align-items:flex-start; gap:8px; }
+.task-item input[type=checkbox] { margin-top:2px; flex-shrink:0; width:13px; height:13px; accent-color:#1a1a1a; cursor:pointer; }
+.task-item label { font-size:11px; color:#444; line-height:1.45; cursor:pointer; flex:1; }
+.task-item.done label { text-decoration:line-through; color:#c0c0c0; }
+
+/* ── FOOTER ── */
+.page-footer { text-align:right; padding:12px 24px 20px; font-size:10px; color:#ccc; }
+
+/* ── SHOPPING LIST ── */
+.shop-wrap { padding:16px 24px 32px; }
+.shop-group { margin-bottom:12px; border:1px solid #e8e8e8; border-radius:8px; overflow:hidden; background:#fff; }
+.shop-group-hdr { padding:10px 16px; display:flex; align-items:center; justify-content:space-between; }
+.shop-group-name { font-size:11px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
+.shop-group-count { font-size:10px; font-weight:700; padding:2px 9px; border-radius:12px; }
+.shop-group-body { display:grid; grid-template-columns:1fr 1fr; gap:0; padding:10px 16px 14px; border-top:1px solid #f2f2f2; }
+.shop-item { display:flex; align-items:flex-start; gap:7px; padding:5px 10px 5px 0; }
+.shop-item input[type=checkbox] { margin-top:2px; flex-shrink:0; width:13px; height:13px; accent-color:#1a1a1a; cursor:pointer; }
+.shop-item label { font-size:11px; color:#444; line-height:1.4; cursor:pointer; flex:1; }
+.shop-item.done label { text-decoration:line-through; color:#c0c0c0; }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<div class="sticky-nav">
+  <div class="nav-top">
+    <div class="nav-title">
+      <h1>Adobe APAC · Account Operating System</h1>
+      <div class="sub">30/60/90 Day Plan + Activities &amp; Sources · Matt Kain, APAC Client Lead · Zenith / Publicis</div>
+    </div>
+    <div class="badge">Adobe APAC</div>
+  </div>
+  <div class="nav-row">
+    <div class="day-pill" id="dayPill"><span class="dn" id="dayNum">–</span><span class="ds">of 90</span></div>
+    <a class="nav-btn" href="#act-PEOPLE">People</a>
+    <a class="nav-btn" href="#act-CLIENT">Client Ops</a>
+    <a class="nav-btn" href="#act-GROWTH">Growth</a>
+    <span class="nav-sep">|</span>
+    <a class="nav-btn" href="#plan-top">▲ Plan</a>
+    <a class="nav-btn primary" href="#act-top">▼ Activities</a>
+    <a class="nav-btn cart-btn" href="#shop-top"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> Shopping</a>
+  </div>
+</div>
+
+<!-- OS CHART -->
+<div id="plan-top" class="plan-wrap">
+  <div class="col-headers">
+    <div></div>
+    <div class="col-hd"><div class="col-hd-phase">30 Days</div><div class="col-hd-date">by 30 May 2026</div><div class="col-hd-tag">Assess · Map</div></div>
+    <div class="col-hd"><div class="col-hd-phase">60 Days</div><div class="col-hd-date">by 30 Jun 2026</div><div class="col-hd-tag">Recommend · Build</div></div>
+    <div class="col-hd"><div class="col-hd-phase">90 Days</div><div class="col-hd-date">by 30 Jul 2026</div><div class="col-hd-tag">Finalise · Lead</div></div>
+  </div>
+  <div id="osRoot"></div>
+</div>
+
+<div class="os-legend">
+  <div class="leg"><div class="leg-dot" style="background:#d0d0d0"></div>Not started</div>
+  <div class="leg"><div class="leg-dot" style="background:#E07800"></div>In progress · on target</div>
+  <div class="leg"><div class="leg-dot" style="background:#CC2200"></div>Slipping</div>
+  <div class="leg"><div class="leg-dot" style="background:#1A8F3C"></div>Complete</div>
+  <div class="leg" style="font-style:italic;margin-left:4px;">· Click status to cycle · Click text to edit · Green bar = Activities progress</div>
+</div>
+
+<!-- SECTION BREAK -->
+<div class="section-break">
+  <div class="sb-line"></div>
+  <div class="sb-label">Activities &amp; Sources</div>
+  <div class="sb-line"></div>
+</div>
+
+<!-- ACTIVITIES -->
+<div id="act-top" class="act-wrap" id="activities-section"></div>
+
+<!-- SECTION BREAK: SHOPPING LIST -->
+<div class="section-break">
+  <div class="sb-line"></div>
+  <div class="sb-label">Shopping List</div>
+  <div class="sb-line"></div>
+</div>
+
+<!-- SHOPPING LIST -->
+<div id="shop-top" class="shop-wrap" id="shopping-section"></div>
+
+<div class="page-footer" id="pageFooter"></div>
+
+<script>
+const STORE   = 'adobe_merged_v1';
+const START   = new Date('2026-05-04');
+const DL      = [new Date('2026-05-30'),new Date('2026-06-30'),new Date('2026-07-30')];
+const CYCLE   = ['not-started','on-target','slipping','complete'];
+const LABELS  = {'not-started':'Not started','on-target':'In progress · on target','slipping':'Slipping','complete':'Complete'};
+const PROJ_LABELS = {PEOPLE:'PEOPLE',CLIENT:'CLIENT OPERATIONS',GROWTH:'GROWTH & CAPABILITIES'};
+const PROJ_SUBS   = {
+  PEOPLE:'Team structure · market assessment · talent allocation',
+  CLIENT:'Account narrative · brilliant basics · governance reform',
+  GROWTH:'Renewal · B2B pipeline · Adobe on Adobe · partnerships'
+};
+
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(STORE)||'{}'); } catch(e){}
+function saveAll(){ localStorage.setItem(STORE,JSON.stringify(saved)); }
+
+/* ─── UNIFIED DATA ─────────────────────────────────────────────── */
+const INITS = [
+  /* PEOPLE */
+  { project:'PEOPLE', name:'Organisational Design', meta:'Markets to scope',
+    phases:{
+      30:{ id:'p1-30', title:'Map each market to active SOW', due:'22 May',
+           desc:'Confirm what each market is contracted to deliver. Identify gaps between scope and current team capacity.',
+           documents:['Current SOW per APAC market (AU, NZ, SG, IN, PH, ID, TH)','MSA where no individual SOW exists','FTE allocation by market (Finance/Operations)','Scope amendment log if available'],
+           work:['Build a market-by-market scope summary table','Map contracted deliverables against current team capacity','Categorise each deliverable: in/out/ambiguous scope','Flag markets with no active SOW or unclear commercial arrangement'],
+           collaborators:['Market leads – local delivery context','Zenith Finance / Commercial – contract access','MOP / Publicis – contract detail and renewal status'] },
+      60:{ id:'p1-60', title:'Finalise org design with client + budget impacts', due:'19 Jun',
+           desc:'Present org design findings to Jonny and Adobe. Confirm resourcing model and budget implications per market. Sign off on structural changes.',
+           documents:['Scope mapping findings from 30-day phase','FTE cost model per market','Proposed org chart (draft)'],
+           work:['Build options paper: 2–3 org design scenarios with cost implications','Model budget impact per market','Prepare exec presentation for Jonny and Pete','Identify decisions requiring Adobe sign-off vs Zenith authority'],
+           collaborators:['Jonny (Adobe) – client sign-off','Zenith Finance – budget modelling','Zenith SLT – internal approval before client presentation'] },
+      90:{ id:'p1-90', title:'Finalise team model', due:'18 Jul',
+           desc:'Decisions made and communicated to all markets. Flexible resourcing structure confirmed. PH/Indo/TL/Flex capability rollout.',
+           documents:['Signed-off org design from 60-day phase','PH / Indo / TL / Flex capability brief and resourcing model'],
+           work:['Finalise and lock the org chart for all markets','Write comms to each market lead with role clarity','Define the flexible resourcing model for PH/Indo/TL markets','Brief HR on any role changes or new hires required'],
+           collaborators:['All market leads – receive and implement new structure','Jonny (Adobe) – confirm alignment before comms go out','Zenith SLT – final sign-off'] }
+    }
+  },
+  { project:'PEOPLE', name:'Contact Mapping', meta:'2-in-a-box · engagement protocols',
+    phases:{
+      30:{ id:'p2-30', title:'Draft 2-in-a-box model + engagement protocols', due:'22 May',
+           desc:'Map each market pairing: Adobe counterpart to Zenith lead. Agree cadence and channel per pair. Build escalation protocols in from day one – who speaks to whom, and when (if ever) Pete gets looped in.',
+           documents:['Adobe APAC org chart – request from Jonny','Zenith APAC market leads list (internal)','Current account contact list / CRM','Any existing escalation or governance documentation'],
+           work:['Map Zenith lead to each Adobe counterpart per market','Draft proposed cadence and channel per pairing','Produce the draft 2-in-a-box contact matrix','Define escalation protocol: Direct-1 → Direct-2, no skip escalations','Establish guidance on when Pete is looped in vs not'],
+           collaborators:['Jonny (Adobe) – confirm Adobe-side counterparts','Pete (Adobe) – align on day-to-day vs escalation contact','Market leads – confirm their Zenith nomination'] },
+      60:{ id:'p2-60', title:'Finalise 2-in-a-box + lock engagement model', due:'19 Jun',
+           desc:'Present full model to Adobe. Confirm escalation thresholds with Jonny and Pete explicitly. Lock the structure and distribute to all market leads with clear expectations on how to apply it.',
+           documents:['Draft 2-in-a-box contact matrix and engagement protocols from 30-day phase'],
+           work:['Present 2-in-a-box structure and protocols to Adobe','Incorporate client feedback and confirm final pairings','Get Jonny and Pete to explicitly agree the escalation model','Set up recurring meeting invites per market pairing','Distribute the locked model to all market leads'],
+           collaborators:['Jonny (Adobe) – final sign-off on structure and escalation model','Pete (Adobe) – confirm engagement preferences','Market leads – receive and adopt the locked model'] },
+      90:null
+    }
+  },
+  /* CLIENT OPERATIONS */
+  { project:'CLIENT', name:'Account Narrative', meta:'Elevate the story',
+    phases:{
+      30:{ id:'c2-30', title:'Narrative deck v1 delivered', due:'30 May',
+           desc:'Where we are, where we\'re going, what brilliant looks like for Adobe APAC. Shared with Jonny and Pete for input.',
+           documents:['Previous 2–3 QBR decks if accessible','Adobe global agency narrative or positioning statement','Zenith APAC credentials deck','Market activation highlights – last 12 months'],
+           work:['Define the narrative arc: current state → direction → what brilliant looks like','Write the storyline before building slides','Share draft with Jonny and Pete for input','Incorporate feedback and deliver v1'],
+           collaborators:['Market leads – local performance data and highlights','Zenith strategy – narrative framing','Jonny (Adobe) – review and feedback'] },
+      60:null,
+      90:{ id:'c2-90', title:'First QBR delivered', due:'18 Jul',
+           desc:'New QBR template live. Adobe and Zenith stakeholders both present. Sets the cadence for the rest of the year.',
+           documents:['QBR template built and tested in 60-day phase','Q2 2026 performance data across all markets','H1 results summary vs targets by market','H2 activation plan'],
+           work:['Set data submission deadlines for all market leads','Collect Q2 data and consolidate','Write exec narrative: wins, misses, learnings, H2 priorities','Rehearse with Zenith SLT before the live session','Facilitate and document agreed actions'],
+           collaborators:['All market leads – data inputs','Jonny and Pete (Adobe) – primary audience','Zenith SLT – to attend and present'] }
+    }
+  },
+  { project:'CLIENT', name:'Brilliant Basics', meta:'Meeting the Brief · Reporting for Duty',
+    phases:{
+      30:{ id:'c3-30', title:'Meeting the Brief', due:'30 May',
+           desc:'Quantify what client meetings and internal standups are actually costing. Map how much time goes to delivery vs client servicing. Identify what should change.',
+           documents:['Calendar export across AU market leads and account team – last 4 weeks','Any existing governance or meeting cadence documentation','FTE cost data from Finance – to apply hourly rate to meeting time'],
+           work:['Audit recurring meetings: type, attendees, frequency, duration','Calculate time cost per meeting type and roll up to monthly/annual FTE cost','Map split: delivery time vs client servicing vs internal admin','Identify meetings that are duplicated, low-value, or client-driven by default','Draft a proposed cadence: what stays, what goes, what changes format'],
+           collaborators:['Market leads – to share their calendar reality','Zenith Finance – for FTE rate to cost the audit','Jonny (Adobe) – sense-check on client-driven cadence expectations'] },
+      60:{ id:'c3-60', title:'Reporting for Duty', due:'19 Jun',
+           desc:'Audit every standing report we produce. What does it cost to make? Is Adobe actually using it? Map ownership, assess value, and identify what can be rationalised or automated.',
+           documents:['Full list of current reports: weekly RTB, SOR, QBR, ad-hoc – with frequency and owner','Time-to-produce estimate per report (from team leads)','Any Adobe feedback on report utility or requests for format changes'],
+           work:['Catalogue every report by type, audience, frequency, owner, and production time','Cost each report: FTE hours × rate','Assess value: is Adobe reading this? Is it driving decisions or ticking a box?','Identify what to stop, simplify, consolidate, or automate','Map ownership: who should own delivery vs who currently does','Draft a new reporting model and get Jonny\'s alignment before rolling out'],
+           collaborators:['Market leads and account team – to supply production time estimates','Jonny (Adobe) – to assess which reports Adobe genuinely values','Zenith strategy / ops – for templating and automation options'] },
+      90:null
+    }
+  },
+  /* GROWTH */
+  { project:'GROWTH', name:'Renewal', meta:'Protect the base',
+    phases:{
+      30:{ id:'g1-30', title:'Contract rollover', due:'19 May',
+           desc:'MOP confidence in rollover as is – scope, fees, etc. Little detail shared however – escalate for clarity on terms before expiry.',
+           documents:['Current contract / MSA with expiry date clearly identified','Renewal timeline and any notices already issued','MOP briefing on rollover intent','Commercial terms: fees, scope, SLAs, penalty clauses'],
+           work:['Review contract in full – flag ambiguous or risky clauses','Confirm rollover intent and timeline with MOP','Identify scope or team changes that need to be reflected in renewal','Escalate to Zenith legal if terms are unclear or inadequate'],
+           collaborators:['MOP / Publicis commercial – contract access and rollover intent','Zenith legal / commercial – clause review','Jonny (Adobe) – client-side renewal intention and timing'] },
+      60:{ id:'g1-60', title:'Scope & org alignment', due:'19 Jun',
+           desc:'Cross-reference renewal scope against Org Design and Contact Mapping outcomes. Confirm team commitments and structural changes are reflected in contract terms.',
+           documents:['Org Design outcomes from 30–60-day phase','Contact Mapping final model','Draft renewal terms / redlined contract if available'],
+           work:['Cross-reference renewal scope against Org Design findings','Identify mismatches where contract does not reflect the new team model','Draft proposed contract amendments or scope addenda','Prepare negotiation position for any scope or fee adjustments'],
+           collaborators:['Zenith commercial / legal – contract redlining','Jonny (Adobe) – client-side scope alignment','MOP / Publicis – group-level contract authority'] },
+      90:{ id:'g1-90', title:'Cross-market proof point', due:'18 Jul',
+           desc:'SG or IN included in a brief, activation, or QBR contribution. Documented as evidence the APAC structure works across markets and adds value beyond AU – strengthens the renewal case.',
+           documents:['Live briefs or activation opportunities from SG or IN','H2 market activation calendar','Zenith SG / IN capability overview'],
+           work:['Identify the right brief or moment in SG/IN to use as the vehicle','Pitch cross-market inclusion to Jonny as a renewal proof point','Brief the SG or IN lead and execute','Capture outcomes and write up as a proof point','Include in first QBR as evidence of the APAC model working'],
+           collaborators:['SG or IN market lead – execution partner','Jonny (Adobe) – client buy-in and renewal framing','Zenith strategy – frame the outcome strategically'] }
+    }
+  },
+  { project:'GROWTH', name:'Adobe on Adobe', meta:'Capability depth',
+    phases:{
+      30:{ id:'g2-30', title:'Audit current Adobe stack', due:'30 May',
+           desc:'Comprehensive review of which Adobe tools we currently use across all APAC markets, and what the roadmap to Power Users should look like.',
+           documents:['Adobe tool licences held by Zenith APAC – from IT or Finance','Adobe product catalogue / roadmap – from Adobe CSM','Current tool usage data per market – from IT or platform admins','Adobe Power Users benchmark or maturity model if accessible'],
+           work:['Inventory every Adobe tool in active use across all 7 markets','Rate usage maturity per tool per market: basic / intermediate / power','Identify unused or underutilised licences','Map the roadmap to Power User for each key tool','Identify quick wins – tools that can be activated immediately'],
+           collaborators:['Zenith IT / Technology – licence data and tool access logs','Adobe account team / CSM – product roadmap and maturity benchmarks','Market leads – local tool usage context'] },
+      60:{ id:'g2-60', title:'Publicis partnership', due:'19 Jun',
+           desc:'Audit tool use and agency team mapping across other Publicis brands. Build a plan to get Prodigious in for lower funnel production work.',
+           documents:['Prodigious APAC capabilities deck','Publicis Groupe tool and agency mapping for APAC','Current bottom-funnel production costs'],
+           work:['Map Adobe tool usage across other Publicis brands in APAC','Identify where Prodigious can take on lower-funnel production work','Model cost difference vs outsourcing to non-Publicis vendors','Draft integration proposal for Jonny / Adobe consideration'],
+           collaborators:['Prodigious APAC leadership – capability and capacity','Jonny (Adobe) – client alignment on Prodigious involvement','Zenith Finance – cost modelling of the production pod'] },
+      90:null
+    }
+  },
+  { project:'GROWTH', name:'New Revenue', meta:'B2B · data · upper funnel',
+    phases:{
+      30:null,
+      60:{ id:'g3-60', title:'Scope Harmony', due:'26 Jun',
+           desc:'Outline services Adobe could award us to make it easier to deliver flexibility. E.g. 4–5 FTE Creative Production pod for bottom funnel, SEO, and Agentic Search Optimisation.',
+           documents:['Current SOW and in-scope services (from Org Design workstream)','Creative production rate cards – FTE model','SEO scope and pricing benchmarks for APAC'],
+           work:['Define the 4–5 FTE Creative Production pod: structure, capabilities, output','Cost the pod: FTE vs retainer vs project-based pricing','Outline SEO scope extension and pricing for relevant markets','Define Agentic Search Optimisation as a new billable service','Write the Scope Harmony proposal document for Adobe'],
+           collaborators:['Zenith strategy / growth – commercial framing','SEO lead – scope definition and pricing','AI / technology lead – ASO definition','Jonny (Adobe) – client appetite check and budget authority'] },
+      90:{ id:'g3-90', title:'Upper funnel pilot scoped', due:'25 Jul',
+           desc:'Events or research-led campaign proposed. At least one market committed. Brief written and client-approved.',
+           documents:['Adobe APAC H2 brand / upper funnel marketing calendar','Market activation calendar for pilot market (SG or IN)','Upper funnel budget estimates'],
+           work:['Identify best upper funnel vehicle: events, research, or brand campaign','Select pilot market based on client appetite and timing','Write the brief: objectives, audience, channels, budget, timeline','Present upper funnel pilot concept to Jonny for approval'],
+           collaborators:['Adobe brand / marketing team – upper funnel objectives','Zenith strategy – concept development','SG or IN market lead – execution partner in market','Jonny (Adobe) – final approval and budget authority'] }
+    }
+  }
+];
+
+const PROJ_ORDER = ['PEOPLE','CLIENT','GROWTH'];
+
+/* ─── HELPERS ──────────────────────────────────────────────────────── */
+function getCompletion(action){
+  const secs = ['documents','work','collaborators'];
+  let total=0, done=0;
+  secs.forEach((s,si)=>{
+    (action[s]||[]).forEach((_,idx)=>{ total++; if(saved[`${action.id}-${si}-${idx}`]) done++; });
+  });
+  return { done, total, pct: total ? Math.round(done/total*100) : 0 };
+}
+
+/* ─── NAV: day + phase pills ───────────────────────────────────────── */
+const today  = new Date();
+const dayNum = Math.min(90, Math.max(1, Math.floor((today-START)/86400000)+1));
+document.getElementById('dayNum').textContent = 'Day '+dayNum;
+
+function refreshDayPill(){
+  let color='#1A8F3C';
+  INITS.forEach(init=>[30,60,90].forEach(ph=>{ if(!init.phases[ph]) return; const s=saved['status_'+init.phases[ph].id]||'not-started'; if(s==='slipping') color='#CC2200'; }));
+  const el=document.getElementById('dayPill');
+  el.style.background=color; el.style.boxShadow='0 2px 8px '+color+'55';
+}
+
+/* ─── OS CHART RENDER ──────────────────────────────────────────────── */
+const osRoot = document.getElementById('osRoot');
+PROJ_ORDER.forEach(pk=>{
+  const inits = INITS.filter(i=>i.project===pk);
+  const block = document.createElement('div'); block.className='os-project';
+  const ph = document.createElement('div'); ph.className='os-proj-hdr';
+  ph.innerHTML=`<a class="os-proj-title" href="#act-${pk}">${PROJ_LABELS[pk]}<span class="hint">↓ activities</span></a><div class="os-proj-span">${PROJ_SUBS[pk]}</div>`;
+  block.appendChild(ph);
+
+  inits.forEach(init=>{
+    const row=document.createElement('div'); row.className='init-row';
+    const lbl=document.createElement('div'); lbl.className='init-label';
+    lbl.innerHTML=`<div class="init-name">${init.name}</div><div class="init-meta">${init.meta}</div>`;
+    row.appendChild(lbl);
+
+    [30,60,90].forEach(phase=>{
+      const raw=init.phases[phase];
+      const cell=document.createElement('div');
+      if(!raw){ cell.className='action-cell empty'; cell.innerHTML='<div class="empty-dash">·</div>'; }
+      else {
+        cell.className='action-cell';
+        const aid=raw.id;
+        const status=saved['status_'+aid]||'not-started';
+        const {pct}=getCompletion(raw);
+
+        const div=document.createElement('div');
+        div.className='os-action'; div.dataset.id=aid; div.dataset.status=status;
+
+        const t=document.createElement('div'); t.className='action-title'; t.setAttribute('contenteditable','true'); t.setAttribute('data-placeholder','Add title…');
+        t.innerText=saved['title_'+aid]||raw.title;
+        t.addEventListener('blur',()=>{ saved['title_'+aid]=t.innerText; saveAll(); });
+        t.addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();t.blur();} });
+
+        const d=document.createElement('div'); d.className='action-desc'; d.setAttribute('contenteditable','true'); d.setAttribute('data-placeholder','Add detail…');
+        d.innerText=saved['desc_'+aid]||raw.desc;
+        d.addEventListener('blur',()=>{ saved['desc_'+aid]=d.innerText; saveAll(); });
+
+        const mp=document.createElement('div'); mp.className='mini-prog';
+        mp.innerHTML=`<div class="mini-fill" data-aid="${aid}" style="width:${pct}%"></div>`;
+
+        const ft=document.createElement('div'); ft.className='action-footer';
+        ft.innerHTML=`<div class="due-date">${raw.due}</div><div class="sbadge" data-aid="${aid}">${LABELS[status]}</div>`;
+        ft.addEventListener('click',e=>{ e.stopPropagation();
+          const next=CYCLE[(CYCLE.indexOf(div.dataset.status)+1)%CYCLE.length];
+          div.dataset.status=next; ft.querySelector('.sbadge').textContent=LABELS[next];
+          saved['status_'+aid]=next; saveAll(); refreshDayPill();
+        });
+
+        div.appendChild(t); div.appendChild(d); div.appendChild(mp); div.appendChild(ft);
+        cell.appendChild(div);
+      }
+      row.appendChild(cell);
+    });
+    block.appendChild(row);
+  });
+  osRoot.appendChild(block);
+});
+refreshDayPill();
+
+/* ─── ACTIVITIES RENDER ────────────────────────────────────────────── */
+const actWrap = document.querySelector('.act-wrap');
+const SECDEFS = [
+  {icon:'📁', label:'Documents & Files', key:'documents'},
+  {icon:'✅', label:'Work to Do',        key:'work'},
+  {icon:'👥', label:'Collaborators',     key:'collaborators'}
+];
+
+PROJ_ORDER.forEach(pk=>{
+  const inits=INITS.filter(i=>i.project===pk);
+  const actions=[];
+  inits.forEach(init=>[30,60,90].forEach(ph=>{ if(init.phases[ph]) actions.push({init,phase:ph,action:init.phases[ph]}); }));
+  if(!actions.length) return;
+
+  const sec=document.createElement('div'); sec.className='act-proj-sec'; sec.id='act-'+pk;
+  const hdr=document.createElement('div'); hdr.className='act-proj-hdr';
+  hdr.innerHTML=`<div class="act-proj-info"><div class="act-proj-name">${PROJ_LABELS[pk]}</div><div class="act-proj-sub">${PROJ_SUBS[pk]}</div></div><a class="back-link" href="#plan-top">▲ back to plan</a>`;
+  sec.appendChild(hdr);
+
+  const grid=document.createElement('div'); grid.className='cards-grid';
+
+  actions.forEach(({init,phase,action})=>{
+    const {done,total,pct}=getCompletion(action);
+    const card=document.createElement('div'); card.className='act-card'; card.dataset.aid=action.id;
+
+    const top=document.createElement('div'); top.className='act-card-top';
+    top.innerHTML=`<div class="act-badges"><span class="phase-badge p${phase}">${phase}-Day · due ${action.due}</span><span class="init-badge">${init.name}</span></div><div class="act-card-title">${action.title}</div><div class="act-prog-wrap"><div class="act-prog-meta"><span class="act-prog-count">${done}/${total} tasks</span><span class="act-prog-pct">${pct}%</span></div><div class="act-prog-track"><div class="act-prog-fill" data-aid="${action.id}" style="width:${pct}%"></div></div></div>`;
+    card.appendChild(top);
+
+    const body=document.createElement('div'); body.className='act-card-body';
+    let firstSec=true;
+    SECDEFS.forEach((sec,si)=>{
+      const items=action[sec.key]||[];
+      if(!items.length) return;
+      if(!firstSec){ const hr=document.createElement('hr'); hr.className='sec-hr'; body.appendChild(hr); }
+      firstSec=false;
+      const secDiv=document.createElement('div');
+      const lbl=document.createElement('div'); lbl.className='sec-label';
+      lbl.innerHTML=`<span>${sec.icon}</span>${sec.label}`;
+      secDiv.appendChild(lbl);
+      const list=document.createElement('div'); list.className='task-list';
+      items.forEach((item,idx)=>{
+        const key=`${action.id}-${si}-${idx}`;
+        const checked=saved[key]===true;
+        const ti=document.createElement('div'); ti.className='task-item'+(checked?' done':'');
+        const cb=document.createElement('input'); cb.type='checkbox'; cb.dataset.key=key; cb.checked=checked;
+        const lb=document.createElement('label'); lb.textContent=item;
+        cb.addEventListener('change',()=>{
+          saved[key]=cb.checked; ti.classList.toggle('done',cb.checked); saveAll();
+          updateCardProg(card,action); syncToOS(action);
+        });
+        lb.addEventListener('click',()=>cb.click());
+        ti.appendChild(cb); ti.appendChild(lb); list.appendChild(ti);
+      });
+      secDiv.appendChild(list); body.appendChild(secDiv);
+    });
+    card.appendChild(body); grid.appendChild(card);
+  });
+  sec.appendChild(grid); actWrap.appendChild(sec);
+});
+
+/* ─── CROSS-SECTION SYNC ───────────────────────────────────────────── */
+function updateCardProg(card,action){
+  const {done,total,pct}=getCompletion(action);
+  const c=card.querySelector('.act-prog-count'), p=card.querySelector('.act-prog-pct'), f=card.querySelector('.act-prog-fill[data-aid]');
+  if(c) c.textContent=`${done}/${total} tasks`;
+  if(p) p.textContent=`${pct}%`;
+  if(f) f.style.width=pct+'%';
+}
+
+function syncToOS(action){
+  const {pct}=getCompletion(action);
+  const mf=document.querySelector(`.mini-fill[data-aid="${action.id}"]`);
+  if(mf) mf.style.width=pct+'%';
+  if(pct===100){
+    const oa=document.querySelector(`.os-action[data-id="${action.id}"]`);
+    if(oa && oa.dataset.status!=='complete'){
+      oa.dataset.status='complete';
+      const sb=oa.querySelector('.sbadge'); if(sb) sb.textContent=LABELS.complete;
+      saved['status_'+action.id]='complete'; saveAll(); refreshDayPill();
+    }
+  }
+}
+
+/* ─── SMOOTH SCROLL ────────────────────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+
+document.getElementById('pageFooter').textContent=
+  'Adobe APAC · Opened '+today.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+
+/* ─── SHOPPING LIST ────────────────────────────────────────────────── */
+const SHOP_STORE = 'adobe_shopping_v1';
+let shopSaved = {};
+try { shopSaved = JSON.parse(localStorage.getItem(SHOP_STORE)||'{}'); } catch(e){}
+function shopSaveAll(){ localStorage.setItem(SHOP_STORE, JSON.stringify(shopSaved)); }
+
+const SHOP_GROUPS = [
+  { id:'sg1', label:'Jonny (Adobe)', color:'#CC0000', bg:'#fff0f0',
+    items:['Current SOW per APAC market (AU, NZ, SG, IN, PH, ID, TH)','MSA / Master Service Agreement where no individual SOW exists','Any SOW amendments or extensions to date','Adobe APAC org chart','Renewal timeline and any notices already issued','Commercial terms clarity – fees, scope, SLAs, penalties','Adobe global agency narrative / positioning statement','H2 marketing calendar and activation intent','SG and IN market priorities and named contacts'] },
+  { id:'sg2', label:'Adobe Account Team / CSM', color:'#cc4400', bg:'#fff6f0',
+    items:['Adobe product roadmap (APAC-relevant elements)','Power Users benchmark data by market','Partner programme terms and obligations','Previous 2–3 QBR decks (current or prior agency cycle)','Any Adobe-stated service expectations or KPIs'] },
+  { id:'sg3', label:'MOP / Publicis Commercial', color:'#1565c0', bg:'#f0f4ff',
+    items:['Rollover briefing – intent, scope, and timeline','Draft renewal or redlined contract if in circulation','Publicis tool and agency mapping across the account','Data on other Publicis brands using Adobe services','Precedents from comparable scope renewals'] },
+  { id:'sg4', label:'Prodigious', color:'#6a1b9a', bg:'#f8f0ff',
+    items:['APAC capabilities deck','Capacity and availability by market','Rate cards for creative production','Existing Adobe work examples or case studies'] },
+  { id:'sg5', label:'Zenith Finance', color:'#1A8F3C', bg:'#f0faf4',
+    items:['FTE allocation by market (current model)','FTE cost model – salary, on-costs, overheads','Account P&L by market (current year)','Budget vs actuals report year to date','Creative production rate cards – bottom-funnel','Upper funnel production budget estimates','Revenue and margin by market and channel'] },
+  { id:'sg6', label:'Zenith IT / Technology', color:'#00695c', bg:'#f0faf8',
+    items:['Adobe licence list – what is contracted and active','Tool usage data per market (utilisation rates)','Prior technology or tool audit reports','Any Adobe integration or configuration documentation'] },
+  { id:'sg7', label:'Zenith Strategy & Operations', color:'#555', bg:'#f6f6f6',
+    items:['Zenith APAC credentials and positioning deck','Market leads list with contact details (all 7 markets)','CRM / contact data for the Adobe account','Existing governance documents or account playbooks','Comparable scope proposals from other accounts','Events and sponsorship capability overview','SG and IN capability overview','SEO benchmarks by market (if available)'] },
+  { id:'sg8', label:'Market Leads (all 7 markets)', color:'#E07800', bg:'#fff8f0',
+    items:['Performance data by market – last 12 months','Activation highlights and case study candidates','Q2 2026 data (as available)','H1 results summary vs targets','H2 activation plans and any live briefs','SG and IN live briefs or pipeline briefs','Pilot market activation calendar'] },
+  { id:'sg9', label:'Build / Create Internally', color:'#444', bg:'#f4f4f4',
+    items:['Proposed APAC org chart (draft)','2-in-a-box contact matrix (draft)','Comms plan template for market leads','New QBR template (structure and format)','PH / Indo / TL resourcing brief','ASO capability definition document','Scope Harmony proposal document','Escalation protocol framework (draft)'] }
+];
+
+function shopCountDone(g){
+  var d=0; g.items.forEach(function(x,i){ if(shopSaved[g.id+'-'+i]) d++; }); return d;
+}
+
+function renderShop(){
+  const root = document.getElementById('shop-top');
+  if(!root) return;
+  let html = '';
+  SHOP_GROUPS.forEach(function(g){
+    const total = g.items.length;
+    const done  = shopCountDone(g);
+    html += '<div class="shop-group" data-sgid="'+g.id+'">';
+    html += '<div class="shop-group-hdr" style="background:'+g.bg+'">';
+    html += '<span class="shop-group-name" style="color:'+g.color+'">'+g.label+'</span>';
+    html += '<span class="shop-group-count" data-sgcount="'+g.id+'" style="background:'+g.color+'22;color:'+g.color+'">'+done+' / '+total+'</span>';
+    html += '</div><div class="shop-group-body">';
+    g.items.forEach(function(item, i){
+      const cid = g.id+'-'+i;
+      const ck  = shopSaved[cid] ? 'checked' : '';
+      const dc  = shopSaved[cid] ? ' done' : '';
+      html += '<div class="shop-item'+dc+'" id="si-'+cid+'"><input type="checkbox" id="sc-'+cid+'" '+ck+'><label for="sc-'+cid+'">'+item+'</label></div>';
+    });
+    html += '</div></div>';
+  });
+  root.innerHTML = html;
+  SHOP_GROUPS.forEach(function(g){
+    g.items.forEach(function(item, i){
+      const cid = g.id+'-'+i;
+      const cb  = document.getElementById('sc-'+cid);
+      if(!cb) return;
+      cb.addEventListener('change', function(){
+        shopSaved[cid] = cb.checked; shopSaveAll();
+        var si = document.getElementById('si-'+cid);
+        if(si) si.className = 'shop-item'+(cb.checked?' done':'');
+        var cnt = document.querySelector('[data-sgcount="'+g.id+'"]');
+        if(cnt) cnt.textContent = shopCountDone(g)+' / '+g.items.length;
+      });
+    });
+  });
+}
+renderShop();
+</script>
+</body>
+</html>

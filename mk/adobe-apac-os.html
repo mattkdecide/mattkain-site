@@ -28,6 +28,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .nav-btn:hover { background:#f5f5f5; border-color:#ccc; color:#444; }
 .nav-btn.primary { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
 .nav-btn.primary:hover { background:#333; }
+.nav-btn.cart-btn { display:inline-flex; align-items:center; gap:5px; }
+.nav-btn.cart-btn svg { flex-shrink:0; }
 
 /* ── OS CHART ── */
 .plan-wrap { padding:20px 24px 0; }
@@ -141,18 +143,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   </div>
   <div class="nav-row">
     <div class="day-pill" id="dayPill"><span class="dn" id="dayNum">–</span><span class="ds">of 90</span></div>
-    <div class="phase-pill p30" id="pill30">30-Day</div>
-    <div class="phase-pill p60" id="pill60">60-Day</div>
-    <div class="phase-pill p90" id="pill90">90-Day</div>
+    <a class="nav-btn" href="#act-PEOPLE">People</a>
+    <a class="nav-btn" href="#act-CLIENT">Client Ops</a>
+    <a class="nav-btn" href="#act-GROWTH">Growth</a>
     <span class="nav-sep">|</span>
     <a class="nav-btn" href="#plan-top">▲ Plan</a>
     <a class="nav-btn primary" href="#act-top">▼ Activities</a>
-    <span class="nav-sep">|</span>
-    <a class="nav-btn" href="#act-PEOPLE">People</a>
-    <a class="nav-btn" href="#act-CLIENT">Client</a>
-    <a class="nav-btn" href="#act-GROWTH">Growth</a>
-    <span class="nav-sep">|</span>
-    <a class="nav-btn" href="#shop-top">🛒 Shopping</a>
+    <a class="nav-btn cart-btn" href="#shop-top"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> Shopping</a>
   </div>
 </div>
 
@@ -203,10 +200,10 @@ const START   = new Date('2026-05-04');
 const DL      = [new Date('2026-05-30'),new Date('2026-06-30'),new Date('2026-07-30')];
 const CYCLE   = ['not-started','on-target','slipping','complete'];
 const LABELS  = {'not-started':'Not started','on-target':'In progress · on target','slipping':'Slipping','complete':'Complete'};
-const PROJ_LABELS = {PEOPLE:'PEOPLE',CLIENT:'CLIENT',GROWTH:'GROWTH & CAPABILITIES'};
+const PROJ_LABELS = {PEOPLE:'PEOPLE',CLIENT:'CLIENT OPERATIONS',GROWTH:'GROWTH & CAPABILITIES'};
 const PROJ_SUBS   = {
   PEOPLE:'Team structure · market assessment · talent allocation',
-  CLIENT:'Brilliant basics · relationship architecture · narrative',
+  CLIENT:'Account narrative · brilliant basics · governance reform',
   GROWTH:'Renewal · B2B pipeline · Adobe on Adobe · partnerships'
 };
 
@@ -221,60 +218,65 @@ const INITS = [
     phases:{
       30:{ id:'p1-30', title:'Map each market to active SOW', due:'22 May',
            desc:'Confirm what each market is contracted to deliver. Identify gaps between scope and current team capacity.',
-           documents:['Current SOW for each APAC market – AU, NZ, SG, IN, PH, ID, TH','MSA / Master Service Agreement per market where no individual SOW exists','Previous year contract terms and any amendments or change orders','FTE allocation by market (from Finance or Operations)','Scope change / amendment log if available','Internal account P&L or revenue summary per market'],
-           work:['Build a market-by-market scope summary table','Map each market\'s contracted deliverables against current team capacity','Categorise each deliverable: in-scope / out-of-scope / ambiguous','Identify gaps where markets are under-resourced vs contracted scope','Flag markets with no active SOW or unclear commercial arrangement','Draft a findings summary for leadership review'],
-           collaborators:['Zenith Commercial / Finance – for contract access and interpretation','Market leads (AU, NZ, SG, IN, PH, ID, TH) – for local delivery context','MOP / Publicis procurement – for contract detail and renewal status','Jonny (Adobe) – for any scope interpretation questions'] },
+           documents:['Current SOW per APAC market (AU, NZ, SG, IN, PH, ID, TH)','MSA where no individual SOW exists','FTE allocation by market (Finance/Operations)','Scope amendment log if available'],
+           work:['Build a market-by-market scope summary table','Map contracted deliverables against current team capacity','Categorise each deliverable: in/out/ambiguous scope','Flag markets with no active SOW or unclear commercial arrangement'],
+           collaborators:['Market leads – local delivery context','Zenith Finance / Commercial – contract access','MOP / Publicis – contract detail and renewal status'] },
       60:{ id:'p1-60', title:'Finalise org design with client + budget impacts', due:'19 Jun',
            desc:'Present org design findings to Jonny and Adobe. Confirm resourcing model and budget implications per market. Sign off on structural changes.',
-           documents:['Scope mapping findings from 30-day phase','FTE cost model per market (salary, on-costs, overheads)','Budget vs actuals report for current year','Proposed org chart (draft)','Benchmark: comparable APAC agency team models if accessible'],
-           work:['Build an options paper: 2–3 org design scenarios with cost implications','Model the budget impact of each scenario per market','Prepare executive presentation deck for Jonny and Pete','Identify decisions requiring Adobe sign-off vs Zenith authority','Prepare comms plan for market leads once decisions are made'],
-           collaborators:['Jonny (Adobe) – client sign-off on proposed structure','Pete (Adobe) – additional stakeholder alignment','Zenith Finance – budget modelling and commercial sign-off','Zenith SLT – internal approval before client presentation'] },
+           documents:['Scope mapping findings from 30-day phase','FTE cost model per market','Proposed org chart (draft)'],
+           work:['Build options paper: 2–3 org design scenarios with cost implications','Model budget impact per market','Prepare exec presentation for Jonny and Pete','Identify decisions requiring Adobe sign-off vs Zenith authority'],
+           collaborators:['Jonny (Adobe) – client sign-off','Zenith Finance – budget modelling','Zenith SLT – internal approval before client presentation'] },
       90:{ id:'p1-90', title:'Finalise team model', due:'18 Jul',
            desc:'Decisions made and communicated to all markets. Flexible resourcing structure confirmed. PH/Indo/TL/Flex capability rollout.',
-           documents:['Signed-off org design from 60-day phase','Market-specific communications plan template','Onboarding or transition plan for any structural changes','PH / Indo / TL / Flex capability brief and resourcing model'],
-           work:['Finalise and lock the org chart for all markets','Write comms to each market lead with role clarity and expectations','Define the flexible resourcing model for PH, Indo, TL markets','Establish success metrics for the new structure (12-month view)','Brief HR / People on any role changes or new hires required'],
-           collaborators:['All market leads – to receive and implement the new structure','HR / People & Culture – for any staffing or role implications','Jonny (Adobe) – confirm client alignment before comms go out','Zenith SLT – final sign-off before structural decisions are communicated'] }
+           documents:['Signed-off org design from 60-day phase','PH / Indo / TL / Flex capability brief and resourcing model'],
+           work:['Finalise and lock the org chart for all markets','Write comms to each market lead with role clarity','Define the flexible resourcing model for PH/Indo/TL markets','Brief HR on any role changes or new hires required'],
+           collaborators:['All market leads – receive and implement new structure','Jonny (Adobe) – confirm alignment before comms go out','Zenith SLT – final sign-off'] }
     }
   },
   { project:'PEOPLE', name:'Contact Mapping', meta:'2-in-a-box · engagement protocols',
     phases:{
       30:{ id:'p2-30', title:'Draft 2-in-a-box model + engagement protocols', due:'22 May',
            desc:'Map each market pairing: Adobe counterpart to Zenith lead. Agree cadence and channel per pair. Build escalation protocols in from day one – who speaks to whom, and when (if ever) Pete gets looped in.',
-           documents:['Adobe APAC org chart – request from Jonny or research via LinkedIn','Zenith APAC market leads list (internal)','Current account contact list / CRM for the Adobe account','Any existing escalation protocol or account governance documentation','Any Adobe-stated APAC market priorities or named contacts shared to date'],
-           work:['Identify the Adobe counterpart for each APAC market','Map Zenith market lead to each Adobe counterpart','Draft proposed cadence and preferred channel for each market pairing','Identify gap markets where no clear Adobe counterpart yet exists','Produce the draft 2-in-a-box contact matrix','Draft engagement norms: who speaks to whom day-to-day per market','Define the escalation protocol: Direct-1 → Direct-2 → one-level only (no skip escalations)','Establish clear guidance on when Pete is looped in vs not – eliminate the CC-everything habit'],
-           collaborators:['Jonny (Adobe) – to confirm Adobe-side counterparts per market','Pete (Adobe) – align on who he expects to be contacted day-to-day vs looped in for escalations','Market leads (each country) – to confirm their Zenith nomination','Zenith SLT – to align on internal escalation hierarchy before presenting to client','Zenith account team – for internal CRM / contact data'] },
+           documents:['Adobe APAC org chart – request from Jonny','Zenith APAC market leads list (internal)','Current account contact list / CRM','Any existing escalation or governance documentation'],
+           work:['Map Zenith lead to each Adobe counterpart per market','Draft proposed cadence and channel per pairing','Produce the draft 2-in-a-box contact matrix','Define escalation protocol: Direct-1 → Direct-2, no skip escalations','Establish guidance on when Pete is looped in vs not'],
+           collaborators:['Jonny (Adobe) – confirm Adobe-side counterparts','Pete (Adobe) – align on day-to-day vs escalation contact','Market leads – confirm their Zenith nomination'] },
       60:{ id:'p2-60', title:'Finalise 2-in-a-box + lock engagement model', due:'19 Jun',
            desc:'Present full model to Adobe. Confirm escalation thresholds with Jonny and Pete explicitly. Lock the structure and distribute to all market leads with clear expectations on how to apply it.',
-           documents:['Draft 2-in-a-box contact matrix and engagement protocols from 30-day phase','Any resourcing or budget implications from the Org Design workstream'],
-           work:['Present 2-in-a-box structure and engagement protocols to Adobe (Jonny / Pete)','Incorporate client feedback and confirm final pairings','Confirm escalation protocol with Adobe – get Jonny and Pete to explicitly agree the model','Agree on cadence: frequency, channel, pre-read expectation per pairing','Set up recurring meeting invites for each market pairing','Document the locked model – contact map, engagement norms, escalation thresholds','Distribute to all market leads with clear expectations on how to apply it'],
-           collaborators:['Jonny (Adobe) – final sign-off on structure and escalation model','Pete (Adobe) – confirm his engagement preferences and escalation triggers','Market leads – to receive and adopt the locked model'] },
+           documents:['Draft 2-in-a-box contact matrix and engagement protocols from 30-day phase'],
+           work:['Present 2-in-a-box structure and protocols to Adobe','Incorporate client feedback and confirm final pairings','Get Jonny and Pete to explicitly agree the escalation model','Set up recurring meeting invites per market pairing','Distribute the locked model to all market leads'],
+           collaborators:['Jonny (Adobe) – final sign-off on structure and escalation model','Pete (Adobe) – confirm engagement preferences','Market leads – receive and adopt the locked model'] },
       90:null
     }
   },
-  /* CLIENT */
+  /* CLIENT OPERATIONS */
   { project:'CLIENT', name:'Account Narrative', meta:'Elevate the story',
     phases:{
       30:{ id:'c2-30', title:'Narrative deck v1 delivered', due:'30 May',
            desc:'Where we are, where we\'re going, what brilliant looks like for Adobe APAC. Shared with Jonny and Pete for input.',
-           documents:['Previous QBR decks – last 2–3 if accessible','Current performance data by market (media, search, DX)','Adobe global agency narrative or positioning statement if available','Zenith APAC credentials and positioning deck','Market activation highlights from the past 12 months'],
-           work:['Audit previous QBR decks for tone, structure, and content gaps','Define the narrative arc: where we are → where we\'re going → what brilliant looks like','Write the storyline and structure before building slides','Build the deck: current state, strategic direction, APAC proof points','Share draft with Jonny and Pete for input before finalising','Incorporate feedback and deliver final v1'],
-           collaborators:['Market leads – for local performance data and activation highlights','Zenith strategy team – for narrative input and positioning angle','Jonny (Adobe) – review and feedback on draft deck','Pete (Adobe) – secondary input before final version'] },
+           documents:['Previous 2–3 QBR decks if accessible','Adobe global agency narrative or positioning statement','Zenith APAC credentials deck','Market activation highlights – last 12 months'],
+           work:['Define the narrative arc: current state → direction → what brilliant looks like','Write the storyline before building slides','Share draft with Jonny and Pete for input','Incorporate feedback and deliver v1'],
+           collaborators:['Market leads – local performance data and highlights','Zenith strategy – narrative framing','Jonny (Adobe) – review and feedback'] },
       60:null,
       90:{ id:'c2-90', title:'First QBR delivered', due:'18 Jul',
            desc:'New QBR template live. Adobe and Zenith stakeholders both present. Sets the cadence for the rest of the year.',
-           documents:['QBR template – new format built and tested in 60-day phase','Q2 2026 performance data across all markets and channels','H1 results summary vs targets by market','Forward-looking market activation plan for H2','Narrative deck from 30-day phase as the story foundation'],
-           work:['Finalise QBR template in 60-day phase and test with one market','Set data submission deadlines for all market leads','Collect Q2 data from all markets and consolidate','Write exec narrative: wins, misses, learnings, H2 priorities','Design and produce the full QBR deck','Rehearse with Zenith SLT before the live session','Facilitate the QBR with Adobe and Zenith stakeholders','Document agreed actions and owners from the session'],
-           collaborators:['All market leads – for data inputs and local narrative contributions','Jonny and Pete (Adobe) – primary audience','Adobe APAC leadership – to invite and brief before the session','Zenith SLT – to attend and present where relevant'] }
+           documents:['QBR template built and tested in 60-day phase','Q2 2026 performance data across all markets','H1 results summary vs targets by market','H2 activation plan'],
+           work:['Set data submission deadlines for all market leads','Collect Q2 data and consolidate','Write exec narrative: wins, misses, learnings, H2 priorities','Rehearse with Zenith SLT before the live session','Facilitate and document agreed actions'],
+           collaborators:['All market leads – data inputs','Jonny and Pete (Adobe) – primary audience','Zenith SLT – to attend and present'] }
     }
   },
-  { project:'CLIENT', name:'Inclusion Beyond AU', meta:'Pan-APAC activation',
+  { project:'CLIENT', name:'Brilliant Basics', meta:'Meeting the Brief · Reporting for Duty',
     phases:{
-      30:null, 60:null,
-      90:{ id:'c3-90', title:'First cross-market moment', due:'25 Jul',
-           desc:'SG or IN included in a brief, workshop, or activation. Documented as a proof point for pan-APAC operating model.',
-           documents:['Live briefs from SG or IN market to identify the right vehicle','Adobe APAC market priorities for SG and IN','Previous cross-market activations for reference (if any)','Zenith SG / IN capability overview'],
-           work:['Identify the right brief or activation in SG or IN to use as the vehicle','Pitch cross-market inclusion to Jonny as a strategic proof point','Brief the SG or IN lead on the activation and objectives','Execute the activation and capture outcomes','Write up a proof point document for the pan-APAC operating model','Include in first QBR as evidence of the model working across markets'],
-           collaborators:['SG market lead or IN market lead – execution partner','Jonny (Adobe) – client buy-in for the cross-market approach','Adobe SG / IN contacts – client-side in market','Zenith strategy – to frame the outcome as a strategic proof point'] }
+      30:{ id:'c3-30', title:'Meeting the Brief', due:'30 May',
+           desc:'Quantify what client meetings and internal standups are actually costing. Map how much time goes to delivery vs client servicing. Identify what should change.',
+           documents:['Calendar export across AU market leads and account team – last 4 weeks','Any existing governance or meeting cadence documentation','FTE cost data from Finance – to apply hourly rate to meeting time'],
+           work:['Audit recurring meetings: type, attendees, frequency, duration','Calculate time cost per meeting type and roll up to monthly/annual FTE cost','Map split: delivery time vs client servicing vs internal admin','Identify meetings that are duplicated, low-value, or client-driven by default','Draft a proposed cadence: what stays, what goes, what changes format'],
+           collaborators:['Market leads – to share their calendar reality','Zenith Finance – for FTE rate to cost the audit','Jonny (Adobe) – sense-check on client-driven cadence expectations'] },
+      60:{ id:'c3-60', title:'Reporting for Duty', due:'19 Jun',
+           desc:'Audit every standing report we produce. What does it cost to make? Is Adobe actually using it? Map ownership, assess value, and identify what can be rationalised or automated.',
+           documents:['Full list of current reports: weekly RTB, SOR, QBR, ad-hoc – with frequency and owner','Time-to-produce estimate per report (from team leads)','Any Adobe feedback on report utility or requests for format changes'],
+           work:['Catalogue every report by type, audience, frequency, owner, and production time','Cost each report: FTE hours × rate','Assess value: is Adobe reading this? Is it driving decisions or ticking a box?','Identify what to stop, simplify, consolidate, or automate','Map ownership: who should own delivery vs who currently does','Draft a new reporting model and get Jonny\'s alignment before rolling out'],
+           collaborators:['Market leads and account team – to supply production time estimates','Jonny (Adobe) – to assess which reports Adobe genuinely values','Zenith strategy / ops – for templating and automation options'] },
+      90:null
     }
   },
   /* GROWTH */
@@ -282,29 +284,33 @@ const INITS = [
     phases:{
       30:{ id:'g1-30', title:'Contract rollover', due:'19 May',
            desc:'MOP confidence in rollover as is – scope, fees, etc. Little detail shared however – escalate for clarity on terms before expiry.',
-           documents:['Current contract / MSA with expiry date clearly identified','Renewal timeline and any notices already issued','MOP notes or briefing on rollover intent','Commercial terms: fees, scope, SLAs, and any penalty clauses'],
-           work:['Review the current contract in full – flag ambiguous or risky clauses','Confirm rollover intent and timeline with MOP','Identify scope or team changes that need to be reflected in renewal','Escalate to Zenith legal / commercial if terms are unclear or inadequate','Prepare a summary of key renewal risks and asks for leadership'],
-           collaborators:['MOP / Publicis commercial – for contract access and rollover intent','Zenith legal / commercial – for clause review and risk assessment','Jonny (Adobe) – for client-side renewal intention and timing','Zenith CFO / Finance – for fee model alignment'] },
-      60:{ id:'g1-60', title:'Scope & Org alignment', due:'19 Jun',
+           documents:['Current contract / MSA with expiry date clearly identified','Renewal timeline and any notices already issued','MOP briefing on rollover intent','Commercial terms: fees, scope, SLAs, penalty clauses'],
+           work:['Review contract in full – flag ambiguous or risky clauses','Confirm rollover intent and timeline with MOP','Identify scope or team changes that need to be reflected in renewal','Escalate to Zenith legal if terms are unclear or inadequate'],
+           collaborators:['MOP / Publicis commercial – contract access and rollover intent','Zenith legal / commercial – clause review','Jonny (Adobe) – client-side renewal intention and timing'] },
+      60:{ id:'g1-60', title:'Scope & org alignment', due:'19 Jun',
            desc:'Cross-reference renewal scope against Org Design and Contact Mapping outcomes. Confirm team commitments and structural changes are reflected in contract terms.',
-           documents:['Org Design outcomes from People workstream (30–60-day phase)','Contact Mapping final model','Draft renewal terms / redlined contract if available','Budget model per market from Org Design phase'],
-           work:['Cross-reference renewal scope against Org Design findings','Identify mismatches where contract does not reflect the new team model','Draft proposed contract amendments or scope addenda','Confirm team commitments are reflected in commercial terms','Prepare negotiation position for any scope or fee adjustments needed'],
-           collaborators:['Zenith commercial / legal – for contract redlining','Jonny (Adobe) – for client-side scope alignment','Zenith Finance – for budget confirmation','MOP / Publicis – for group-level contract authority'] },
-      90:null
+           documents:['Org Design outcomes from 30–60-day phase','Contact Mapping final model','Draft renewal terms / redlined contract if available'],
+           work:['Cross-reference renewal scope against Org Design findings','Identify mismatches where contract does not reflect the new team model','Draft proposed contract amendments or scope addenda','Prepare negotiation position for any scope or fee adjustments'],
+           collaborators:['Zenith commercial / legal – contract redlining','Jonny (Adobe) – client-side scope alignment','MOP / Publicis – group-level contract authority'] },
+      90:{ id:'g1-90', title:'Cross-market proof point', due:'18 Jul',
+           desc:'SG or IN included in a brief, activation, or QBR contribution. Documented as evidence the APAC structure works across markets and adds value beyond AU – strengthens the renewal case.',
+           documents:['Live briefs or activation opportunities from SG or IN','H2 market activation calendar','Zenith SG / IN capability overview'],
+           work:['Identify the right brief or moment in SG/IN to use as the vehicle','Pitch cross-market inclusion to Jonny as a renewal proof point','Brief the SG or IN lead and execute','Capture outcomes and write up as a proof point','Include in first QBR as evidence of the APAC model working'],
+           collaborators:['SG or IN market lead – execution partner','Jonny (Adobe) – client buy-in and renewal framing','Zenith strategy – frame the outcome strategically'] }
     }
   },
   { project:'GROWTH', name:'Adobe on Adobe', meta:'Capability depth',
     phases:{
-      30:{ id:'g2-30', title:'Audit Current Adobe Stack', due:'30 May',
+      30:{ id:'g2-30', title:'Audit current Adobe stack', due:'30 May',
            desc:'Comprehensive review of which Adobe tools we currently use across all APAC markets, and what the roadmap to Power Users should look like.',
-           documents:['Adobe tool licences held by Zenith APAC – request from IT or Finance','Adobe product catalogue / roadmap – request from Adobe account team or CSM','Current usage data per tool per market – from IT or platform admins','Adobe "Power Users" benchmark or maturity model if accessible','Any prior tool audit reports or capability assessments'],
-           work:['Inventory every Adobe tool in active use across AU, NZ, SG, IN, PH, ID, TH','Rate usage maturity per tool per market: basic / intermediate / power user','Identify unused or underutilised licences that represent wasted spend','Map the roadmap: what does "Power User" look like for each key tool?','Produce a gap analysis: current state vs target maturity','Identify quick wins – tools that can be activated or maximised immediately'],
-           collaborators:['Zenith IT / Technology – for licence data and tool access logs','Market leads – for local tool usage context and feedback','Adobe account team / CSM – for product roadmap and maturity benchmarks','Platform specialists in-house (e.g. AEP, AEM leads if applicable)'] },
-      60:{ id:'g2-60', title:'Publicis Partnership', due:'19 Jun',
+           documents:['Adobe tool licences held by Zenith APAC – from IT or Finance','Adobe product catalogue / roadmap – from Adobe CSM','Current tool usage data per market – from IT or platform admins','Adobe Power Users benchmark or maturity model if accessible'],
+           work:['Inventory every Adobe tool in active use across all 7 markets','Rate usage maturity per tool per market: basic / intermediate / power','Identify unused or underutilised licences','Map the roadmap to Power User for each key tool','Identify quick wins – tools that can be activated immediately'],
+           collaborators:['Zenith IT / Technology – licence data and tool access logs','Adobe account team / CSM – product roadmap and maturity benchmarks','Market leads – local tool usage context'] },
+      60:{ id:'g2-60', title:'Publicis partnership', due:'19 Jun',
            desc:'Audit tool use and agency team mapping across other Publicis brands. Build a plan to get Prodigious in for lower funnel production work.',
-           documents:['Prodigious APAC capabilities deck – request from Prodigious leadership','Publicis Groupe tool and agency mapping for APAC markets','Other Publicis brands\' Adobe usage and maturity data','Adobe partner programme terms for Publicis group','Current bottom-funnel production costs and budget estimates'],
-           work:['Map Adobe tool usage across other Publicis brands in APAC','Identify where Prodigious can take on lower-funnel production work','Build a phased integration plan to bring Prodigious into Adobe APAC scope','Model cost difference vs outsourcing to non-Publicis vendors','Draft integration proposal for Jonny / Adobe consideration','Identify any contractual or commercial barriers to Prodigious involvement'],
-           collaborators:['Prodigious APAC leadership – for capability and capacity brief','Publicis Groupe APAC – for partnership authority and commercial framework','Jonny (Adobe) – client alignment on bringing Prodigious into scope','Zenith Finance – for cost modelling of the production pod'] },
+           documents:['Prodigious APAC capabilities deck','Publicis Groupe tool and agency mapping for APAC','Current bottom-funnel production costs'],
+           work:['Map Adobe tool usage across other Publicis brands in APAC','Identify where Prodigious can take on lower-funnel production work','Model cost difference vs outsourcing to non-Publicis vendors','Draft integration proposal for Jonny / Adobe consideration'],
+           collaborators:['Prodigious APAC leadership – capability and capacity','Jonny (Adobe) – client alignment on Prodigious involvement','Zenith Finance – cost modelling of the production pod'] },
       90:null
     }
   },
@@ -312,15 +318,15 @@ const INITS = [
     phases:{
       30:null,
       60:{ id:'g3-60', title:'Scope Harmony', due:'26 Jun',
-           desc:'Outline services Adobe could award us to make it easier to deliver flexibility. E.g. 4–5 FTE Creative Production pod for bottom funnel creative, SEO, and Agentic Search Optimisation.',
-           documents:['Current SOW and in-scope services (from Org Design workstream)','Incremental service opportunities identified to date','Creative production cost model – FTE rate cards','SEO scope and pricing benchmarks for APAC','Agentic Search Optimisation (ASO) capability overview – emerging discipline','Comparable scope expansion proposals from other accounts if available'],
-           work:['Define the 4–5 FTE Creative Production pod: structure, capabilities, output','Cost the pod: FTE model vs retainer vs project-based pricing','Outline SEO scope extension and pricing for relevant markets','Research and define Agentic Search Optimisation as a new billable service','Write the Scope Harmony proposal document for Adobe','Identify which markets are the strongest candidates for piloting expanded scope'],
-           collaborators:['Zenith strategy / growth lead – for commercial framing','SEO lead / specialist – for scope definition and pricing','AI / technology lead – for Agentic Search Optimisation definition','Zenith Finance – for FTE cost modelling','Jonny (Adobe) – for client appetite check and budget authority'] },
+           desc:'Outline services Adobe could award us to make it easier to deliver flexibility. E.g. 4–5 FTE Creative Production pod for bottom funnel, SEO, and Agentic Search Optimisation.',
+           documents:['Current SOW and in-scope services (from Org Design workstream)','Creative production rate cards – FTE model','SEO scope and pricing benchmarks for APAC'],
+           work:['Define the 4–5 FTE Creative Production pod: structure, capabilities, output','Cost the pod: FTE vs retainer vs project-based pricing','Outline SEO scope extension and pricing for relevant markets','Define Agentic Search Optimisation as a new billable service','Write the Scope Harmony proposal document for Adobe'],
+           collaborators:['Zenith strategy / growth – commercial framing','SEO lead – scope definition and pricing','AI / technology lead – ASO definition','Jonny (Adobe) – client appetite check and budget authority'] },
       90:{ id:'g3-90', title:'Upper funnel pilot scoped', due:'25 Jul',
            desc:'Events or research-led campaign proposed. At least one market committed. Brief written and client-approved.',
-           documents:['Adobe APAC H2 brand / upper funnel marketing calendar','Previous events or research-led campaign proposals (if any)','Market activation calendar for target pilot market (SG or IN)','Upper funnel budget estimates','Zenith events / research capability overview'],
-           work:['Identify best upper funnel vehicle: events, research, or brand campaign','Select pilot market (SG or IN) based on client appetite and timing alignment','Write the brief: objectives, audience, channels, budget, timeline','Present the upper funnel pilot concept to Jonny for approval','Get client-approved brief signed off','Identify and brief the production / activation team to deliver'],
-           collaborators:['Adobe brand / marketing team – for upper funnel objectives and alignment','Zenith strategy – for concept development','SG or IN market lead – as the execution partner in market','Events or research team (Zenith or third-party) – for production','Jonny (Adobe) – for final approval and budget authority'] }
+           documents:['Adobe APAC H2 brand / upper funnel marketing calendar','Market activation calendar for pilot market (SG or IN)','Upper funnel budget estimates'],
+           work:['Identify best upper funnel vehicle: events, research, or brand campaign','Select pilot market based on client appetite and timing','Write the brief: objectives, audience, channels, budget, timeline','Present upper funnel pilot concept to Jonny for approval'],
+           collaborators:['Adobe brand / marketing team – upper funnel objectives','Zenith strategy – concept development','SG or IN market lead – execution partner in market','Jonny (Adobe) – final approval and budget authority'] }
     }
   }
 ];
@@ -341,11 +347,6 @@ function getCompletion(action){
 const today  = new Date();
 const dayNum = Math.min(90, Math.max(1, Math.floor((today-START)/86400000)+1));
 document.getElementById('dayNum').textContent = 'Day '+dayNum;
-['p30','p60','p90'].forEach((id,i)=>{
-  const dl   = DL[i];
-  const left = Math.max(0, Math.floor((dl-today)/86400000));
-  document.getElementById('pill'+[30,60,90][i]).textContent = [30,60,90][i]+'-Day · '+left+' days left';
-});
 
 function refreshDayPill(){
   let color='#1A8F3C';

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Adobe APAC · Account Operating System · 30·60·90</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0f0f10; --bg2:#161618; --bg3:#1e1e20;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+  --text:#fff; --text2:rgba(255,255,255,0.55); --text3:rgba(255,255,255,0.28);
+  --accent:#eb1000;
+  --p1c:#fb923c; --p2c:#f472b6; --p3c:#34d399;
+  --dial-ov:#60a5fa;
+  --green:#22c55e; --red:#ef4444; --orange:#f97316;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);padding-bottom:80px;font-size:13px}
+
+/* NAV */
+.snav{position:sticky;top:0;z-index:100;background:rgba(15,15,16,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;
+  height:42px;overflow-x:auto;scrollbar-width:none;gap:0}
+.snav::-webkit-scrollbar{display:none}
+.snav-lbl{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;
+  letter-spacing:.7px;white-space:nowrap;margin-right:10px;flex-shrink:0}
+.snav a{font-size:11px;font-weight:500;color:var(--text2);padding:0 9px;height:42px;
+  display:flex;align-items:center;white-space:nowrap;border-bottom:2px solid transparent;
+  text-decoration:none;transition:color .15s,border-color .15s;flex-shrink:0}
+.snav a:hover{color:var(--text)}
+.snav a.cur{color:var(--text);border-bottom-color:var(--accent)}
+.snav .sep{color:var(--text3);font-size:10px;padding:0 4px;flex-shrink:0}
+
+/* HEADER */
+.hdr{max-width:1100px;margin:0 auto;padding:28px 24px 0;display:flex;justify-content:space-between;align-items:flex-start}
+.hdr-ey{font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.9px;margin-bottom:5px}
+.hdr-title{font-size:21px;font-weight:800;letter-spacing:-.5px;line-height:1.15}
+.hdr-sub{font-size:11px;color:var(--text2);margin-top:4px}
+.hdr-badge{background:var(--accent);color:#fff;font-size:10px;font-weight:700;
+  letter-spacing:.8px;text-transform:uppercase;padding:5px 12px;border-radius:4px;white-space:nowrap;flex-shrink:0}
+
+/* DIALS */
+.dials{max-width:1100px;margin:0 auto;padding:18px 24px;display:flex;gap:14px}
+.dial{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  padding:18px 12px 14px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.dial-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;
+  color:var(--text3);text-align:center}
+.dial svg{width:88px;height:88px}
+
+/* WRAP */
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* SECTION HEADER */
+.sh{display:flex;justify-content:space-between;align-items:center;
+  margin:24px 0 12px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.sh-l{display:flex;align-items:center;gap:9px}
+.sh-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sh-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text2)}
+.sh-sub{font-size:10px;color:var(--text3)}
+.sh-btn{font-size:10px;color:var(--text3);cursor:pointer;background:none;border:none;
+  font-family:inherit;padding:3px 7px;border-radius:4px}
+.sh-btn:hover{color:var(--text2);background:var(--bg3)}
+
+/* CONTACT MAPPING */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.ccard{background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:10px 11px;display:flex;flex-direction:column;gap:5px;position:relative}
+.ccard-flag{font-size:18px;line-height:1;margin-bottom:1px}
+.ccard-market{font-size:11px;font-weight:700;color:var(--text)}
+.ccard-row{display:flex;flex-direction:column;gap:1px}
+.ccard-label{font-size:8px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
+.ccard-val{font-size:10px;color:var(--text2);outline:none;cursor:text;border-radius:2px;
+  min-height:14px;line-height:1.4}
+.ccard-val:focus{color:var(--text);background:rgba(255,255,255,.04)}
+.ccard-val:empty:before{content:attr(data-ph);color:var(--text3)}
+.ccard-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px;padding-top:5px;border-top:1px solid var(--border)}
+.ccard-cadence{font-size:9px;color:var(--text3);outline:none;cursor:text;flex:1}
+.ccard-cadence:empty:before{content:'Cadence TBC';color:var(--text3)}
+.ccard-cadence:focus{color:var(--text2)}
+.ccard-status{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+  padding:2px 6px;border-radius:3px;cursor:pointer;white-space:nowrap;flex-shrink:0;margin-left:6px}
+.cs-draft   {background:rgba(107,114,128,.18);color:#9ca3af}
+.cs-progress{background:rgba(249,115,22,.18);color:#fb923c}
+.cs-locked  {background:rgba(52,211,153,.18);color:#34d399}
+
+/* MARKET COVERAGE */
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.mcard{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 11px;display:flex;flex-direction:column;gap:4px}
+.mcard-flag{font-size:18px;line-height:1}
+.mcard-name{font-size:11px;font-weight:700;color:var(--text)}
+.mcard-focus{font-size:9px;color:var(--text3);line-height:1.35;outline:none;cursor:text}
+.mcard-focus:focus{color:var(--text2)}
+.mcard-focus:empty:before{content:'Add focus…';color:var(--text3)}
+.mcard-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px;padding-top:5px;border-top:1px solid var(--border)}
+.sow-pill{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px;border-radius:3px}
+.sow-active {background:rgba(52,211,153,.18);color:#34d399}
+.sow-review {background:rgba(251,146,60,.18);color:#fb923c}
+.sow-tbc    {background:rgba(107,114,128,.18);color:#9ca3af}
+.mcard-priority{font-size:8px;color:var(--text3)}
+
+/* WEEK CARD */
+.wk{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:7px;overflow:hidden}
+.wk.now{border-color:rgba(235,16,0,.3)}
+.wk-hdr{display:flex;justify-content:space-between;align-items:center;
+  padding:11px 15px;cursor:pointer;user-select:none;transition:background .15s}
+.wk-hdr:hover{background:rgba(255,255,255,.02)}
+.wk-hl{display:flex;align-items:center;gap:9px}
+.wk-num{font-size:11px;font-weight:800;background:var(--bg3);padding:3px 8px;
+  border-radius:4px;min-width:34px;text-align:center;color:var(--text)}
+.wk.now .wk-num{background:var(--accent)}
+.wk-dates{font-size:11px;color:var(--text2)}
+.wk-pill{font-size:8px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:10px;opacity:.75}
+.pp1{background:rgba(251,146,60,.14);color:#fb923c}
+.pp2{background:rgba(244,114,182,.14);color:#f472b6}
+.pp3{background:rgba(52,211,153,.14);color:#34d399}
+.wk-cur{font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.4px}
+.wk-hr{display:flex;align-items:center;gap:9px}
+.wk-prog{font-size:10px;color:var(--text3)}
+.chev{font-size:10px;color:var(--text3);transition:transform .2s;display:inline-block}
+.wk.coll .chev{transform:rotate(-90deg)}
+.wk-body{border-top:1px solid var(--border)}
+.wk.coll .wk-body{display:none}
+.wk-cols{display:grid;grid-template-columns:1fr 1fr}
+.wk-col{padding:14px 15px}
+.wk-col+.wk-col{border-left:1px solid var(--border)}
+.col-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:10px}
+
+/* STRAT ITEMS */
+.si{background:var(--bg3);border-radius:6px;padding:9px 11px;margin-bottom:7px;border-left:3px solid var(--border2)}
+.si.p1{border-left-color:var(--p1c)}.si.p2{border-left-color:var(--p2c)}.si.p3{border-left-color:var(--p3c)}
+.si-proj{font-size:7px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.si-init{font-size:10px;font-weight:600;color:var(--text2);margin-bottom:2px}
+.si-act{font-size:10px;color:var(--text3);line-height:1.4}
+.si-due{font-size:8px;color:var(--text3);margin-top:3px}
+
+/* CHECKLIST */
+.cklist{list-style:none}
+.ci{display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px solid var(--border)}
+.ci:last-child{border-bottom:none}
+.ci input[type=checkbox]{width:13px;height:13px;margin-top:1px;flex-shrink:0;accent-color:var(--accent);cursor:pointer}
+.ci input:checked+.ct{color:var(--text3);text-decoration:line-through}
+.ct{font-size:11px;color:var(--text2);line-height:1.4;outline:none;flex:1;cursor:text;border-radius:2px}
+.ct:focus{color:var(--text)}
+.ct:empty:before{content:'Add task…';color:var(--text3)}
+.add-btn{display:flex;align-items:center;gap:5px;margin-top:7px;padding:4px 2px;
+  font-size:10px;color:var(--text3);cursor:pointer;background:none;border:none;
+  font-family:inherit;border-radius:4px;transition:color .15s}
+.add-btn:hover{color:var(--text2)}
+
+/* OBSERVATIONS */
+.obs-ta{width:100%;min-height:110px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;color:var(--text2);font-family:inherit;font-size:12px;line-height:1.6;
+  padding:13px;resize:vertical;outline:none}
+.obs-ta:focus{border-color:var(--border2);color:var(--text)}
+.obs-ta::placeholder{color:var(--text3)}
+
+/* GRID TABLE */
+.grid-wrap{overflow-x:auto}
+.gt{width:100%;border-collapse:separate;border-spacing:0;font-size:11px}
+.gt th{background:var(--bg3);border:1px solid var(--border);padding:8px 11px;text-align:left;font-weight:600;font-size:9px;color:var(--text2);white-space:nowrap}
+.gt th.h1{color:#fb923c}.gt th.h2{color:#f472b6}.gt th.h3{color:#34d399}
+.gt td{border:1px solid var(--border);padding:10px 11px;vertical-align:top;background:var(--bg2)}
+.gt tr:hover td{background:var(--bg3)}
+.gt .ph td{background:#1a1a1c!important}
+.pn{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.7px}
+.in{font-size:10px;font-weight:600;color:var(--text2)}
+.im{font-size:8px;color:var(--text3);margin-top:2px;text-transform:uppercase}
+.at{font-size:10px;font-weight:600;color:var(--text);line-height:1.35}
+.ad{font-size:9px;color:var(--text3);line-height:1.45;margin-top:3px}
+.adue{font-size:8px;color:var(--text3);margin-top:4px}
+.gempty{color:var(--text3);text-align:center}
+.gitem{margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.gitem:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.gs-badge{display:inline-block;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:2px 6px;border-radius:3px;cursor:pointer;margin-top:4px}
+
+/* BACKLOG */
+.bl-item{display:flex;align-items:flex-start;gap:9px;padding:11px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:5px}
+.bl-dot{color:var(--text3);font-size:12px;margin-top:1px;flex-shrink:0}
+.bl-txt{flex:1}
+.bl-t{font-size:11px;font-weight:600;color:var(--text2);outline:none;cursor:text;border-radius:2px}
+.bl-t:focus{color:var(--text)}
+.bl-s{font-size:10px;color:var(--text3);margin-top:2px;outline:none;cursor:text;line-height:1.4}
+.bl-s:focus{color:var(--text2)}
+.bl-del{font-size:14px;color:var(--text3);cursor:pointer;background:none;border:none;padding:0 2px;line-height:1;font-family:inherit}
+.bl-del:hover{color:var(--red)}
+
+/* FOOTER */
+.pfoot{max-width:1100px;margin:36px auto 0;padding:15px 24px;display:flex;
+  justify-content:space-between;align-items:center;font-size:10px;color:var(--text3);
+  border-top:1px solid var(--border)}
+.leg{display:flex;gap:13px;flex-wrap:wrap}
+.ld{display:flex;align-items:center;gap:4px}
+.ldot{width:6px;height:6px;border-radius:50%}
+
+/* PRINT */
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  .snav{display:none}
+  body{background:#fff;color:#000;padding-bottom:0}
+  .hdr-title,.sh-title{color:#000}
+  .wk,.dial,.ccard,.mcard{background:#fff!important;border:1px solid #ddd!important}
+  .wk.coll .wk-body{display:block!important}
+  .wk-col,.si,.bl-item{background:#fff!important}
+  .gt td,.gt th{background:#fff!important;color:#000!important}
+  .obs-ta{border:1px solid #ddd;color:#333;background:#fff}
+  .phase-section{page-break-before:always}
+  .phase-section:first-child{page-break-before:avoid}
+  .add-btn,.sh-btn,.bl-del{display:none}
+  .hdr{padding-top:0}
+}
+.phase-section,.sec-anchor{scroll-margin-top:52px}
+</style>
+</head>
+<body>
+
+<nav class="snav" id="snav">
+  <span class="snav-lbl">Jump to</span>
+  <a href="#contacts">Contacts</a>
+  <a href="#markets">Markets</a>
+  <span class="sep">·</span>
+  <a href="#phase1">Phase 1</a>
+  <a href="#phase2">Phase 2</a>
+  <a href="#phase3">Phase 3</a>
+  <span class="sep">·</span>
+  <a href="#w1">W1</a><a href="#w2">W2</a><a href="#w3">W3</a><a href="#w4">W4</a>
+  <span class="sep">·</span>
+  <a href="#w5">W5</a><a href="#w6">W6</a><a href="#w7">W7</a><a href="#w8">W8</a>
+  <span class="sep">·</span>
+  <a href="#w9">W9</a><a href="#w10">W10</a><a href="#w11">W11</a><a href="#w12">W12</a>
+  <span class="sep">·</span>
+  <a href="#observations">Observations</a>
+  <a href="#overview">30/60/90</a>
+  <a href="#backlog">Backlog</a>
+</nav>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-ey">Adobe APAC · Zenith / Publicis</div>
+    <div class="hdr-title">Adobe Account Operating System · 30·60·90 Day Plan</div>
+    <div class="hdr-sub">Matt Kain · APAC Client Lead · Start date: 4 May 2026</div>
+  </div>
+  <div class="hdr-badge">Adobe APAC</div>
+</div>
+
+<div class="dials" id="dialsRow"></div>
+
+<div class="wrap">
+
+  <!-- CONTACT MAPPING -->
+  <div id="contacts" class="sec-anchor">
+    <div class="sh">
+      <div class="sh-l">
+        <div class="sh-dot" style="background:#60a5fa"></div>
+        <div class="sh-title">2-in-a-Box · Contact Mapping</div>
+        <div class="sh-sub">· Click any field to edit · Click status to cycle</div>
+      </div>
+    </div>
+    <div class="contact-grid" id="contactGrid"></div>
+  </div>
+
+  <!-- MARKET COVERAGE -->
+  <div id="markets" class="sec-anchor">
+    <div class="sh">
+      <div class="sh-l">
+        <div class="sh-dot" style="background:#34d399"></div>
+        <div class="sh-title">Geographic Scope · Market Coverage</div>
+        <div class="sh-sub">· Click focus area to edit</div>
+      </div>
+    </div>
+    <div class="market-grid" id="marketGrid"></div>
+  </div>
+
+  <!-- WEEK SECTIONS -->
+  <div id="phaseContent"></div>
+
+  <!-- OBSERVATIONS -->
+  <div id="observations" class="sec-anchor" style="margin-top:8px">
+    <div class="sh">
+      <div class="sh-l">
+        <div class="sh-dot" style="background:#eab308"></div>
+        <div class="sh-title">Early Observations</div>
+      </div>
+    </div>
+    <textarea class="obs-ta" id="obsTA"
+      placeholder="Capture early patterns, risks, opportunities and impressions as they emerge. These will inform Phase 2 recommendations…"></textarea>
+  </div>
+
+  <!-- 30/60/90 GRID -->
+  <div id="overview" class="sec-anchor">
+    <div class="sh">
+      <div class="sh-l">
+        <div class="sh-dot" style="background:var(--accent)"></div>
+        <div class="sh-title">Strategic Overview · 30·60·90</div>
+      </div>
+    </div>
+    <div class="grid-wrap">
+      <table class="gt" id="gridTable"></table>
+    </div>
+  </div>
+
+  <!-- BACKLOG -->
+  <div id="backlog" class="sec-anchor">
+    <div class="sh">
+      <div class="sh-l">
+        <div class="sh-dot" style="background:#6b7280"></div>
+        <div class="sh-title">Initiatives Backlog</div>
+      </div>
+    </div>
+    <div id="backlogList"></div>
+    <button class="add-btn" id="addBL">+ Add backlog item</button>
+  </div>
+
+</div>
+
+<div class="pfoot">
+  <div class="leg">
+    <div class="ld"><div class="ldot" style="background:#444"></div>Not started</div>
+    <div class="ld"><div class="ldot" style="background:var(--orange)"></div>On target</div>
+    <div class="ld"><div class="ldot" style="background:var(--red)"></div>Slipping</div>
+    <div class="ld"><div class="ldot" style="background:var(--green)"></div>Complete</div>
+    <div class="ld" style="margin-left:6px;font-style:italic">Click status to cycle · Click text to edit</div>
+  </div>
+  <div id="footDate"></div>
+</div>
+
+<script>
+// ── CONSTANTS ─────────────────────────────────────────────
+const SD = new Date(2026,4,4);
+const PH = [
+  {id:'phase1',label:'Phase 1 · Immersion',  dead:new Date(2026,4,30),col:'#fb923c',pill:'pp1',n:1},
+  {id:'phase2',label:'Phase 2 · Momentum',   dead:new Date(2026,5,30),col:'#f472b6',pill:'pp2',n:2},
+  {id:'phase3',label:'Phase 3 · Acceleration',dead:new Date(2026,6,30),col:'#34d399',pill:'pp3',n:3},
+];
+const WKDEF = [
+  {id:'w1', l:'W1', d:'4 – 10 May',     s:new Date(2026,4,4),  e:new Date(2026,4,10), ph:1},
+  {id:'w2', l:'W2', d:'11 – 17 May',    s:new Date(2026,4,11), e:new Date(2026,4,17), ph:1},
+  {id:'w3', l:'W3', d:'18 – 24 May',    s:new Date(2026,4,18), e:new Date(2026,4,24), ph:1},
+  {id:'w4', l:'W4', d:'25 – 30 May',    s:new Date(2026,4,25), e:new Date(2026,4,30), ph:1},
+  {id:'w5', l:'W5', d:'1 – 7 Jun',      s:new Date(2026,5,1),  e:new Date(2026,5,7),  ph:2},
+  {id:'w6', l:'W6', d:'8 – 14 Jun',     s:new Date(2026,5,8),  e:new Date(2026,5,14), ph:2},
+  {id:'w7', l:'W7', d:'15 – 21 Jun',    s:new Date(2026,5,15), e:new Date(2026,5,21), ph:2},
+  {id:'w8', l:'W8', d:'22 – 28 Jun',    s:new Date(2026,5,22), e:new Date(2026,5,28), ph:2},
+  {id:'w9', l:'W9', d:'29 Jun – 5 Jul', s:new Date(2026,5,29), e:new Date(2026,6,5),  ph:3},
+  {id:'w10',l:'W10',d:'6 – 12 Jul',     s:new Date(2026,6,6),  e:new Date(2026,6,12), ph:3},
+  {id:'w11',l:'W11',d:'13 – 19 Jul',    s:new Date(2026,6,13), e:new Date(2026,6,19), ph:3},
+  {id:'w12',l:'W12',d:'20 – 26 Jul',    s:new Date(2026,6,20), e:new Date(2026,6,26), ph:3},
+];
+const CYCLE = ['not-started','on-target','slipping','complete'];
+const SL = {'not-started':'Not started','on-target':'On target','slipping':'Slipping','complete':'Complete'};
+const GC = {'not-started':['#2a2a2c','#666'],'on-target':['#2d1800','#f97316'],'slipping':['#2d0000','#ef4444'],'complete':['#0a2a0a','#22c55e']};
+const CS_CYCLE = ['draft','progress','locked'];
+const CS_LABEL = {draft:'Draft',progress:'In progress',locked:'Confirmed'};
+const CS_CLASS = {draft:'cs-draft',progress:'cs-progress',locked:'cs-locked'};
+
+// ── DATE CALCS ────────────────────────────────────────────
+const now = new Date(); now.setHours(0,0,0,0);
+const dayNum = Math.max(0, Math.floor((now-SD)/86400000));
+const ovPct  = Math.round(Math.min(dayNum,90)/90*100);
+function phPct(i){
+  const p=PH[i];
+  const st=i===0?SD:new Date(PH[i-1].dead.getTime()+86400000);
+  const tot=Math.floor((p.dead-st)/86400000);
+  const el=Math.max(0,Math.min(tot,Math.floor((now-st)/86400000)));
+  return Math.round(el/tot*100);
+}
+const [p1,p2,p3]=[0,1,2].map(phPct);
+function curWk(){for(let i=WKDEF.length-1;i>=0;i--)if(now>=WKDEF[i].s)return WKDEF[i].id;return'w1';}
+const CWK=curWk();
+
+// ── PERSISTENCE ───────────────────────────────────────────
+let S={};
+try{S=JSON.parse(localStorage.getItem('aos_v5')||'{}');}catch(e){}
+S.grid=S.grid||{};
+S.tasks=S.tasks||{};
+S.obs=S.obs||'';
+S.contacts=S.contacts||{};
+S.markets=S.markets||{};
+S.backlog=S.backlog||[
+  {t:'B2B pipeline development',s:'Mid-market strategy for FY27'},
+  {t:'Research & Insights offer',s:'Adobe audience data + Publicis research capability'},
+  {t:'Creative Studio proposal',s:'In-house production pod for Adobe — lower funnel creative'},
+  {t:'Brand Safety framework',s:'APAC-wide brand safety standards and reporting'},
+  {t:'Data & Technology audit',s:'Full-stack audit of Adobe DXP tools across APAC'},
+  {t:'Awards & PR strategy',s:'Cannes/Effies nomination pathway for key campaigns'},
+];
+function sv(){localStorage.setItem('aos_v5',JSON.stringify(S));}
+
+// ── SVG DIALS ─────────────────────────────────────────────
+const CIRC=238.76;
+function dial(pct,col,lbl,l1,l2){
+  const off=(CIRC*(1-pct/100)).toFixed(2);
+  return`<div class="dial"><div class="dial-lbl">${lbl}</div>
+  <svg viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="7"/>
+    <circle cx="50" cy="50" r="38" fill="none" stroke="${col}" stroke-width="7"
+      stroke-linecap="round" stroke-dasharray="${CIRC}" stroke-dashoffset="${off}"
+      transform="rotate(-90 50 50)" style="transition:stroke-dashoffset .8s ease"/>
+    <text x="50" y="46" text-anchor="middle" fill="white" font-size="19" font-weight="800" font-family="Inter,sans-serif">${l1}</text>
+    <text x="50" y="57" text-anchor="middle" fill="rgba(255,255,255,0.38)" font-size="8" font-family="Inter,sans-serif">${l2}</text>
+  </svg></div>`;
+}
+document.getElementById('dialsRow').innerHTML=
+  dial(ovPct,'#60a5fa','Overall Progress','D'+Math.min(dayNum,90),'of 90 days')+
+  dial(p1,'#fb923c','Phase 1 · Immersion',p1+'%','by 30 May')+
+  dial(p2,'#f472b6','Phase 2 · Momentum',p2+'%','by 30 Jun')+
+  dial(p3,'#34d399','Phase 3 · Acceleration',p3+'%','by 30 Jul');
+
+// ── CONTACT MAPPING ───────────────────────────────────────
+const CONTACT_DEF = [
+  {id:'au', flag:'🇦🇺', market:'Australia',   adobe:'',zenith:'Matt Kain',  cadence:'Fortnightly · Fridays'},
+  {id:'nz', flag:'🇳🇿', market:'New Zealand', adobe:'',zenith:'',           cadence:''},
+  {id:'sg', flag:'🇸🇬', market:'Singapore',   adobe:'',zenith:'',           cadence:''},
+  {id:'jp', flag:'🇯🇵', market:'Japan',        adobe:'',zenith:'',           cadence:''},
+  {id:'in', flag:'🇮🇳', market:'India',        adobe:'',zenith:'',           cadence:''},
+  {id:'id', flag:'🇮🇩', market:'Indonesia',    adobe:'',zenith:'',           cadence:''},
+  {id:'ph', flag:'🇵🇭', market:'Philippines',  adobe:'',zenith:'',           cadence:''},
+  {id:'th', flag:'🇹🇭', market:'Thailand',     adobe:'',zenith:'',           cadence:''},
+];
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function renderContacts(){
+  const el=document.getElementById('contactGrid');
+  el.innerHTML=CONTACT_DEF.map(c=>{
+    const saved=S.contacts[c.id]||{};
+    const adobe=saved.adobe!=null?saved.adobe:c.adobe;
+    const zenith=saved.zenith!=null?saved.zenith:c.zenith;
+    const cadence=saved.cadence!=null?saved.cadence:c.cadence;
+    const status=saved.status||'draft';
+    return`<div class="ccard" data-cid="${c.id}">
+      <div class="ccard-flag">${c.flag}</div>
+      <div class="ccard-market">${c.market}</div>
+      <div class="ccard-row">
+        <div class="ccard-label">Adobe</div>
+        <div class="ccard-val" contenteditable="true" data-cid="${c.id}" data-f="adobe"
+          data-ph="Adobe counterpart TBC">${esc(adobe)}</div>
+      </div>
+      <div class="ccard-row">
+        <div class="ccard-label">Zenith</div>
+        <div class="ccard-val" contenteditable="true" data-cid="${c.id}" data-f="zenith"
+          data-ph="Zenith lead TBC">${esc(zenith)}</div>
+      </div>
+      <div class="ccard-footer">
+        <div class="ccard-cadence" contenteditable="true" data-cid="${c.id}" data-f="cadence">${esc(cadence)}</div>
+        <div class="ccard-status ${CS_CLASS[status]}" data-cid="${c.id}">${CS_LABEL[status]}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  el.querySelectorAll('[contenteditable]').forEach(e=>{
+    e.addEventListener('blur',()=>{
+      if(!S.contacts[e.dataset.cid])S.contacts[e.dataset.cid]={};
+      S.contacts[e.dataset.cid][e.dataset.f]=e.innerText.trim(); sv();
+    });
+    e.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();e.blur();}});
+  });
+
+  el.querySelectorAll('.ccard-status').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const cid=b.dataset.cid;
+      if(!S.contacts[cid])S.contacts[cid]={};
+      const cur=S.contacts[cid].status||'draft';
+      const nx=CS_CYCLE[(CS_CYCLE.indexOf(cur)+1)%CS_CYCLE.length];
+      S.contacts[cid].status=nx;
+      b.className='ccard-status '+CS_CLASS[nx];
+      b.textContent=CS_LABEL[nx]; sv();
+    });
+  });
+}
+renderContacts();
+
+// ── MARKET COVERAGE ───────────────────────────────────────
+const MARKET_DEF = [
+  {id:'au', flag:'🇦🇺', name:'Australia',    sow:'active', pri:'Lead market',    focus:'Primary focus · full service delivery · AU leads APAC'},
+  {id:'nz', flag:'🇳🇿', name:'New Zealand',  sow:'active', pri:'ANZ coverage',   focus:'ANZ coverage · active SOW'},
+  {id:'sg', flag:'🇸🇬', name:'Singapore',    sow:'active', pri:'Regional hub',   focus:'Regional hub · DXP + B2B · mapping in progress'},
+  {id:'jp', flag:'🇯🇵', name:'Japan',         sow:'active', pri:'Premium market', focus:'Distinct market · localisation complexity · scoping'},
+  {id:'in', flag:'🇮🇳', name:'India',         sow:'review', pri:'Growth market',  focus:'Growth market · capability build · scoping'},
+  {id:'id', flag:'🇮🇩', name:'Indonesia',    sow:'review', pri:'Emerging',        focus:'Emerging · flexible resourcing model'},
+  {id:'ph', flag:'🇵🇭', name:'Philippines',  sow:'tbc',    pri:'Flex capability', focus:'PH/Indo/TL flex capability rollout'},
+  {id:'th', flag:'🇹🇭', name:'Thailand',      sow:'tbc',    pri:'Flex capability', focus:'Flex capability · regional activation'},
+];
+
+function renderMarkets(){
+  const el=document.getElementById('marketGrid');
+  el.innerHTML=MARKET_DEF.map(m=>{
+    const saved=S.markets[m.id]||{};
+    const focus=saved.focus!=null?saved.focus:m.focus;
+    const sowCls=m.sow==='active'?'sow-active':m.sow==='review'?'sow-review':'sow-tbc';
+    const sowLbl=m.sow==='active'?'Active':m.sow==='review'?'Review':'TBC';
+    return`<div class="mcard">
+      <div class="mcard-flag">${m.flag}</div>
+      <div class="mcard-name">${m.name}</div>
+      <div class="mcard-focus" contenteditable="true" data-mid="${m.id}">${esc(focus)}</div>
+      <div class="mcard-footer">
+        <span class="sow-pill ${sowCls}">${sowLbl}</span>
+        <span class="mcard-priority">${m.pri}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  el.querySelectorAll('.mcard-focus').forEach(e=>{
+    e.addEventListener('blur',()=>{
+      if(!S.markets[e.dataset.mid])S.markets[e.dataset.mid]={};
+      S.markets[e.dataset.mid].focus=e.innerText.trim(); sv();
+    });
+    e.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();e.blur();}});
+  });
+}
+renderMarkets();
+
+// ── STRATEGIC FOCUS BY WEEK ───────────────────────────────
+const SW={
+  w1:[{proj:'People',init:'Organisational Design',act:'Map each market to active SOW',due:'by 22 May',p:1},
+      {proj:'Growth',init:'Renewal',act:'Contract rollover · MOP confidence check',due:'by 19 May',p:1}],
+  w2:[{proj:'People',init:'Contact Mapping',act:'Draft 2-in-a-box model',due:'by 22 May',p:1},
+      {proj:'Client',init:'Brilliant Basics',act:'Establish Jonny & Pete cadence',due:'by 19 May',p:1},
+      {proj:'Growth',init:'Adobe on Adobe',act:'Audit Current Adobe Stack (begin)',due:'by 30 May',p:1}],
+  w3:[{proj:'People',init:'Org Design',act:'Market-to-SOW mapping complete',due:'by 22 May',p:1},
+      {proj:'Client',init:'Account Narrative',act:'Narrative deck v1 in progress',due:'by 30 May',p:1},
+      {proj:'Client',init:'Brilliant Basics',act:'Escalation protocol agreed',due:'by 30 May',p:1}],
+  w4:[{proj:'Client',init:'Account Narrative',act:'Narrative deck v1 delivered',due:'by 30 May',p:1},
+      {proj:'Growth',init:'Adobe on Adobe',act:'Adobe stack audit complete',due:'by 30 May',p:1},
+      {proj:'People',init:'Contact Mapping',act:'2-in-a-box model finalised',due:'by 30 May',p:1}],
+  w5:[{proj:'People',init:'Org Design',act:'Finalise with Client + Budget impacts',due:'by 19 Jun',p:2},
+      {proj:'Growth',init:'Renewal',act:'Scope & Org alignment',due:'by 19 Jun',p:2}],
+  w6:[{proj:'People',init:'Contact Mapping',act:'Finalise with client + budget sign-off',due:'by 19 Jun',p:2},
+      {proj:'Growth',init:'Adobe on Adobe',act:'Publicis Partnership · Prodigious plan',due:'by 19 Jun',p:2}],
+  w7:[{proj:'Growth',init:'New Revenue',act:'Scope Harmony drafted',due:'by 26 Jun',p:2},
+      {proj:'Client',init:'Brilliant Basics',act:'Phase 2 cadence review',due:'by 30 Jun',p:2}],
+  w8:[{proj:'Growth',init:'New Revenue',act:'Scope Harmony delivered',due:'by 26 Jun',p:2},
+      {proj:'People',init:'Org Design',act:'Phase 2 sign-off complete',due:'by 30 Jun',p:2}],
+  w9:[{proj:'People',init:'Org Design',act:'Finalise team model',due:'by 18 Jul',p:3},
+      {proj:'Client',init:'Inclusion Beyond AU',act:'Cross-market scoping (SG or IN)',due:'by 25 Jul',p:3}],
+  w10:[{proj:'People',init:'Org Design',act:'Team model communications to all markets',due:'by 18 Jul',p:3},
+       {proj:'Growth',init:'New Revenue',act:'Upper funnel pilot scoped',due:'by 25 Jul',p:3}],
+  w11:[{proj:'Client',init:'Account Narrative',act:'First QBR · prep + rehearsal',due:'by 18 Jul',p:3},
+       {proj:'Client',init:'Inclusion Beyond AU',act:'Cross-market activation underway',due:'by 25 Jul',p:3}],
+  w12:[{proj:'Client',init:'Account Narrative',act:'First QBR delivered',due:'by 18 Jul',p:3},
+       {proj:'Growth',init:'New Revenue',act:'Upper funnel pilot live',due:'by 25 Jul',p:3}],
+};
+const DT={
+  w1:['Meet Jonny — context setting + priorities','Review all active SOWs across APAC markets','Intro calls with market leads (AU, SG, JP, IN, ID, PH, TH)','Request contract terms and rollover status from MOP','Map team structure + existing reporting lines'],
+  w2:['Map each market to active SOW','Draft 2-in-a-box contact model','Confirm Jonny fortnightly cadence (Fridays)','Begin Adobe stack audit across APAC markets','Clarify contract rollover terms with MOP'],
+  w3:['Complete market-to-SOW mapping','Present 2-in-a-box draft to Jonny','Draft escalation protocol for SLT review','Start account narrative deck v1','Adobe stack audit: markets 1–3 complete'],
+  w4:['Deliver narrative deck v1 to Jonny and Pete','Lock Jonny/Pete cadence and pre-read template','Sign off escalation protocol with SLT','Finalise Adobe stack audit','Phase 1 self-review and gap assessment'],
+  w5:['Present org design findings to Jonny and Adobe','Confirm resourcing model and budget per market','Cross-reference renewal scope with org design outcomes','Draft Publicis partnership audit plan','Establish Phase 2 reporting rhythm'],
+  w6:['2-in-a-box model: finalise with client sign-off','Audit Publicis brand tool use vs Adobe stack','Budget alignment for structural changes','Prodigious lower funnel brief drafted','Mid-phase check-in with market leads'],
+  w7:['Scope Harmony outline to Jonny','Creative Production pod concept documented','SEO + Agentic Search scope defined','Phase 2 initiative progress review','QBR template and structure agreed'],
+  w8:['Confirm all Phase 2 deliverables on track','Scope Harmony delivered to Jonny','Phase 2 close summary for SLT','Phase 3 plan briefed to market leads','QBR date and stakeholder attendance locked'],
+  w9:['Communicate team model decisions to all markets','Document flexible resourcing structure','Cross-market brief scoped for SG or IN','Upper funnel pilot proposal drafted','QBR deck at 50%'],
+  w10:['Team model: all markets signed off','Cross-market activation brief to client','Upper funnel pilot approved by client','QBR deck at 80%','Phase 3 deliverable tracker reviewed'],
+  w11:['QBR deck complete + final review','QBR rehearsal with Zenith leadership','Cross-market activation in motion','Upper funnel campaign confirmed live','Phase 3 wrap checklist started'],
+  w12:['First QBR delivered','Post-QBR debrief with Jonny and Pete','Phase 3 final wrap report','Backlog review: H2 priorities identified','Transition to BAU operating model documented'],
+};
+
+// ── RENDER WEEKS ─────────────────────────────────────────
+const pc=document.getElementById('phaseContent');
+PH.forEach(ph=>{
+  const phEl=document.createElement('div');
+  phEl.id=ph.id; phEl.className='phase-section';
+  const dead=ph.dead.toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
+  const phHd=document.createElement('div'); phHd.className='sh';
+  phHd.innerHTML=`<div class="sh-l"><div class="sh-dot" style="background:${ph.col}"></div>
+    <div class="sh-title">${ph.label}</div><div class="sh-sub">· ${dead}</div></div>
+    <button class="sh-btn" onclick="togglePh('${ph.id}')">Toggle all</button>`;
+  phEl.appendChild(phHd);
+
+  WKDEF.filter(w=>w.ph===ph.n).forEach(wk=>{
+    if(!S.tasks[wk.id])S.tasks[wk.id]=(DT[wk.id]||[]).map(t=>({t,d:false}));
+    const tasks=S.tasks[wk.id];
+    const done=tasks.filter(x=>x.d).length;
+    const isCur=wk.id===CWK;
+    const isFut=now<wk.s;
+    const pname=ph.n===1?'Immersion':ph.n===2?'Momentum':'Acceleration';
+    const strats=(SW[wk.id]||[]).map(s=>`<div class="si p${s.p}">
+      <div class="si-proj">${s.proj}</div><div class="si-init">${s.init}</div>
+      <div class="si-act">${s.act}</div><div class="si-due">${s.due}</div></div>`).join('')||
+      '<div style="font-size:10px;color:var(--text3)">No focused initiatives this week</div>';
+    const checks=tasks.map((t,i)=>`<li class="ci">
+      <input type="checkbox" ${t.d?'checked':''} data-wk="${wk.id}" data-i="${i}">
+      <span class="ct" contenteditable="true" data-wk="${wk.id}" data-i="${i}" spellcheck="false">${esc(t.t)}</span>
+    </li>`).join('');
+
+    const card=document.createElement('div');
+    card.className=`wk${isCur?' now':''}${(!isCur&&isFut)?' coll':''}`;
+    card.id=wk.id;
+    card.innerHTML=`<div class="wk-hdr" onclick="toggleWk('${wk.id}')">
+        <div class="wk-hl">
+          <div class="wk-num">${wk.l}</div>
+          <div class="wk-dates">${wk.d}</div>
+          <div class="wk-pill ${ph.pill}">Phase ${ph.n} · ${pname}</div>
+          ${isCur?'<div class="wk-cur">→ Current</div>':''}
+        </div>
+        <div class="wk-hr">
+          <div class="wk-prog" id="wp-${wk.id}">${done}/${tasks.length} done</div>
+          <span class="chev">▾</span>
+        </div>
+      </div>
+      <div class="wk-body">
+        <div class="wk-cols">
+          <div class="wk-col"><div class="col-lbl">Strategic Focus</div>${strats}</div>
+          <div class="wk-col">
+            <div class="col-lbl">This Week's Actions</div>
+            <ul class="cklist" id="cl-${wk.id}">${checks}</ul>
+            <button class="add-btn" onclick="addTask('${wk.id}')">+ Add task</button>
+          </div>
+        </div>
+      </div>`;
+    phEl.appendChild(card);
+  });
+  pc.appendChild(phEl);
+});
+
+document.querySelectorAll('.ci input[type=checkbox]').forEach(cb=>{
+  cb.addEventListener('change',e=>{
+    const{wk,i}=e.target.dataset;
+    S.tasks[wk][+i].d=e.target.checked; updWkProg(wk); sv();
+  });
+});
+document.querySelectorAll('.ct').forEach(el=>{
+  el.addEventListener('blur',()=>{const{wk,i}=el.dataset;S.tasks[wk][+i].t=el.innerText.trim();sv();});
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();el.blur();}});
+});
+
+const nLink=document.querySelector(`.snav a[href="#${CWK}"]`);
+if(nLink)nLink.classList.add('cur');
+
+function toggleWk(id){document.getElementById(id)?.classList.toggle('coll');}
+function togglePh(pid){
+  const cards=document.getElementById(pid)?.querySelectorAll('.wk')||[];
+  const any=[...cards].some(c=>c.classList.contains('coll'));
+  cards.forEach(c=>any?c.classList.remove('coll'):c.classList.add('coll'));
+}
+function addTask(wid){
+  if(!S.tasks[wid])S.tasks[wid]=[];
+  const idx=S.tasks[wid].length;
+  S.tasks[wid].push({t:'',d:false});
+  const ul=document.getElementById('cl-'+wid);
+  const li=document.createElement('li');li.className='ci';
+  li.innerHTML=`<input type="checkbox" data-wk="${wid}" data-i="${idx}">
+    <span class="ct" contenteditable="true" data-wk="${wid}" data-i="${idx}" spellcheck="false"></span>`;
+  ul.appendChild(li);
+  const cb=li.querySelector('input');
+  cb.addEventListener('change',e=>{S.tasks[wid][+e.target.dataset.i].d=e.target.checked;updWkProg(wid);sv();});
+  const sp=li.querySelector('.ct');
+  sp.addEventListener('blur',()=>{S.tasks[wid][+sp.dataset.i].t=sp.innerText.trim();sv();});
+  sp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();sp.blur();}});
+  sp.focus();sv();
+}
+function updWkProg(wid){
+  const t=S.tasks[wid]||[];
+  const el=document.getElementById('wp-'+wid);
+  if(el)el.textContent=`${t.filter(x=>x.d).length}/${t.length} done`;
+}
+
+// ── STRATEGIC OVERVIEW GRID ───────────────────────────────
+const GD=[
+  {proj:'PEOPLE',sub:'Team structure · market assessment · talent allocation',inits:[
+    {n:'Organisational Design',m:'Markets to scope',a:{
+      30:{t:'Map each market to active SOW',d:'Confirm what each market is contracted to deliver. Identify gaps between scope and current team capacity.',due:'22 May'},
+      60:{t:'Finalise with Client + Budget impacts',d:'Present org design findings to Jonny and Adobe. Confirm resourcing model and budget implications per market. Sign off on structural changes.',due:'19 Jun'},
+      90:{t:'Finalise team model',d:'Decisions made and communicated to all markets. Flexible resourcing structure confirmed. PH/Indo/TL/Flex capability rollout.',due:'18 Jul'}
+    }},
+    {n:'Contact Mapping',m:'2-in-a-box model',a:{
+      30:{t:'Draft 2-in-a-box model',d:'Identify the Adobe counterpart and Zenith lead for each market. Draft proposed cadence and channel per pairing.',due:'22 May'},
+      60:{t:'Finalise with client + budget impacts',d:'Present 2-in-a-box structure to Adobe for alignment. Confirm resourcing or budget implications per market. Lock the model.',due:'19 Jun'},
+      90:null
+    }}
+  ]},
+  {proj:'CLIENT',sub:'Brilliant basics · relationship architecture · narrative',inits:[
+    {n:'Brilliant Basics',m:'Governance & cadence',a:{
+      30:[
+        {t:'Establish Jonny & Pete cadence',d:'Fortnightly Jonny sync confirmed (Fridays). Pete pre-sync locked. Format and pre-read template agreed.',due:'19 May'},
+        {t:'Escalation protocol agreed',d:'Direct-1 / direct-2 / one-level escalation model. Limits CC culture. Signed off by SLT and communicated to all markets.',due:'30 May'}
+      ],
+      60:null,90:null
+    }},
+    {n:'Account Narrative',m:'Elevate the story',a:{
+      30:{t:'Narrative deck v1 delivered',d:"Where we are, where we're going, what brilliant looks like for Adobe APAC. Shared with Jonny and Pete for input.",due:'30 May'},
+      60:null,
+      90:{t:'First QBR delivered',d:'New QBR template live. Adobe and Zenith stakeholders both present. Sets the cadence for the rest of the year.',due:'18 Jul'}
+    }},
+    {n:'Inclusion Beyond AU',m:'Pan-APAC activation',a:{
+      30:null,60:null,
+      90:{t:'First cross-market moment',d:'SG or IN included in a brief, workshop, or activation. Documented as a proof point for pan-APAC operating model.',due:'25 Jul'}
+    }}
+  ]},
+  {proj:'GROWTH & CAPABILITIES',sub:'Renewal · B2B pipeline · Adobe on Adobe · partnerships',inits:[
+    {n:'Renewal',m:'Protect the base',a:{
+      30:{t:'Contract rollover',d:'MOP confidence in rollover as is — scope, fees, etc. Little detail shared however — escalate for clarity on terms before expiry.',due:'19 May'},
+      60:{t:'Scope & Org alignment',d:'Cross-reference renewal scope against Org Design and Contact Mapping outcomes from the People workstream. Confirm team commitments and structural changes are reflected in contract terms.',due:'19 Jun'},
+      90:null
+    }},
+    {n:'Adobe on Adobe',m:'Capability depth',a:{
+      30:{t:'Audit Current Adobe Stack',d:'Comprehensive review of which Adobe tools we currently use across all APAC markets, and what the roadmap to Power Users should look like.',due:'30 May'},
+      60:{t:'Publicis Partnership',d:'Audit tool use and agency team mapping across other Publicis brands. Build a plan to get Prodigious in for lower funnel production work.',due:'19 Jun'},
+      90:null
+    }},
+    {n:'New Revenue',m:'B2B · data · upper funnel',a:{
+      30:null,
+      60:{t:'Scope Harmony',d:'Outline services Adobe could award us to make it easier to deliver flexibility. E.g. create a 4–5 FTE Creative Production pod to service bottom funnel creative, SEO, and Agentic Search Optimisation.',due:'26 Jun'},
+      90:{t:'Upper funnel pilot scoped',d:'Events or research-led campaign proposed. At least one market committed. Brief written and client-approved.',due:'25 Jul'}
+    }}
+  ]}
+];
+
+const tbl=document.getElementById('gridTable');
+let gh=`<thead><tr>
+  <th style="width:155px">Initiative</th>
+  <th class="h1">30 Days · Immersion<br><span style="font-weight:400;opacity:.55;font-size:8px">by 30 May 2026</span></th>
+  <th class="h2">60 Days · Momentum<br><span style="font-weight:400;opacity:.55;font-size:8px">by 30 Jun 2026</span></th>
+  <th class="h3">90 Days · Acceleration<br><span style="font-weight:400;opacity:.55;font-size:8px">by 30 Jul 2026</span></th>
+</tr></thead><tbody>`;
+GD.forEach((proj,pi)=>{
+  gh+=`<tr class="ph"><td colspan="4"><span class="pn">${proj.proj}</span>
+    <span style="font-size:8px;color:var(--text3);margin-left:9px">${proj.sub}</span></td></tr>`;
+  proj.inits.forEach((init,ii)=>{
+    gh+=`<tr><td><div class="in">${init.n}</div><div class="im">${init.m}</div></td>`;
+    [30,60,90].forEach(ph=>{
+      const raw=init.a[ph];
+      if(!raw){gh+=`<td class="gempty">·</td>`;return;}
+      const items=Array.isArray(raw)?raw:[raw];
+      let cell='';
+      items.forEach((a,ai)=>{
+        const k=`g${pi}-${ii}-${ph}-${ai}`;
+        const st=S.grid[k]||'not-started';
+        const[bg,fg]=GC[st];
+        cell+=`<div class="gitem"><div class="at">${a.t}</div><div class="ad">${a.d}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="adue">Due ${a.due}</span>
+            <span class="gs-badge" data-k="${k}" style="background:${bg};color:${fg}">${SL[st]}</span>
+          </div></div>`;
+      });
+      gh+=`<td>${cell}</td>`;
+    });
+    gh+='</tr>';
+  });
+});
+gh+='</tbody>';
+tbl.innerHTML=gh;
+tbl.querySelectorAll('.gs-badge').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const k=b.dataset.k;
+    const nx=CYCLE[(CYCLE.indexOf(S.grid[k]||'not-started')+1)%CYCLE.length];
+    S.grid[k]=nx;
+    const[bg,fg]=GC[nx];b.style.background=bg;b.style.color=fg;b.textContent=SL[nx];sv();
+  });
+});
+
+// ── OBSERVATIONS ─────────────────────────────────────────
+const ota=document.getElementById('obsTA');
+ota.value=S.obs;
+ota.addEventListener('input',()=>{S.obs=ota.value;sv();});
+
+// ── BACKLOG ───────────────────────────────────────────────
+function renderBL(){
+  const el=document.getElementById('backlogList');
+  el.innerHTML=S.backlog.map((b,i)=>`<div class="bl-item">
+    <div class="bl-dot">○</div>
+    <div class="bl-txt">
+      <div class="bl-t" contenteditable="true" data-i="${i}">${esc(b.t)}</div>
+      <div class="bl-s" contenteditable="true" data-i="${i}" data-f="s">${esc(b.s||'')}</div>
+    </div>
+    <button class="bl-del" onclick="delBL(${i})">×</button>
+  </div>`).join('');
+  el.querySelectorAll('.bl-t').forEach(e=>{
+    e.addEventListener('blur',()=>{S.backlog[+e.dataset.i].t=e.innerText.trim();sv();});
+    e.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();e.blur();}});
+  });
+  el.querySelectorAll('[data-f=s]').forEach(e=>{
+    e.addEventListener('blur',()=>{S.backlog[+e.dataset.i].s=e.innerText.trim();sv();});
+  });
+}
+function delBL(i){S.backlog.splice(i,1);sv();renderBL();}
+document.getElementById('addBL').addEventListener('click',()=>{
+  S.backlog.push({t:'New initiative',s:''});sv();renderBL();
+  const items=document.querySelectorAll('.bl-t');
+  if(items.length)items[items.length-1].focus();
+});
+renderBL();
+
+// ── FOOTER ────────────────────────────────────────────────
+document.getElementById('footDate').textContent=
+  'Opened '+now.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+</script>
+</body>
+</html>

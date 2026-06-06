@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>W Brisbane · Sisters' Weekend</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f10;
+      --surface: #181820;
+      --surface2: #1e1e28;
+      --border: rgba(255,255,255,0.08);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.45);
+      --accent: #c9a96e;
+      --accent-light: #e8d5b0;
+      --friday: #c9a96e;
+      --saturday: #a8c5da;
+      --sunday: #b8d4b8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 72px 20px 56px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(201,169,110,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 10vw, 60px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-tagline {
+      font-size: clamp(15px, 4vw, 18px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .hero-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 auto;
+      opacity: 0.5;
+    }
+
+    /* ── WEATHER ── */
+    .weather {
+      max-width: 900px;
+      margin: 0 auto 48px;
+      padding: 0 16px;
+    }
+    .weather-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .weather-icon { font-size: 28px; flex-shrink: 0; margin-top: 1px; }
+    .weather-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+    .weather-text {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px 72px;
+    }
+
+    /* ── DAY SECTION ── */
+    .day-section { margin-bottom: 56px; }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-pill {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .day-pill.friday  { background: rgba(201,169,110,0.15); color: var(--friday);   border: 1px solid rgba(201,169,110,0.3); }
+    .day-pill.saturday{ background: rgba(168,197,218,0.12); color: var(--saturday); border: 1px solid rgba(168,197,218,0.25); }
+    .day-pill.sunday  { background: rgba(184,212,184,0.12); color: var(--sunday);   border: 1px solid rgba(184,212,184,0.25); }
+
+    .day-title {
+      font-size: clamp(18px, 5vw, 22px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #fff;
+    }
+    .day-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    /* ── CHECK-IN BLOCK ── */
+    .checkin-block {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .checkin-icon { font-size: 26px; flex-shrink: 0; }
+    .checkin-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 2px;
+    }
+    .checkin-text { font-size: 15px; font-weight: 600; color: #fff; }
+    .checkin-sub  { font-size: 13px; color: var(--muted); }
+
+    /* ── EVENTS ── */
+    .events { display: flex; flex-direction: column; gap: 12px; }
+
+    .event-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 18px;
+      transition: border-color 0.2s;
+    }
+    .event-card:hover { border-color: rgba(255,255,255,0.14); }
+    .event-card.featured {
+      border-color: rgba(201,169,110,0.22);
+      background: linear-gradient(135deg, rgba(201,169,110,0.06) 0%, var(--surface) 55%);
+    }
+
+    /* Desktop: two-column layout */
+    @media (min-width: 600px) {
+      .event-card {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        gap: 0 20px;
+      }
+    }
+
+    .event-time {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      line-height: 1.4;
+      padding-top: 1px;
+      margin-bottom: 10px; /* mobile gap */
+    }
+    @media (min-width: 600px) { .event-time { margin-bottom: 0; } }
+
+    .event-time .time-main { display: block; font-size: 14px; }
+    .event-time .time-note {
+      font-size: 11px; color: var(--muted);
+      font-weight: 400; margin-top: 2px;
+    }
+
+    .event-name {
+      font-size: clamp(15px, 4vw, 16px);
+      font-weight: 600; color: #fff;
+      margin-bottom: 6px; line-height: 1.3;
+    }
+    .event-desc {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.65;
+    }
+    .event-meta {
+      display: flex; flex-wrap: wrap;
+      gap: 7px; margin-top: 10px;
+    }
+    .event-tag {
+      font-size: 11px; font-weight: 500;
+      padding: 3px 10px; border-radius: 100px;
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.48);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .event-link {
+      display: inline-flex; align-items: center;
+      gap: 3px; margin-top: 10px;
+      font-size: 12.5px; font-weight: 500;
+      color: var(--accent); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .event-link::after { content: '→'; font-size: 11px; }
+    .event-link:hover { color: var(--accent-light); }
+
+    .event-note {
+      background: rgba(255,255,255,0.04);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* ── ROUTE ── */
+    .route-inner {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+    .route-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 10px;
+    }
+    .route-stops {
+      display: flex; flex-wrap: wrap;
+      gap: 6px; align-items: center;
+    }
+    .route-stop {
+      font-size: 12px; font-weight: 500;
+      padding: 4px 11px; border-radius: 100px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: rgba(255,255,255,0.65);
+    }
+    .route-arrow { font-size: 11px; color: var(--muted); }
+
+    /* ── CLOSING ── */
+    .closing {
+      text-align: center;
+      padding: 44px 20px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .closing-heart  { font-size: 32px; margin-bottom: 12px; }
+    .closing-text   { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .closing-sub    { font-size: 14px; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 20px 20px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    footer span { margin: 0 5px; opacity: 0.3; }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">W Brisbane · June 2026</div>
+    <h1>Sisters' <span>Weekend</span></h1>
+    <p class="hero-tagline">Long overdue, slightly indulgent, and entirely centred around sister time.</p>
+    <div class="hero-divider"></div>
+  </div>
+
+  <!-- WEATHER -->
+  <div class="weather">
+    <div class="weather-card">
+      <div class="weather-icon">🌤️</div>
+      <div>
+        <div class="weather-label">Brisbane Weather</div>
+        <div class="weather-text">Cool winter mornings, sunny days around 22–24°C, and ideal walking weather. No rain until Sunday afternoon. Bring a jacket for evenings, comfy kicks for the riverside wander, and swimmers for the Bathhouse.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="container">
+
+    <!-- ── FRIDAY ── -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-pill friday">Friday</div>
+        <div>
+          <div class="day-title">Arrive, Exhale, Begin</div>
+          <div class="day-subtitle">W Brisbane · check-in from 3:00pm</div>
+        </div>
+      </div>
+
+      <div class="checkin-block">
+        <div class="checkin-icon">🏨</div>
+        <div>
+          <div class="checkin-label">W Brisbane</div>
+          <div class="checkin-text">Check-in from 3:00pm</div>
+          <div class="checkin-sub">George Street, Brisbane CBD</div>
+        </div>
+      </div>
+
+      <div class="events">
+
+        <div class="event-card">
+          <div class="event-time">
+            <span class="time-main">Afternoon</span>
+            <span class="time-note">Suite Sessions</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Champagne &amp; Catch-ups</div>
+            <div class="event-desc">Music on, drinks poured, and immediate life updates. No agenda — just the beginning.</div>
+            <div class="event-meta">
+              <span class="event-tag">Suite</span>
+              <span class="event-tag">Champagne</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card featured">
+          <div class="event-time">
+            <span class="time-main">7:45pm</span>
+            <span class="time-note">Dinner</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Golden Avenue</div>
+            <div class="event-desc">A fun start to the weekend — cocktails, beautiful interiors, and dinner worthy of the occasion. Matt joins for dinner.</div>
+            <div class="event-meta">
+              <span class="event-tag">Dinner</span>
+              <span class="event-tag">Cocktails</span>
+              <span class="event-tag">Matt joins</span>
+            </div>
+            <a class="event-link" href="https://anyday.com.au/golden-venue-page" target="_blank" rel="noopener">View venue</a>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">
+            <span class="time-main">After Dinner</span>
+            <span class="time-note">Jazz</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Le Royale</div>
+            <div class="event-desc">Late-night cocktails, jazz, and playful Paris-meets-New-York energy.</div>
+            <div class="event-note">Where would Miss Jolene choose to join us?</div>
+            <div class="event-meta">
+              <span class="event-tag">Jazz bar</span>
+              <span class="event-tag">Late-night</span>
+            </div>
+            <a class="event-link" href="https://anyday.com.au/le-royale" target="_blank" rel="noopener">View venue</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SATURDAY ── -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-pill saturday">Saturday</div>
+        <div>
+          <div class="day-title">Walk · Soak · Celebrate</div>
+          <div class="day-subtitle">River to table, and everything in between</div>
+        </div>
+      </div>
+
+      <div class="events">
+
+        <div class="event-card">
+          <div class="event-time">
+            <span class="time-main">Morning</span>
+            <span class="time-note">Riverside Walk</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Riverside Walk + Breakfast</div>
+            <div class="event-desc">Coffee, river views, and a proper debrief. Breakfast en route at Mulga Bill's.</div>
+            <div class="route-inner">
+              <div class="route-label">Route</div>
+              <div class="route-stops">
+                <span class="route-stop">W Hotel</span>
+                <span class="route-arrow">→</span>
+                <span class="route-stop">Riverwalk</span>
+                <span class="route-arrow">→</span>
+                <span class="route-stop">Kangaroo Point Bridge</span>
+                <span class="route-arrow">→</span>
+                <span class="route-stop">Howard Smith Wharves</span>
+                <span class="route-arrow">→</span>
+                <span class="route-stop">Story Bridge</span>
+                <span class="route-arrow">→</span>
+                <span class="route-stop">City return</span>
+              </div>
+            </div>
+            <div class="event-meta" style="margin-top:12px;">
+              <span class="event-tag">☀️ Outdoors</span>
+              <span class="event-tag">Comfy kicks required</span>
+            </div>
+            <a class="event-link" href="https://www.mulgabills.com.au/" target="_blank" rel="noopener">Mulga Bill's</a>
+          </div>
+        </div>
+
+        <div class="event-card featured">
+          <div class="event-time">
+            <span class="time-main">2:30pm</span>
+            <span class="time-note">90 minutes</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Albion Bathhouse</div>
+            <div class="event-desc">Steam, soak, switch off. The wellness chapter of the weekend.</div>
+            <div class="event-meta">
+              <span class="event-tag">Steam</span>
+              <span class="event-tag">Soak</span>
+              <span class="event-tag">Swimwear required</span>
+            </div>
+            <a class="event-link" href="https://thebathhousegroup.com/albion/" target="_blank" rel="noopener">View Albion Bathhouse</a>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">
+            <span class="time-main">Late Afternoon</span>
+            <span class="time-note">Downtime</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Pool · Naps · Robes · Shopping</div>
+            <div class="event-desc">Or simply enjoying not having to be anywhere urgent. No schedule, only options.</div>
+            <div class="event-meta">
+              <span class="event-tag">Hotel pool</span>
+              <span class="event-tag">Free time</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card featured">
+          <div class="event-time">
+            <span class="time-main">7:15pm</span>
+            <span class="time-note">Dinner</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Central 中環</div>
+            <div class="event-desc">Saturday night's signature dinner. Underground Hong Kong vibes &amp; Cantopop tunes — the kind of restaurant you keep thinking about long after.</div>
+            <div class="event-meta">
+              <span class="event-tag">Signature dinner</span>
+              <span class="event-tag">Cantonese</span>
+              <span class="event-tag">Cocktails</span>
+            </div>
+            <a class="event-link" href="https://www.centralbne.com.au" target="_blank" rel="noopener">View venue</a>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">
+            <span class="time-main">Later</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Cocktails · Dessert · Deep Chats</div>
+            <div class="event-desc">Hotel glamour or an early night. No pressure, only options. The night is yours.</div>
+            <div class="event-meta">
+              <span class="event-tag">Optional</span>
+              <span class="event-tag">No agenda</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SUNDAY ── -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-pill sunday">Sunday</div>
+        <div>
+          <div class="day-title">Soft Landing</div>
+          <div class="day-subtitle">Easy like Sunday morning</div>
+        </div>
+      </div>
+
+      <div class="events">
+
+        <div class="event-card">
+          <div class="event-time">
+            <span class="time-main">Morning</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Slow Start</div>
+            <div class="event-desc">Late breakfast, room service, or a last wander. No rush — this one's for savouring.</div>
+            <div class="event-meta">
+              <span class="event-tag">Late checkout</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card featured">
+          <div class="event-time">
+            <span class="time-main">By Midday</span>
+            <span class="time-note">Roast Lunch</span>
+          </div>
+          <div class="event-body">
+            <div class="event-name">Roast Lunch at Valentine Crescent</div>
+            <div class="event-desc">Finishing the weekend the right way — a proper roast lunch with Ron &amp; Helen.</div>
+            <div class="event-note">Allow 45 minutes for the drive to the airport.</div>
+            <div class="event-meta" style="margin-top:10px;">
+              <span class="event-tag">Family lunch</span>
+              <span class="event-tag">Roast</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="closing">
+      <div class="closing-heart">❤️</div>
+      <div class="closing-text">Can't wait.</div>
+      <div class="closing-sub">Sister time, long overdue.</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    W Brisbane · Sisters' Weekend · June 2026
+    <span>·</span>
+    mattkain.com
+  </footer>
+
+</body>
+</html>

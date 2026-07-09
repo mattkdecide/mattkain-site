@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adobe.pub &middot; Vision 2028</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f10;
+      --surface: #161618;
+      --surface2: #1c1c1e;
+      --border: #2a2a2e;
+      --text: #f0f0f2;
+      --muted: #8888a0;
+      --faint: #3a3a44;
+      --accent: #eb1000;
+      --accent-lo: rgba(235,16,0,0.08);
+      --gold: #d4a840;
+      --gold-lo: rgba(212,168,64,0.10);
+      --blue: #5b9cf6;
+      --blue-lo: rgba(91,156,246,0.08);
+      --green: #4ec994;
+      --green-lo: rgba(78,201,148,0.08);
+      --purple: #a78bfa;
+      --purple-lo: rgba(167,139,250,0.08);
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    header { border-bottom: 1px solid var(--border); padding: 0 32px; }
+    .header-inner {
+      max-width: 1020px; margin: 0 auto; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; }
+    .brand .dot { color: var(--accent); }
+    .header-meta { font-size: 11px; color: var(--muted); }
+
+    /* Hero */
+    .hero { border-bottom: 1px solid var(--border); padding: 64px 32px 56px; }
+    .hero-inner { max-width: 1020px; margin: 0 auto; }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: 48px; font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.05; margin-bottom: 16px; max-width: 760px;
+    }
+    .hero-north-star {
+      font-size: 18px; font-weight: 500; color: var(--gold);
+      font-style: italic; margin-bottom: 28px; max-width: 600px;
+    }
+    .hero-sub {
+      font-size: 15px; color: var(--muted); max-width: 660px;
+      line-height: 1.7; margin-bottom: 32px;
+    }
+    .hero-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .meta-pill {
+      font-size: 11px; font-weight: 500; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px;
+    }
+    .meta-pill.conf { color: var(--accent); border-color: var(--accent); opacity: 0.7; }
+
+    /* Main */
+    .main-wrap { max-width: 1020px; margin: 0 auto; padding: 0 32px 80px; }
+
+    /* Section */
+    .section { padding: 56px 0 0; }
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .section-body {
+      font-size: 15px; color: var(--muted); max-width: 760px;
+      line-height: 1.75;
+    }
+    .section-body p { margin-bottom: 14px; }
+    .section-body ul { padding-left: 20px; margin-bottom: 14px; }
+    .section-body li { margin-bottom: 6px; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 56px 0 0; }
+
+    /* Context block */
+    .context-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 28px 32px; margin-top: 24px;
+    }
+    .context-block p { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 12px; }
+    .context-block p:last-child { margin-bottom: 0; }
+
+    /* Pillars */
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border); border-radius: 12px;
+      overflow: hidden; margin-top: 28px;
+    }
+    .pillar-card {
+      background: var(--surface); padding: 28px 24px;
+    }
+    .pillar-num {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .pillar-num.p1 { color: var(--gold); }
+    .pillar-num.p2 { color: var(--blue); }
+    .pillar-num.p3 { color: var(--green); }
+    .pillar-title {
+      font-size: 17px; font-weight: 700; letter-spacing: -0.01em;
+      margin-bottom: 12px; line-height: 1.3;
+    }
+    .pillar-body { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
+    .pillar-lane {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 5px 10px; border-radius: 6px;
+      display: inline-block;
+    }
+    .pillar-lane.p1 { color: var(--gold); background: var(--gold-lo); }
+    .pillar-lane.p2 { color: var(--blue); background: var(--blue-lo); }
+    .pillar-lane.p3 { color: var(--green); background: var(--green-lo); }
+
+    /* North star outcomes */
+    .outcomes-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border); border-radius: 12px;
+      overflow: hidden; margin-top: 12px;
+    }
+    .outcome-card { background: var(--surface2); padding: 20px 22px; }
+    .outcome-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .outcome-label.p1 { color: var(--gold); }
+    .outcome-label.p2 { color: var(--blue); }
+    .outcome-label.p3 { color: var(--green); }
+    .outcome-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* Audience sequence table */
+    .seq-table { width: 100%; margin-top: 24px; border-collapse: collapse; }
+    .seq-table th {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); text-align: left;
+      padding: 0 16px 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .seq-table td {
+      font-size: 13px; color: var(--muted); padding: 14px 16px 14px 0;
+      border-bottom: 1px solid var(--faint); vertical-align: top;
+    }
+    .seq-table td:first-child { width: 60px; }
+    .seq-table td.stage-num {
+      font-weight: 700; color: var(--text); font-size: 14px;
+    }
+    .seq-table td.audience-name { color: var(--text); font-weight: 500; }
+    .seq-table tr:last-child td { border-bottom: none; }
+
+    /* 30/60/90 grid */
+    .plan-lane { margin-top: 32px; }
+    .plan-lane-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+    }
+    .lane-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 6px;
+    }
+    .lane-badge.people { color: var(--gold); background: var(--gold-lo); }
+    .lane-badge.ops { color: var(--blue); background: var(--blue-lo); }
+    .lane-badge.growth { color: var(--green); background: var(--green-lo); }
+    .lane-title { font-size: 15px; font-weight: 600; }
+
+    .initiatives-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; background: var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .initiative-block { background: var(--surface); padding: 22px 24px; }
+    .initiative-title {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--text); margin-bottom: 14px;
+    }
+    .phase-row { margin-bottom: 10px; }
+    .phase-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 4px;
+    }
+    .phase-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* SOW implications */
+    .sow-list { margin-top: 20px; }
+    .sow-item {
+      display: flex; gap: 12px; padding: 14px 0;
+      border-bottom: 1px solid var(--faint);
+    }
+    .sow-item:last-child { border-bottom: none; }
+    .sow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); margin-top: 8px; flex-shrink: 0;
+    }
+    .sow-text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* Open questions */
+    .questions-list { margin-top: 20px; counter-reset: qnum; }
+    .q-item {
+      display: flex; gap: 16px; padding: 16px 0;
+      border-bottom: 1px solid var(--faint);
+    }
+    .q-item:last-child { border-bottom: none; }
+    .q-num {
+      font-size: 12px; font-weight: 700; color: var(--muted);
+      min-width: 24px; margin-top: 2px;
+    }
+    .q-text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* Context callout */
+    .callout {
+      background: var(--accent-lo); border: 1px solid rgba(235,16,0,0.15);
+      border-radius: 10px; padding: 20px 24px; margin-top: 24px;
+    }
+    .callout-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .callout-text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* Landscape risk items */
+    .risk-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; background: var(--border); border-radius: 12px;
+      overflow: hidden; margin-top: 24px;
+    }
+    .risk-card { background: var(--surface); padding: 24px; }
+    .risk-icon { font-size: 20px; margin-bottom: 10px; }
+    .risk-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .risk-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    @media (max-width: 700px) {
+      .pillars-grid, .outcomes-row, .risk-row { grid-template-columns: 1fr; }
+      .initiatives-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">adobe<span class="dot">.</span>pub</div>
+    <div class="header-meta">ACCOUNT OPERATING SYSTEM &middot; APAC &middot; INTERNAL CONFIDENTIAL</div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Vision 2028 &middot; Strategic Framework</div>
+    <h1 class="hero-title">Adobe.pub APAC<br>Vision 2028</h1>
+    <div class="hero-north-star">&ldquo;Not just the Adobe agency. The Adobe partner.&rdquo;</div>
+    <p class="hero-sub">The strategic wrapper for the Adobe.pub APAC relaunch and FY27&ndash;FY29 renewal. It frames the next 90 days as the window to codify the organisational, operational, and commercial changes that should be written into the next three-year agreement.</p>
+    <div class="hero-meta">
+      <span class="meta-pill">Matt Kain &middot; APAC Client Lead</span>
+      <span class="meta-pill">Zenith / Publicis Media</span>
+      <span class="meta-pill">May 2026</span>
+      <span class="meta-pill conf">Internal Confidential</span>
+    </div>
+  </div>
+</section>
+
+<div class="main-wrap">
+
+  <!-- Context -->
+  <div class="section">
+    <div class="section-label">Context</div>
+    <h2 class="section-title">The Renewal Moment</h2>
+    <div class="context-block">
+      <p>The Adobe APAC account reaches a natural renewal point in 2026 — the close of an initial three-year term and the opening of the next. Seven markets, active SOWs, established teams, working client relationships. What has developed is a collection of independent market operations rather than a cohesive, high-performing regional partnership. This is the moment to define what the next three years actually deliver.</p>
+      <p>The renewal will proceed — but the next 90 days is the window to codify the changes that should have been made, and the ambitions that have not yet been reached. The People and Client Operations work happening right now is not preparatory to the renewal. It is the renewal content. Whatever gets resolved across org design, ways of working, and accountability structures in the next 90 days gets written into the new three-year terms.</p>
+      <p>The plan is structured across three pillars — People, Client Operations, and Growth — each directly connected to one of the three Adobe.pub vision convictions. The sequencing is deliberate: build the team, build the relationship, then build the commercial case.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Landscape -->
+  <div class="section">
+    <div class="section-label">Landscape</div>
+    <h2 class="section-title">Competitive Pressure &amp; Strategic Response</h2>
+    <p class="section-body">Adobe&rsquo;s competitive position is under real pressure from two directions simultaneously. The Vision positions Velocity Content and AI search optimisation as strategic responses to this shift, not peripheral add-ons.</p>
+
+    <div class="risk-row">
+      <div class="risk-card">
+        <div class="risk-title">Canva Moving Upmarket</div>
+        <div class="risk-body">Canva has captured the prosumer and SMB creative market with a speed and simplicity that legacy Creative Cloud cannot easily replicate — and it is moving upmarket fast into more professional and business workflows.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-title">LLMs Commoditising Creative</div>
+        <div class="risk-body">Generative AI tools are commoditising basic creative and copywriting tasks that once required Adobe&rsquo;s toolkit, lowering the barrier to entry across the content production stack.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 12px;">
+      <div class="callout-label">Strategic Response</div>
+      <div class="callout-text">Agentic and AI-powered search is creating a new optimisation discipline at the intersection of SEO, content strategy, and model visibility. The next three years are a pivotal window for Adobe to defend its platform leadership in the enterprise and mid-market — and for Publicis to move decisively into the content supply chain layer before that territory is claimed by others. Velocity Content and Growth should be framed as audience intelligence, AI-enabled insight tooling, market support, content velocity, and enablement around Adobe&rsquo;s evolving operating model.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Three Pillars -->
+  <div class="section">
+    <div class="section-label">Three Pillars</div>
+    <h2 class="section-title">Vision Architecture</h2>
+    <p class="section-body">Each pillar connects to a lane. Everything in the 30/60/90 plan, the SOW, and the renewal conversation should ladder back to one of these three convictions.</p>
+
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-num p1">Pillar 01 &middot; People Lane</div>
+        <div class="pillar-title">Culture &amp; Destination</div>
+        <div class="pillar-body">Become the account people at Zenith want to work on. Strong team identity, client integration, and meaningful recognition at every level. Elevate ICs closest to delivery into genuine client leaders with real ownership — not task lists. A destination account performs better, retains better, and attracts better talent.</div>
+        <span class="pillar-lane p1">&rarr; People Lane</span>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num p2">Pillar 02 &middot; Client Ops Lane</div>
+        <div class="pillar-title">Digital Excellence &amp; Adobe Power</div>
+        <div class="pillar-body">Be the best digital operator in the room. On the front foot with Lotame, LiveRamp, and Epsilon data partnerships. Best-in-class programmatic and SEM. Work that wins digital awards. Become the leading Adobe tool user in the Publicis network. Tie performance to at-risk compensation: when the account wins, the team wins.</div>
+        <span class="pillar-lane p2">&rarr; Client Operations Lane</span>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num p3">Pillar 03 &middot; Growth Lane</div>
+        <div class="pillar-title">Velocity Content &amp; Growth</div>
+        <div class="pillar-body">Expand the partnership beyond the media buy into content, creation, and optimisation. A Velocity Content team running rapid test-and-learn cycles across lower funnel media and social. Content strategy and production for SEO and AI-optimised search. More markets, more services — with a flexible resourcing model that allows Zenith to move quickly.</div>
+        <span class="pillar-lane p3">&rarr; Growth Lane</span>
+      </div>
+    </div>
+
+    <div class="outcomes-row">
+      <div class="outcome-card">
+        <div class="outcome-label p1">In Three Years &middot; People</div>
+        <div class="outcome-text">Adobe.pub is the account Zenith people compete to work on. Seven markets, one team, clear ownership at every level.</div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-label p2">In Three Years &middot; Client Ops</div>
+        <div class="outcome-text">Zenith leads the Publicis network on Adobe tool adoption. We win digital awards. Our compensation reflects our performance.</div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-label p3">In Three Years &middot; Growth</div>
+        <div class="outcome-text">A Velocity Content team runs test-and-learn for Adobe across APAC. AI search optimisation is in scope. SG and IN are full participants.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Audience Sequence -->
+  <div class="section">
+    <div class="section-label">Rollout Sequence</div>
+    <h2 class="section-title">Audience Staging</h2>
+    <p class="section-body">The same underlying strategy should not be shown in the same form to every audience. This sequence controls the narrative as it becomes progressively more operational and broadly shareable.</p>
+
+    <table class="seq-table">
+      <thead>
+        <tr>
+          <th>Stage</th>
+          <th>Audience</th>
+          <th>Purpose</th>
+          <th>Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stage-num">1</td>
+          <td class="audience-name">Jonny Cordony &amp; Nicola Watkins</td>
+          <td>Align on leadership intent, political framing, operating model, role clarity, and what can safely be taken to Adobe.</td>
+          <td>Internal leadership narrative and decision list.</td>
+        </tr>
+        <tr>
+          <td class="stage-num">1B</td>
+          <td class="audience-name">Mark Oben-Pepra</td>
+          <td>Align global account leadership and fee negotiation track before the client-facing scope narrative is taken to Adobe.</td>
+          <td>MOP briefing note and commercial implications summary.</td>
+        </tr>
+        <tr>
+          <td class="stage-num">2</td>
+          <td class="audience-name">Will Leung &amp; Pete Nagy</td>
+          <td>Test and align the client-facing account vision, SOW implications, two-in-a-box model, and renewal priorities.</td>
+          <td>Adobe-facing strategic narrative and scope discussion pack.</td>
+        </tr>
+        <tr>
+          <td class="stage-num">3</td>
+          <td class="audience-name">Discipline Leads</td>
+          <td>Convert the vision into owned workstreams for Strategy, Planning, Operations, Activation, and Data &amp; Analytics.</td>
+          <td>30/60/90 and 3-year workstream briefs by discipline.</td>
+        </tr>
+        <tr>
+          <td class="stage-num">4</td>
+          <td class="audience-name">Internal All-Hands</td>
+          <td>Launch the account culture, operating principles, rituals, and expectations across the Adobe.pub team.</td>
+          <td>Team launch pack and operating playbook.</td>
+        </tr>
+        <tr>
+          <td class="stage-num">5</td>
+          <td class="audience-name">Broader Adobe Audience</td>
+          <td>Publish selected, non-commercial elements that build confidence in the new model without exposing internal detail.</td>
+          <td>Adobe-facing summary of ways of working, governance, innovation agenda, and value commitments.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 30/60/90 -->
+  <div class="section">
+    <div class="section-label">Initiative Framework</div>
+    <h2 class="section-title">30 / 60 / 90 Day Plan</h2>
+    <p class="section-body">Sequenced by dependency, not priority. Each initiative resolves into the three-year renewal terms. The next 90 days turns the vision into decisions, proof points, and SOW-ready operating commitments.</p>
+
+    <!-- People Lane -->
+    <div class="plan-lane">
+      <div class="plan-lane-header">
+        <span class="lane-badge people">People</span>
+        <span class="lane-title">Culture &amp; Destination</span>
+      </div>
+      <div class="initiatives-grid">
+        <div class="initiative-block">
+          <div class="initiative-title">Organisational Design</div>
+          <div class="phase-row">
+            <div class="phase-label">30 Days</div>
+            <div class="phase-text">Map markets to SOW, contracted scope to team capacity, gaps, duplications, and unclear commercial arrangements.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">60 Days</div>
+            <div class="phase-text">Finalise two to three org design scenarios with cost implications by market, co-designed with Jonny and Pete.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">90 Days</div>
+            <div class="phase-text">Lock the team model, communicate across all markets, confirm flexible resourcing for Philippines and Indonesia, and codify into renewal terms.</div>
+          </div>
+        </div>
+        <div class="initiative-block">
+          <div class="initiative-title">Contact Mapping</div>
+          <div class="phase-row">
+            <div class="phase-label">30 Days</div>
+            <div class="phase-text">Draft the two-in-a-box model, mapping each Zenith lead to an Adobe counterpart by market, with cadence, channels, and escalation protocol.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">60 Days</div>
+            <div class="phase-text">Lock the engagement model with Adobe, including escalation thresholds and live recurring cadence across all pairings.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Client Ops Lane -->
+    <div class="plan-lane" style="margin-top: 24px;">
+      <div class="plan-lane-header">
+        <span class="lane-badge ops">Client Ops</span>
+        <span class="lane-title">Digital Excellence &amp; Adobe Power</span>
+      </div>
+      <div class="initiatives-grid">
+        <div class="initiative-block">
+          <div class="initiative-title">Account Narrative</div>
+          <div class="phase-row">
+            <div class="phase-label">30 Days</div>
+            <div class="phase-text">Build Narrative Deck v1 covering current state, future direction, and what brilliant looks like for Adobe APAC.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">90 Days</div>
+            <div class="phase-text">Deliver the first QBR in the new template, with Q2 data across all markets and a senior narrative on wins, misses, learnings, and H2 priorities.</div>
+          </div>
+        </div>
+        <div class="initiative-block">
+          <div class="initiative-title">Brilliant Basics</div>
+          <div class="phase-row">
+            <div class="phase-label">30 Days</div>
+            <div class="phase-text">Audit recurring meetings by type, attendee, frequency, duration, FTE cost, and delivery vs admin split.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">60 Days</div>
+            <div class="phase-text">Catalogue every standing report: audience, frequency, owner, production time, and whether Adobe acts on it. Identify what to stop, simplify, or automate.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Growth Lane -->
+    <div class="plan-lane" style="margin-top: 24px;">
+      <div class="plan-lane-header">
+        <span class="lane-badge growth">Growth</span>
+        <span class="lane-title">Velocity Content &amp; Growth</span>
+      </div>
+      <div class="initiatives-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+        <div class="initiative-block">
+          <div class="initiative-title">Renewal</div>
+          <div class="phase-row">
+            <div class="phase-label">30 Days</div>
+            <div class="phase-text">Review the contract, flag ambiguous clauses, confirm rollover intent with MOP, identify org and scope changes needed.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">60 Days</div>
+            <div class="phase-text">Cross-reference renewal scope against org design outcomes, identify mismatches, draft proposed contract amendments and negotiation positions.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">90 Days</div>
+            <div class="phase-text">Create a cross-market proof point using Singapore or India and write it up as evidence that the APAC model is real.</div>
+          </div>
+        </div>
+        <div class="initiative-block">
+          <div class="initiative-title">Adobe on Adobe</div>
+          <div class="phase-row">
+            <div class="phase-label">30 Days</div>
+            <div class="phase-text">Audit Adobe stack usage across all seven markets, rating maturity by tool and market.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">60 Days</div>
+            <div class="phase-text">Map Adobe tool use across Publicis brands, identify where Prodigious can support lower-funnel production, and model cost vs non-Publicis vendors.</div>
+          </div>
+        </div>
+        <div class="initiative-block">
+          <div class="initiative-title">New Revenue</div>
+          <div class="phase-row">
+            <div class="phase-label">60 Days</div>
+            <div class="phase-text">Define Velocity Content team structure, capability model, billing model, SEO scope extension, and Agentic Search Optimisation proposal.</div>
+          </div>
+          <div class="phase-row">
+            <div class="phase-label">90 Days</div>
+            <div class="phase-text">Scope a Velocity Content pilot by selecting the right market and brief.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SOW Implications -->
+  <div class="section">
+    <div class="section-label">SOW</div>
+    <h2 class="section-title">SOW Implications</h2>
+    <p class="section-body">The Vision should be treated as the strategic front door to the SOW process. The SOW Wizard turns this into a scope review; this document explains why that review matters.</p>
+    <div class="sow-list">
+      <div class="sow-item">
+        <div class="sow-dot"></div>
+        <div class="sow-text">Organisational model and two-in-a-box engagement structure must be captured as operating commitments, not left as informal ways of working.</div>
+      </div>
+      <div class="sow-item">
+        <div class="sow-dot"></div>
+        <div class="sow-text">Digital excellence should translate into named capabilities, owners, cadence, tools, and measurable outputs.</div>
+      </div>
+      <div class="sow-item">
+        <div class="sow-dot"></div>
+        <div class="sow-text">Velocity Content, SEO extension, Agentic Search Optimisation, Adobe-on-Adobe, and creative/content production should be scoped as explicit growth services.</div>
+      </div>
+      <div class="sow-item">
+        <div class="sow-dot"></div>
+        <div class="sow-text">The renewal should include flexible resourcing language for emerging market opportunities, especially Philippines and Indonesia.</div>
+      </div>
+      <div class="sow-item">
+        <div class="sow-dot"></div>
+        <div class="sow-text">Any performance-linked team reward model needs commercial and HR review before being written into renewal mechanics.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Team Evolution -->
+  <div class="section">
+    <div class="section-label">Team Evolution &middot; Added June 2026</div>
+    <h2 class="section-title">Chapter 2.2 / 2.3 Link</h2>
+    <p class="section-body">The team evolution should be explicitly tied to Vision 2028 rather than positioned as a defensive resourcing conversation.</p>
+    <div class="context-block">
+      <p><strong style="color: var(--text);">v0.19</strong> — Shows the current full team Adobe relies on today.</p>
+      <p><strong style="color: var(--text);">v0.20</strong> — Shows the Core + Added Value base view and makes the case for signing the incremental GBI and APAC Expansion SOWs.</p>
+      <p><strong style="color: var(--text);">1H2027 Transition</strong> — Responds to paid social in-housing by adding or reframing resources around AI operations, social consulting, creative optimisation and Velocity Content. AI / LLM SEO remains a likely incremental scope.</p>
+      <p><strong style="color: var(--text);">2029 Target Team</strong> — The Vision 2028 operating model made real: Adobe.pub helps Adobe become digital leaders, uses Adobe&rsquo;s own tools, builds a stronger account culture and supports more than 20% YoY growth.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Open Questions -->
+  <div class="section">
+    <div class="section-label">Open Questions</div>
+    <h2 class="section-title">Outstanding Decisions</h2>
+    <div class="questions-list">
+      <div class="q-item">
+        <div class="q-num">01</div>
+        <div class="q-text">Confirm whether &ldquo;Vision 2028&rdquo; or &ldquo;FY29 Vision&rdquo; is the preferred working title. The contract horizon runs to November 2029, but the artefact title is Vision 2028.</div>
+      </div>
+      <div class="q-item">
+        <div class="q-num">02</div>
+        <div class="q-text">Confirm which elements become Adobe-facing at Stage 5 versus kept internal.</div>
+      </div>
+      <div class="q-item">
+        <div class="q-num">03</div>
+        <div class="q-text">Confirm how hard to push performance-linked reward in the SOW context versus keeping it as an internal culture mechanism.</div>
+      </div>
+      <div class="q-item">
+        <div class="q-num">04</div>
+        <div class="q-text">Confirm which market should host the first Velocity Content proof point.</div>
+      </div>
+      <div class="q-item">
+        <div class="q-num">05</div>
+        <div class="q-text">Confirm restricted operating-model timing and what support Adobe will still need from Publicis.</div>
+      </div>
+      <div class="q-item">
+        <div class="q-num">06</div>
+        <div class="q-text">Confirm whether the first market model should segment APAC into emerging, growth/middle, and mature markets, and how this maps to Acrobat, Adobe Firefly, MAU, and paid conversion goals.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-wrap -->
+
+</body>
+</html>

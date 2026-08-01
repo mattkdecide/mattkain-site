@@ -236,7 +236,7 @@
       <div class="header-sub">Adobe APAC Executive OS — Intelligence Layer</div>
     </div>
     <div class="header-date">
-      <strong>Last updated: April 2026</strong>
+      <strong>Last updated: August 2026</strong>
       Markets: US · UK · DE · JP · IN · AU/NZ · SG
     </div>
   </div>
@@ -261,7 +261,7 @@
     <button class="filter-btn" data-filter="apac" onclick="setFilter('apac')">APAC</button>
   </div>
   <div class="divider"></div>
-  <button class="toggle-past showing" onclick="togglePast()" id="pastToggle">Showing past events</button>
+  <button class="toggle-past" onclick="togglePast()" id="pastToggle">Past events hidden</button>
 </div>
 
 <div class="stats" id="statsBar">
@@ -279,7 +279,7 @@
 // =============================================
 // EVENT DATA
 // =============================================
-const TODAY = new Date('2026-04-14');
+const TODAY = new Date(); // always reflects the visitor's current date, so past/upcoming stays accurate
 
 const events = [
 
@@ -370,6 +370,15 @@ const events = [
 
   // ── MARCH ──────────────────────────────────────────────
   {
+    name: "Spikes Asia 2026",
+    start: "2026-03-11", end: "2026-03-12",
+    cat: "apac",
+    location: "Singapore (Capitol Kempinski Hotel / National Design Centre)",
+    type: "Festival",
+    markets: ["SG", "AU", "JP", "IN"],
+    notes: "DATE CORRECTED — festival moved to March in 2026 (previously listed in September; Awards Gala held 12 March at Capitol Theatre, Singapore). APAC's leading creative and advertising festival — campaign trends, brand strategy, and AI in creativity from the regional lens."
+  },
+  {
     name: "SXSW 2026",
     start: "2026-03-13", end: "2026-03-22",
     cat: "industry",
@@ -403,7 +412,7 @@ const events = [
     location: "San Jose, USA",
     type: "Earnings",
     markets: ["US"],
-    notes: "Revenue $6.4B (+12% YoY, beat). Firefly ARR +75% QoQ. Freemium MAU 80M (+50% YoY). SAME DAY: Shantanu Narayen announced CEO transition after 18 years — will remain Chair. Succession search underway (internal + external). Adobe shares down ~23% YTD as of announcement."
+    notes: "Revenue $6.4B (+12% YoY, beat). Firefly ARR +75% QoQ. Freemium MAU 80M (+50% YoY). SAME DAY: Shantanu Narayen announced CEO transition after 18 years — will remain Chair. Succession search underway (internal + external). Adobe shares down ~23% YTD as of announcement. UPDATE (Aug 2026): media reports (The AI Software Report, GuruFocus, others) name David Wadhwani, President of Digital Media, as the leading internal candidate; Frank Calderoni chairs the board's search committee. No formal successor confirmed via Adobe's own newsroom as of this update — verify at news.adobe.com before briefing."
   },
   {
     name: "Adobe / NVIDIA Strategic Partnership",
@@ -505,7 +514,7 @@ const events = [
     location: "SoFi Stadium / Hollywood Park, Los Angeles, USA",
     type: "Product Event",
     markets: ["US", "AU"],
-    notes: "CRITICAL WATCH — April 16, 2 days from now. Canva acquired Simtheory (AI agent platform) and Ortto (CDP + marketing automation) on April 9. Billing this as 'the biggest transformation in Canva's history.' Creative Operating System launched Oct 2025. Canva is pivoting from design platform to AI platform with full marketing automation stack — direct attack on both Creative Cloud and Experience Cloud. Free online stream available."
+    notes: "Canva acquired Simtheory (agentic AI orchestration) and Ortto (CDP + marketing automation) on April 8–9. OUTCOME: at the April 16 event, Canva unveiled 'Canva AI 2.0' — its clearest statement yet that it is no longer a design tool with AI added, but an AI platform with design and productivity at its core. Direct competitive overlap with both Creative Cloud and Experience Cloud — ongoing watch item for GTM positioning."
   },
 
   // ── MAY ──────────────────────────────────────────────
@@ -637,7 +646,7 @@ const events = [
     location: "Singapore / Tokyo / Sydney (TBC)",
     type: "Conference",
     markets: ["SG", "JP", "AU"],
-    notes: "Adobe's APAC-focused customer and partner events (dates approximate). Key for regional customer intelligence, AEP adoption, and competitive positioning in JAPAC markets."
+    notes: "Adobe's APAC-focused customer and partner events. UPDATE: Adobe has confirmed 2026 regional Summit editions in London, Tokyo, Singapore and Sydney (per partner event pages — Infosys, Accenture, Deloitte) but exact dates were not published in Adobe's own channels as of this update — verify at summit.adobe.com before relying on the date above. Key for regional customer intelligence, AEP adoption, and competitive positioning in JAPAC markets."
   },
 
   // ── AUGUST ──────────────────────────────────────────────
@@ -651,13 +660,22 @@ const events = [
     notes: "Q2 FY2027 covers May–Jul 2026. Watch: Marketing Cloud ARR, Agentforce deployment scale, Data Cloud competitive wins."
   },
   {
-    name: "Gartner Marketing Symposium 2026",
-    start: "2026-08-10", end: "2026-08-12",
+    name: "Gartner Marketing Symposium/Xpo 2026 (Denver)",
+    start: "2026-06-08", end: "2026-06-10",
     cat: "industry",
-    location: "USA (TBC)",
+    location: "Denver, USA (Gaylord Rockies Resort & Convention Center)",
     type: "Conference",
     markets: ["US"],
-    notes: "Key analyst event for CMOs. Gartner research on marketing tech stacks, AI in marketing, and budget allocation signals."
+    notes: "CORRECTED — replaces prior placeholder TBC entry. North American edition of Gartner's flagship CMO event. Marketing tech stack, AI in marketing, and budget allocation signals."
+  },
+  {
+    name: "Gartner Marketing Symposium/Xpo 2026 (London)",
+    start: "2026-05-11", end: "2026-05-12",
+    cat: "industry",
+    location: "London, UK",
+    type: "Conference",
+    markets: ["UK", "DE"],
+    notes: "NEW — EMEA edition of Gartner's flagship CMO event, ahead of the Denver edition. Useful for European marketing tech and AI budget signals."
   },
   {
     name: "Campaign Asia-Pacific Awards",
@@ -699,21 +717,12 @@ const events = [
   },
   {
     name: "DMEXCO 2026",
-    start: "2026-09-09", end: "2026-09-10",
+    start: "2026-09-23", end: "2026-09-24",
     cat: "industry",
     location: "Cologne, Germany",
     type: "Conference",
     markets: ["DE", "UK"],
-    notes: "Europe's largest digital marketing and adtech conference. Critical for European market signals — data privacy, programmatic, and AI in marketing."
-  },
-  {
-    name: "Spikes Asia 2026",
-    start: "2026-09-22", end: "2026-09-24",
-    cat: "apac",
-    location: "Singapore",
-    type: "Festival",
-    markets: ["SG", "AU", "JP", "IN"],
-    notes: "APAC's leading creative and advertising festival. Creative campaign trends, brand strategy, and AI in creativity from the regional lens."
+    notes: "DATE CORRECTED (was previously listed as Sept 9–10). Europe's largest digital marketing and adtech conference. Critical for European market signals — data privacy, programmatic, and AI in marketing."
   },
   {
     name: "Alphabet / Google Q3 2026 Earnings",
@@ -858,12 +867,12 @@ const events = [
   },
   {
     name: "Salesforce Q4 FY2027 Earnings",
-    start: "2026-03-04",
+    start: "2027-03-04",
     cat: "earnings",
     location: "San Francisco, USA",
     type: "Earnings",
     markets: ["US"],
-    notes: "FY2027 Q4 ends Jan 31 2027. Full year results."
+    notes: "DATE CORRECTED (year was previously mistyped as 2026, inconsistent with FY2027 naming). FY2027 Q4 ends Jan 31 2027. Full year results."
   },
   {
     name: "Snap Q4 2026 Earnings",
@@ -899,7 +908,7 @@ const events = [
 // RENDER
 // =============================================
 let activeFilter = 'all';
-let showPast = true;
+let showPast = false;
 
 function isPast(dateStr) {
   return new Date(dateStr) < TODAY;

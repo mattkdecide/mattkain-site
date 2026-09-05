@@ -45,6 +45,8 @@ export default function Home() {
     } finally { setLoading(false); }
   }
 
+  // The album selection is the external input that starts this fetch cycle.
+  // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks/exhaustive-deps
   useEffect(() => { loadPhotos(); }, [active.id]);
 
   async function loadCandidates() {
@@ -57,10 +59,15 @@ export default function Home() {
     fetch("/api/google/status").then((response) => response.json()).then(setGoogleStatus).catch(() => setGoogleStatus({ connected: false, configured: false }));
   }, []);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks/exhaustive-deps
   useEffect(() => { loadCandidates(); }, [active.id]);
 
   async function pollPicker(id: string) {
-    const response = await fetch(`/api/google/picker?id=${encodeURIComponent(id)}`);
+    const response = await fetch("/api/google/picker", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error ?? "Import failed");
     if (data.complete) {
@@ -88,7 +95,17 @@ export default function Home() {
       return;
     }
     if (!googleStatus.connected) {
-      window.location.href = `/api/google/start?dad=${active.id}`;
+      const response = await fetch("/api/google/start", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ dad: active.id }),
+      });
+      const data = await response.json();
+      if (!response.ok || !data.url) {
+        setNotice(data.error ?? "Google Photos connection could not be started.");
+        return;
+      }
+      window.location.href = data.url;
       return;
     }
     const pickerWindow = window.open("about:blank", "google-photos-picker", "popup,width=1080,height=760");

@@ -1,5 +1,5 @@
 import { env } from "cloudflare:workers";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { isSameOriginWrite, privateJson, verifyAccessOwner } from "@/lib/security";
 import { isDad } from "@/lib/dads";
 
 export async function GET(request: Request) {
@@ -13,8 +13,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const user = await getChatGPTUser();
-  if (!user) return Response.json({ error: "Sign in required" }, { status: 401 });
+  const user = await verifyAccessOwner(request, env);
+  if (!user) return privateJson({ error: "Owner access required" }, { status: 401 });
+  if (!isSameOriginWrite(request)) return privateJson({ error: "Cross-origin request rejected" }, { status: 403 });
   try {
     const form = await request.formData();
     const file = form.get("photo");

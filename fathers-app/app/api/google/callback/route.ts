@@ -1,5 +1,5 @@
 import { env } from "cloudflare:workers";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { verifyAccessOwner } from "@/lib/security";
 import { encryptToken, exchangeCode, loadGoogleAppConfig } from "@/lib/google-photos";
 
 type StateRow = { user_id: string; user_email: string; dad: string; expires_at: number };
@@ -11,7 +11,7 @@ function home(request: Request, params: Record<string, string>) {
 }
 
 export async function GET(request: Request) {
-  const user = await getChatGPTUser();
+  const user = await verifyAccessOwner(request, env);
   if (!user) return home(request, { google: "signin-required" });
   const url = new URL(request.url);
   const state = url.searchParams.get("state");

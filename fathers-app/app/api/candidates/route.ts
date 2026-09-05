@@ -1,5 +1,5 @@
 import { env } from "cloudflare:workers";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { isSameOriginWrite, privateJson, verifyAccessOwner } from "@/lib/security";
 import { isDad } from "@/lib/dads";
 
 type Candidate = {
@@ -8,8 +8,9 @@ type Candidate = {
 };
 
 export async function GET(request: Request) {
-  const user = await getChatGPTUser();
-  if (!user) return Response.json({ error: "Sign in required" }, { status: 401 });
+  const user = await verifyAccessOwner(request, env);
+  if (!user) return privateJson({ error: "Owner access required" }, { status: 401 });
+  if (!isSameOriginWrite(request)) return privateJson({ error: "Cross-origin request rejected" }, { status: 403 });
   const url = new URL(request.url);
   const dad = url.searchParams.get("dad") ?? "";
   const status = url.searchParams.get("status") ?? "pending";
@@ -35,12 +36,12 @@ export async function GET(request: Request) {
     const best = group.reduce((winner, candidate) => ((candidate.width ?? 0) * (candidate.height ?? 0) > (winner.width ?? 0) * (winner.height ?? 0) ? candidate : winner), group[0]);
     return group.map((candidate) => ({ ...candidate, similarShot: group.length > 1, suggestedBest: group.length > 1 && candidate.id === best.id }));
   });
-  return Response.json({ candidates: review });
+  return privateJson({ candidates: review });
 }
 
 export async function PATCH(request: Request) {
-  const user = await getChatGPTUser();
-  if (!user) return Response.json({ error: "Sign in required" }, { status: 401 });
+  const user = await verifyAccessOwner(request, env);
+  if (!user) return privateJson({ error: "Owner access required" }, { status: 401 });
   const body = await request.json().catch(() => ({})) as { id?: string; action?: string; caption?: string };
   if (!body.id || !["approve", "reject"].includes(body.action ?? "")) return Response.json({ error: "Invalid review action" }, { status: 400 });
   const item = await env.DB.prepare(`SELECT id, dad, r2_key, filename, caption FROM photo_candidates

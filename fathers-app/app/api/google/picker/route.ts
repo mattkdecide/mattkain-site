@@ -1,5 +1,5 @@
 import { env } from "cloudflare:workers";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { isSameOriginWrite, privateJson, verifyAccessOwner } from "@/lib/security";
 import { isDad } from "@/lib/dads";
 import { accessToken, decryptToken, googleFetch, loadGoogleAppConfig } from "@/lib/google-photos";
 
@@ -31,8 +31,9 @@ function safeFilename(value: string) {
 }
 
 export async function POST(request: Request) {
-  const user = await getChatGPTUser();
-  if (!user) return Response.json({ error: "Sign in required" }, { status: 401 });
+  const user = await verifyAccessOwner(request, env);
+  if (!user) return privateJson({ error: "Owner access required" }, { status: 401 });
+  if (!isSameOriginWrite(request)) return privateJson({ error: "Cross-origin request rejected" }, { status: 403 });
   const body = await request.json().catch(() => ({})) as { dad?: string };
   if (!body.dad || !isDad(body.dad)) return Response.json({ error: "Unknown album" }, { status: 400 });
 
@@ -57,10 +58,12 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
-  const user = await getChatGPTUser();
-  if (!user) return Response.json({ error: "Sign in required" }, { status: 401 });
-  const id = new URL(request.url).searchParams.get("id");
+export async function PATCH(request: Request) {
+  const user = await verifyAccessOwner(request, env);
+  if (!user) return privateJson({ error: "Owner access required" }, { status: 401 });
+  if (!isSameOriginWrite(request)) return privateJson({ error: "Cross-origin request rejected" }, { status: 403 });
+  const body = await request.json().catch(() => ({})) as { id?: string };
+  const id = body.id ?? null;
   if (!id) return Response.json({ error: "Missing picker session" }, { status: 400 });
 
   try {

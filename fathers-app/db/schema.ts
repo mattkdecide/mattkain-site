@@ -34,6 +34,8 @@ export const pickerSessions = sqliteTable("picker_sessions", {
   status: text("status").notNull(),
   nextPageToken: text("next_page_token"),
   importedCount: integer("imported_count").notNull().default(0),
+  lockToken: text("lock_token"),
+  lockUntil: integer("lock_until").notNull().default(0),
   expiresAt: integer("expires_at").notNull(),
   createdAt: integer("created_at").notNull(),
   updatedAt: integer("updated_at").notNull(),
@@ -44,6 +46,7 @@ export const photoCandidates = sqliteTable("photo_candidates", {
   userId: text("user_id").notNull(),
   dad: text("dad").notNull(),
   googleMediaId: text("google_media_id").notNull(),
+  pickerSessionId: text("picker_session_id"),
   r2Key: text("r2_key").notNull(),
   filename: text("filename").notNull(),
   mimeType: text("mime_type").notNull(),
@@ -55,6 +58,8 @@ export const photoCandidates = sqliteTable("photo_candidates", {
   createdAt: integer("created_at").notNull(),
   updatedAt: integer("updated_at").notNull(),
 }, (table) => [
-  uniqueIndex("idx_candidates_dad_media").on(table.dad, table.googleMediaId),
+  uniqueIndex("idx_candidates_user_dad_media").on(table.userId, table.dad, table.googleMediaId),
+  index("idx_candidates_picker_session").on(table.pickerSessionId),
+  index("idx_candidates_r2_key").on(table.r2Key),
   index("idx_candidates_user_dad_status").on(table.userId, table.dad, table.status),
 ]);

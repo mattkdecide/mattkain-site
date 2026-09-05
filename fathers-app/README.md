@@ -12,11 +12,11 @@ This is a proposed hosting choice, not approval to create paid resources. Before
 
 The app no longer trusts `oai-authenticated-user-*` headers. Private endpoints verify Cloudflare Access’s signed JWT (header or `CF_Authorization` cookie), including its issuer, audience, expiry, and RSA signature, and then require the verified email in `OWNER_EMAILS`. Cloudflare Access must be configured to allow only the owner to establish that cookie. Do not expose the origin on a route that bypasses the Worker.
 
-All writes additionally require an exact same-origin `Origin` and reject cross-site Fetch Metadata. OAuth connection starts with a same-origin POST; the Google callback remains protected by a one-time, expiring state tied to the verified owner. Pending R2 objects require both owner authentication and a matching pending database row. Admin JSON and pending files are `private, no-store`.
+All writes additionally require an exact same-origin `Origin` and reject cross-site Fetch Metadata. OAuth connection starts with a same-origin POST; the Google callback remains protected by a one-time, expiring state tied to the verified owner. Imported R2 objects are publicly readable only after the matching database row is approved. Pending originals require the matching owner; rejected and orphaned imports are inaccessible. Admin JSON and pending files are `private, no-store`.
 
 ## Configuration (after owner approval)
 
-1. Run `npm ci` with Node.js `>=22.15.0`.
+1. Run `npm ci` with Node.js 24 for the complete test suite.
 2. Copy `wrangler.example.jsonc` to ignored `wrangler.jsonc`; provision D1 and R2 and replace the placeholders. Never commit account IDs, credentials, owner addresses, or secrets.
 3. Apply every migration in `drizzle/` to the staging D1 database.
 4. Create a Cloudflare Access self-hosted application and owner-only policy for the private application paths. Set `CF_ACCESS_TEAM_DOMAIN`, `CF_ACCESS_AUD`, and `OWNER_EMAILS` exactly as shown by Access.
@@ -39,5 +39,9 @@ Local Vite uses disposable Miniflare bindings named `DB` and `BUCKET`. Runtime s
 - Owner approval of the hosting choice, hostname, and provisioning.
 - Private family/person mapping and final photo approval from the owner.
 - Real Google credentials, a newly registered callback URL, and end-to-end staging OAuth/import testing.
-- Import retry/recovery hardening, candidate pagination beyond the current 200-item cap, idempotent approval under partial R2/D1 failure, and broader automated coverage.
+- Live staging verification of the implemented retry/lease handling, pagination, idempotent approval, and album-safe resume behavior.
 - A staging review of Access path policy. Compilation alone is not release approval.
+
+## Release preparation
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the /fathers path setup, configuration checks, migration order and current evidence. Local builds use wrangler.local.jsonc. Set FATHERS_DEPLOY_CONFIG explicitly for a real target. Do not attach a lifecycle deletion rule to pending/: approved originals now remain at their original key.

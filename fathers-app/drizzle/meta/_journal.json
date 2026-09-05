@@ -15,6 +15,13 @@
       "when": 1788603491129,
       "tag": "0001_panoramic_rogue",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788642285697,
+      "tag": "0002_import_recovery",
+      "breakpoints": true
     }
   ]
 }

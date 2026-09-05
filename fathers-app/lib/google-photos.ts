@@ -83,6 +83,7 @@ export function googleAuthorisationUrl(state: string, config: GoogleAppConfig) {
 export async function exchangeCode(code: string, config: GoogleAppConfig) {
   const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
+    signal: AbortSignal.timeout(20_000),
     headers: { "content-type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       client_id: config.clientId,
@@ -99,6 +100,7 @@ export async function exchangeCode(code: string, config: GoogleAppConfig) {
 export async function accessToken(refreshToken: string, config: GoogleAppConfig) {
   const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
+    signal: AbortSignal.timeout(20_000),
     headers: { "content-type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       client_id: config.clientId,
@@ -115,6 +117,7 @@ export async function accessToken(refreshToken: string, config: GoogleAppConfig)
 
 export async function googleFetch(path: string, token: string, init?: RequestInit) {
   return fetch(`https://photospicker.googleapis.com/v1${path}`, {
+    signal: AbortSignal.timeout(20_000),
     ...init,
     headers: { ...init?.headers, authorization: `Bearer ${token}`, "content-type": "application/json" },
   });

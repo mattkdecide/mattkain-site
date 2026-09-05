@@ -42,7 +42,7 @@ test("owner can read the review queue without an Origin header", async () => {
   const response = await GET(new Request("https://family.example/api/candidates?dad=dad"));
   assert.equal(response.status, 200);
   assert.equal(response.headers.get("cache-control"), "private, no-store");
-  assert.deepEqual(await response.json(), { candidates: [] });
+  assert.deepEqual(await response.json(), { candidates: [], nextCursor: null });
 });
 
 test("review writes reject missing and cross-site Origin before touching the database", async () => {

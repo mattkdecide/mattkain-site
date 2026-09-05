@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Camera, Check, ChevronLeft, ChevronRight, Cloud, Heart, ImagePlus, KeyRound, LoaderCircle, Sparkles, Trash2, X } from "lucide-react";
 
+import { appPath } from "@/lib/paths";
+
 type Dad = { id: string; title: string; relationship: string; colour: string; note: string };
 type Photo = { key: string; dad: string; caption: string; url: string };
 type Candidate = { id: string; filename: string; caption: string; capturedAt: string | null; width: number | null; height: number | null; url: string; similarShot: boolean; suggestedBest: boolean };
@@ -36,143 +38,239 @@ export default function Home() {
   const [lightbox, setLightbox] = useState<Photo | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  async function loadPhotos() {
+  const activeId = useRef(dads[0].id);
+  const generation = useRef(0);
+  const pollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [candidateCursor, setCandidateCursor] = useState<string | null>(null);
+  const [retrySession, setRetrySession] = useState<string | null>(null);
+  const [isOwner, setIsOwner] = useState(false);
+  const storageKey = (dadId: string) => `fathers-picker:${dadId}`;
+  const saveSession = (dadId: string, id: string | null) => {
+    try { if (id) sessionStorage.setItem(storageKey(dadId), id); else sessionStorage.removeItem(storageKey(dadId)); } catch { /* retry remains available in this tab */ }
+  };
+  const savedSession = (dadId: string) => {
+    try { return sessionStorage.getItem(storageKey(dadId)); } catch { return null; }
+  };
+
+  function selectDad(dad: Dad) {
+    generation.current++;
+    if (pollTimer.current) clearTimeout(pollTimer.current);
+    activeId.current = dad.id;
+    setActive(dad);
+    setPhotos([]); setCandidates([]); setCandidateCursor(null);
+    setImporting(false); setNotice(""); setLightbox(null);
+    setRetrySession(savedSession(dad.id));
+  }
+
+  async function loadPhotos(dadId = active.id) {
+    const version = generation.current;
     setLoading(true);
     try {
-      const response = await fetch(`/api/photos?dad=${active.id}`);
-      const data = await response.json() as { photos?: Photo[] };
-      setPhotos(data.photos ?? []);
-    } finally { setLoading(false); }
+      let next: { source: string; cursor: string } | null = { source: "imports", cursor: "" };
+      const all = new Map<string, Photo>();
+      while (next) {
+        const params = new URLSearchParams({ dad: dadId, ...next });
+        const response = await fetch(appPath(`/api/photos?${params}`));
+        const data = await response.json() as { photos?: Photo[]; next?: { source: string; cursor: string } | null; error?: string };
+        if (!response.ok) throw new Error(data.error ?? "Photos could not be loaded.");
+        if (activeId.current !== dadId || generation.current !== version) return;
+        for (const photo of data.photos ?? []) all.set(photo.key, photo);
+        setPhotos([...all.values()]);
+        next = data.next ?? null;
+      }
+    } catch (error) {
+      if (activeId.current === dadId && generation.current === version) setNotice(error instanceof Error ? error.message : "Photos could not be loaded.");
+    } finally { if (activeId.current === dadId && generation.current === version) setLoading(false); }
   }
 
-  // The album selection is the external input that starts this fetch cycle.
+  async function loadCandidates(dadId = active.id, cursor: string | null = null) {
+    const version = generation.current;
+    const params = new URLSearchParams({ dad: dadId });
+    if (cursor) params.set("cursor", cursor);
+    try {
+      const response = await fetch(appPath(`/api/candidates?${params}`));
+      if (response.status === 401) return;
+      const data = await response.json() as { candidates?: Candidate[]; nextCursor?: string | null; error?: string };
+      if (!response.ok) throw new Error(data.error ?? "Review queue could not be loaded.");
+      if (activeId.current !== dadId || generation.current !== version) return;
+      setCandidates((current) => cursor
+        ? [...new Map([...current, ...(data.candidates ?? [])].map((item) => [item.id, item])).values()]
+        : data.candidates ?? []);
+      setCandidateCursor(data.nextCursor ?? null);
+    } catch (error) {
+      if (activeId.current === dadId && generation.current === version) setNotice(error instanceof Error ? error.message : "Review queue could not be loaded.");
+    }
+  }
+
+  // Album changes start a fresh fetch cycle; generation guards discard old responses.
   // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks/exhaustive-deps
-  useEffect(() => { loadPhotos(); }, [active.id]);
-
-  async function loadCandidates() {
-    const response = await fetch(`/api/candidates?dad=${active.id}`);
-    const data = await response.json() as { candidates?: Candidate[] };
-    setCandidates(data.candidates ?? []);
-  }
+  useEffect(() => { loadPhotos(active.id); loadCandidates(active.id); }, [active.id]);
 
   useEffect(() => {
-    fetch("/api/google/status").then((response) => response.json() as Promise<GoogleStatus>).then(setGoogleStatus).catch(() => setGoogleStatus({ connected: false, configured: false }));
+    fetch(appPath("/api/google/status")).then(async (response) => {
+      if (!response.ok) return;
+      setIsOwner(true);
+      setGoogleStatus(await response.json() as GoogleStatus);
+    }).catch(() => setGoogleStatus({ connected: false, configured: false }));
+    // This counter invalidates async work; it is not a DOM element reference.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => { generation.current++; if (pollTimer.current) clearTimeout(pollTimer.current); };
   }, []);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks/exhaustive-deps
-  useEffect(() => { loadCandidates(); }, [active.id]);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const dad = dads.find((item) => item.id === params.get("dad")) ?? dads[0];
+    const messages: Record<string, string> = {
+      connected: "Google Photos connected. Choose photos to import.",
+      cancelled: "Google connection was cancelled. You can try again.",
+      "signin-required": "Sign in as the owner before connecting Google Photos.",
+      "invalid-state": "That connection attempt expired or was already used. Connect again.",
+      failed: "Google connection failed. Check your settings and reconnect.",
+    };
+    if (dad.id !== activeId.current) selectDad(dad);
+    else setRetrySession(savedSession(dad.id));
+    // Read the external OAuth callback once after hydration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setNotice(messages[params.get("google") ?? ""] ?? "");
+    // Initial callback parameters only; album selection afterwards is user-controlled.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  async function pollPicker(id: string) {
-    const response = await fetch("/api/google/picker", {
-      method: "PATCH",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ id }),
+  async function pollPicker(id: string, dadId: string, version: number) {
+    if (generation.current !== version || activeId.current !== dadId) return;
+    const response = await fetch(appPath("/api/google/picker"), {
+      method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }),
     });
     const data = await response.json() as { error?: string; complete?: boolean; imported?: number; importing?: boolean; pollAfterMs?: number };
-    if (!response.ok) throw new Error(data.error ?? "Import failed");
+    if (generation.current !== version || activeId.current !== dadId) return;
+    if (!response.ok) {
+      if (response.status === 410 || response.status === 404) { saveSession(dadId, null); setRetrySession(null); }
+      throw new Error(data.error ?? "Import interrupted. Retry this selection.");
+    }
     if (data.complete) {
-      setImporting(false);
-      setNotice(`${data.imported} photo${data.imported === 1 ? "" : "s"} ready to review.`);
-      await loadCandidates();
+      saveSession(dadId, null); setRetrySession(null); setImporting(false);
+      setNotice(`${data.imported ?? 0} photos imported. Review them below.`);
+      await loadCandidates(dadId);
       return;
     }
-    setNotice(data.importing ? `${data.imported} photos imported so far…` : "Choose photos in the Google Photos window.");
-    window.setTimeout(() => pollPicker(id).catch(handleImportError), data.pollAfterMs ?? 3000);
+    setNotice(data.importing ? `${data.imported ?? 0} photos imported so far…` : "Choose photos in the Google Photos window.");
+    pollTimer.current = setTimeout(() => pollPicker(id, dadId, version).catch((error) => handleImportError(error, dadId, version)),
+      Math.min(60_000, Math.max(500, data.pollAfterMs ?? 3000)));
   }
 
-  function handleImportError(error: unknown) {
+  function handleImportError(error: unknown, dadId: string, version: number) {
+    if (generation.current !== version || activeId.current !== dadId) return;
     setImporting(false);
     setNotice(error instanceof Error ? error.message : "The import could not be completed.");
   }
 
-  async function importFromGoogle() {
-    if (!googleStatus?.configured) {
-      setShowGoogleSetup(true);
-      const response = await fetch("/api/google/settings");
+  function retryImport() {
+    const id = retrySession;
+    if (!id) return;
+    setImporting(true);
+    const version = generation.current;
+    pollPicker(id, active.id, version).catch((error) => handleImportError(error, active.id, version));
+  }
+
+  async function openGoogleSetup() {
+    try {
+      const response = await fetch(appPath("/api/google/settings"));
+      if (!response.ok) throw new Error("Sign in as the owner to manage Google settings.");
       const data = await response.json() as { clientId?: string; redirectUri?: string };
-      setClientId(data.clientId ?? "");
-      setRedirectUri(data.redirectUri ?? "");
-      return;
-    }
+      setClientId(data.clientId ?? ""); setClientSecret("");
+      setRedirectUri(data.redirectUri ?? ""); setShowGoogleSetup(true);
+    } catch (error) { setNotice(error instanceof Error ? error.message : "Settings could not be loaded."); }
+  }
+
+  async function importFromGoogle() {
+    const dadId = active.id;
+    const version = generation.current;
+    if (!googleStatus?.configured) { await openGoogleSetup(); return; }
     if (!googleStatus.connected) {
-      const response = await fetch("/api/google/start", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ dad: active.id }),
-      });
-      const data = await response.json() as { error?: string; url?: string };
-      if (!response.ok || !data.url) {
-        setNotice(data.error ?? "Google Photos connection could not be started.");
-        return;
-      }
-      window.location.href = data.url;
+      try {
+        const response = await fetch(appPath("/api/google/start"), {
+          method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ dad: dadId }),
+        });
+        const data = await response.json() as { error?: string; url?: string };
+        if (!response.ok || !data.url) throw new Error(data.error ?? "Google Photos connection could not be started.");
+        window.location.href = data.url;
+      } catch (error) { handleImportError(error, dadId, version); }
       return;
     }
     const pickerWindow = window.open("about:blank", "google-photos-picker", "popup,width=1080,height=760");
-    setImporting(true);
-    setNotice("Opening Google Photos…");
+    setImporting(true); setNotice("Opening Google Photos…");
     try {
-      const response = await fetch("/api/google/picker", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ dad: active.id }) });
+      const response = await fetch(appPath("/api/google/picker"), {
+        method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ dad: dadId }),
+      });
       const data = await response.json() as { error?: string; pickerUri: string; id: string };
-      if (!response.ok) throw new Error(data.error ?? "Google Photos could not be opened");
+      if (!response.ok) throw new Error(data.error ?? "Google Photos could not be opened.");
+      saveSession(dadId, data.id);
+      if (activeId.current === dadId && generation.current === version) setRetrySession(data.id);
       if (pickerWindow) pickerWindow.location.href = data.pickerUri;
-      else window.open(data.pickerUri, "_blank", "noopener,noreferrer");
-      await pollPicker(data.id);
+      else { throw new Error("Allow pop-ups, then start a new Google selection."); }
+      await pollPicker(data.id, dadId, version);
     } catch (error) {
       pickerWindow?.close();
-      handleImportError(error);
+      handleImportError(error, dadId, version);
     }
   }
 
   async function saveGoogleSetup(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSavingGoogleSetup(true);
-    setNotice("");
+    event.preventDefault(); setSavingGoogleSetup(true); setNotice("");
     try {
-      const response = await fetch("/api/google/settings", {
-        method: "PUT",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ clientId, clientSecret }),
+      const response = await fetch(appPath("/api/google/settings"), {
+        method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ clientId, clientSecret }),
       });
       const data = await response.json() as { error?: string };
-      if (!response.ok) throw new Error(data.error ?? "The Google settings could not be saved");
-      setGoogleStatus({ configured: true, connected: false });
-      setClientSecret("");
-      setShowGoogleSetup(false);
-      setNotice("Google Cloud details saved securely. Connect Google Photos to continue.");
-    } catch (error) {
-      setNotice(error instanceof Error ? error.message : "The Google settings could not be saved.");
-    } finally { setSavingGoogleSetup(false); }
+      if (!response.ok) throw new Error(data.error ?? "The Google settings could not be saved.");
+      setGoogleStatus({ configured: true, connected: false }); setClientSecret(""); setShowGoogleSetup(false);
+      setNotice("Google details saved securely. Reconnect Google Photos to continue.");
+    } catch (error) { setNotice(error instanceof Error ? error.message : "The Google settings could not be saved."); }
+    finally { setSavingGoogleSetup(false); }
   }
 
   async function review(candidate: Candidate, action: "approve" | "reject") {
+    const dadId = active.id;
+    const version = generation.current;
     setReviewing(candidate.id);
     try {
-      const response = await fetch("/api/candidates", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: candidate.id, action, caption: candidate.caption }) });
-      if (!response.ok) throw new Error("Review action failed");
-      setCandidates((current) => current.filter((item) => item.id !== candidate.id));
-      if (action === "approve") await loadPhotos();
-    } catch { setNotice("That photo could not be updated. Please try again."); }
-    finally { setReviewing(null); }
+      const response = await fetch(appPath("/api/candidates"), {
+        method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: candidate.id, action, caption: candidate.caption }),
+      });
+      if (!response.ok) throw new Error("Review action failed.");
+      if (activeId.current !== dadId || generation.current !== version) return;
+      await loadCandidates(dadId);
+      if (action === "approve") await loadPhotos(dadId);
+    } catch {
+      if (activeId.current === dadId && generation.current === version) setNotice("That photo could not be updated. Retry or reload the queue.");
+    } finally { setReviewing(null); }
   }
 
   async function upload(files: FileList | null) {
     if (!files?.length) return;
+    const dadId = active.id;
+    const version = generation.current;
     setUploading(true);
     try {
       for (const file of Array.from(files)) {
         const body = new FormData();
-        body.append("photo", file);
-        body.append("dad", active.id);
+        body.append("photo", file); body.append("dad", dadId);
         body.append("caption", file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "));
-        await fetch("/api/photos", { method: "POST", body });
+        const response = await fetch(appPath("/api/photos"), { method: "POST", body });
+        if (!response.ok) {
+          const data = await response.json() as { error?: string };
+          throw new Error(data.error ?? "Upload failed. Completed photos have been kept.");
+        }
       }
-      await loadPhotos();
+      if (activeId.current === dadId && generation.current === version) await loadPhotos(dadId);
+    } catch (error) {
+      if (activeId.current === dadId && generation.current === version) setNotice(error instanceof Error ? error.message : "Upload failed.");
     } finally { setUploading(false); if (inputRef.current) inputRef.current.value = ""; }
   }
 
   const currentIndex = dads.findIndex((dad) => dad.id === active.id);
-  const shift = (n: number) => setActive(dads[(currentIndex + n + dads.length) % dads.length]);
+  const shift = (n: number) => selectDad(dads[(currentIndex + n + dads.length) % dads.length]);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#f2efe8] text-[#172a2d]">
@@ -198,7 +296,7 @@ export default function Home() {
 
       <nav aria-label="Choose a dad" className="border-y border-[#172a2d]/20 bg-[#172a2d] px-5 text-[#f8f4eb] sm:px-10">
         <div className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-4 lg:grid-cols-7">
-          {dads.map((dad, i) => <button key={dad.id} onClick={() => setActive(dad)} className={`min-h-24 border-[#f8f4eb]/20 px-4 py-5 text-left transition sm:border-l ${i === dads.length - 1 ? "sm:border-r" : ""} ${active.id === dad.id ? "bg-[#f8f4eb] text-[#172a2d]" : "hover:bg-white/10"}`}><span className="block text-xs tracking-[0.18em] opacity-60">0{i + 1}</span><span className="mt-2 block font-serif text-xl">{dad.title}</span></button>)}
+          {dads.map((dad, i) => <button key={dad.id} onClick={() => selectDad(dad)} className={`min-h-24 border-[#f8f4eb]/20 px-4 py-5 text-left transition sm:border-l ${i === dads.length - 1 ? "sm:border-r" : ""} ${active.id === dad.id ? "bg-[#f8f4eb] text-[#172a2d]" : "hover:bg-white/10"}`}><span className="block text-xs tracking-[0.18em] opacity-60">0{i + 1}</span><span className="mt-2 block font-serif text-xl">{dad.title}</span></button>)}
         </div>
       </nav>
 
@@ -213,6 +311,7 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-3">
             <button onClick={() => shift(-1)} className="grid h-12 w-12 place-items-center border border-[#172a2d] hover:bg-[#172a2d] hover:text-white" aria-label="Previous dad"><ChevronLeft /></button>
             <button onClick={() => shift(1)} className="grid h-12 w-12 place-items-center border border-[#172a2d] hover:bg-[#172a2d] hover:text-white" aria-label="Next dad"><ChevronRight /></button>
+            {isOwner ? <>
             <input ref={inputRef} className="sr-only" type="file" accept="image/jpeg,image/png,image/webp,image/heic" multiple onChange={(e) => upload(e.target.files)} />
             <button onClick={importFromGoogle} disabled={importing} className="flex h-12 items-center gap-2 border border-[#172a2d] px-5 font-semibold hover:bg-[#172a2d] hover:text-white disabled:cursor-not-allowed disabled:opacity-45">
               {importing ? <LoaderCircle className="animate-spin" /> : googleStatus?.configured === false ? <KeyRound /> : <Cloud />} {googleStatus?.configured === false ? "Set up Google Photos" : googleStatus?.connected ? "Choose from Google" : "Connect Google Photos"}
@@ -220,6 +319,8 @@ export default function Home() {
             <button onClick={() => inputRef.current?.click()} disabled={uploading} className="flex h-12 items-center gap-2 bg-[#b55236] px-5 font-semibold text-white hover:bg-[#8f3f2a] disabled:opacity-60">
               {uploading ? <LoaderCircle className="animate-spin" /> : <ImagePlus />} {uploading ? "Adding…" : "Add photos"}
             </button>
+            <button onClick={openGoogleSetup} className="h-12 border border-[#172a2d] px-4">Google settings</button>
+            </> : <a href={appPath("/admin")} className="h-12 border border-[#172a2d] px-4 py-3">Owner sign in</a>}
           </div>
         </div>
 
@@ -253,23 +354,25 @@ export default function Home() {
           </aside>
         )}
 
-        {(notice || candidates.length > 0) && (
+        {(notice || candidates.length > 0 || retrySession) && (
           <aside className="mb-12 border border-[#172a2d]/25 bg-[#fbfaf6] p-5 sm:p-7" aria-live="polite">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#b55236]">Private review</p>
                 <h3 className="mt-1 font-serif text-3xl">Choose what joins {active.title}’s album</h3>
               </div>
-              <p className="max-w-lg text-sm leading-6 text-[#586668]">Google Photos handles face recognition. Choose from {active.title}’s live album, then approve only photos where everyone shown is part of the named family group.</p>
+              <p className="max-w-lg text-sm leading-6 text-[#586668]">Choose photos that include {active.title}. Approve only photos where everyone shown is part of your family. Identity is checked by you.</p>
             </div>
             {notice && <p className="mt-5 border-l-2 border-[#b55236] pl-4 text-sm text-[#4b5a5b]">{notice}</p>}
+            {retrySession && !importing && <button onClick={retryImport} className="mt-4 border border-[#172a2d] px-4 py-2">Resume / retry selection</button>}
+            {candidateCursor && <button onClick={() => loadCandidates(active.id, candidateCursor)} className="mt-4 ml-3 border border-[#172a2d] px-4 py-2">Load more to review</button>}
             {candidates.length > 0 && (
               <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {candidates.map((candidate) => (
                   <article key={candidate.id} className="overflow-hidden border border-[#172a2d]/20 bg-white">
                     <div className="relative aspect-[4/3] bg-[#e7e1d6]"><img src={candidate.url} alt={candidate.caption} className="h-full w-full object-cover" />
-                      {candidate.suggestedBest && <span className="absolute left-2 top-2 flex items-center gap-1 bg-[#172a2d] px-2 py-1 text-xs font-semibold text-white"><Sparkles className="h-3.5 w-3.5" /> Best of similar</span>}
-                      {candidate.similarShot && !candidate.suggestedBest && <span className="absolute left-2 top-2 bg-white/90 px-2 py-1 text-xs font-semibold">Similar shot</span>}
+                      {candidate.suggestedBest && <span className="absolute left-2 top-2 flex items-center gap-1 bg-[#172a2d] px-2 py-1 text-xs font-semibold text-white"><Sparkles className="h-3.5 w-3.5" /> Highest resolution nearby</span>}
+                      {candidate.similarShot && !candidate.suggestedBest && <span className="absolute left-2 top-2 bg-white/90 px-2 py-1 text-xs font-semibold">Taken within 3 seconds</span>}
                     </div>
                     <div className="p-3">
                       <p className="truncate text-sm" title={candidate.filename}>{candidate.filename}</p>
@@ -286,8 +389,8 @@ export default function Home() {
         )}
 
         {loading ? <div className="grid min-h-56 place-items-center border border-dashed border-[#172a2d]/30"><LoaderCircle className="animate-spin" /></div> : photos.length === 0 ? (
-          <button onClick={() => inputRef.current?.click()} className="group grid min-h-72 w-full place-items-center border border-dashed border-[#172a2d]/35 bg-[#fbfaf6] p-8 text-center hover:border-[#b55236]">
-            <span><Camera className="mx-auto mb-5 h-10 w-10 text-[#b55236]" /><span className="block font-serif text-3xl">Begin {active.title}’s story</span><span className="mt-3 block text-[#5b6666]">Choose photos from your phone or computer</span></span>
+          <button onClick={() => { if (isOwner) inputRef.current?.click(); }} className="group grid min-h-72 w-full place-items-center border border-dashed border-[#172a2d]/35 bg-[#fbfaf6] p-8 text-center hover:border-[#b55236]">
+            <span><Camera className="mx-auto mb-5 h-10 w-10 text-[#b55236]" /><span className="block font-serif text-3xl">Begin {active.title}’s story</span><span className="mt-3 block text-[#5b6666]">{isOwner ? "Choose photos from your phone or computer" : "Family photos will appear here soon."}</span></span>
           </button>
         ) : (
           <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">

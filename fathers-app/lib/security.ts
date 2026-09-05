@@ -8,6 +8,7 @@ type AccessClaims = {
   aud?: string | string[];
   email?: string;
   exp?: number;
+  nbf?: number;
   iss?: string;
   sub?: string;
 };
@@ -16,7 +17,7 @@ type AccessJwk = JsonWebKey & { kid?: string };
 export type Owner = { id: string; email: string };
 
 const encoder = new TextEncoder();
-let cachedKeys: { expiresAt: number; keys: AccessJwk[] } | null = null;
+let cachedKeys: { teamDomain: string; expiresAt: number; keys: AccessJwk[] } | null = null;
 
 function decodeBase64Url(value: string): Uint8Array<ArrayBuffer> {
   const base64 = value.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
@@ -37,12 +38,12 @@ function setting(env: AccessEnv, name: keyof AccessEnv): string {
 }
 
 async function accessKeys(teamDomain: string): Promise<AccessJwk[]> {
-  if (cachedKeys && cachedKeys.expiresAt > Date.now()) return cachedKeys.keys;
+  if (cachedKeys?.teamDomain === teamDomain && cachedKeys.expiresAt > Date.now()) return cachedKeys.keys;
   const response = await fetch(`${teamDomain}/cdn-cgi/access/certs`);
   if (!response.ok) throw new Error("Unable to load Cloudflare Access signing keys");
   const body = await response.json() as { keys?: AccessJwk[] };
   if (!body.keys?.length) throw new Error("Cloudflare Access returned no signing keys");
-  cachedKeys = { keys: body.keys, expiresAt: Date.now() + 5 * 60 * 1000 };
+  cachedKeys = { teamDomain, keys: body.keys, expiresAt: Date.now() + 5 * 60 * 1000 };
   return body.keys;
 }
 
@@ -73,7 +74,8 @@ export async function verifyAccessOwner(request: Request, env: AccessEnv): Promi
     const audiences = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
     const email = claims.email?.trim().toLowerCase();
     const owners = setting(env, "OWNER_EMAILS").split(",").map((item) => item.trim().toLowerCase()).filter(Boolean);
-    if (!claims.sub || !email || !claims.exp || claims.exp <= Date.now() / 1000) return null;
+    if (typeof claims.sub !== "string" || !claims.sub || !email || typeof claims.exp !== "number" || !Number.isFinite(claims.exp) || claims.exp <= Date.now() / 1000) return null;
+    if (claims.nbf !== undefined && (typeof claims.nbf !== "number" || !Number.isFinite(claims.nbf) || claims.nbf > Date.now() / 1000)) return null;
     if (claims.iss?.replace(/\/$/, "") !== teamDomain || !audiences.includes(audience)) return null;
     if (!owners.includes(email)) return null;
     return { id: claims.sub, email };
@@ -93,6 +95,6 @@ export function privateJson(body: unknown, init: ResponseInit = {}): Response {
   const headers = new Headers(init.headers);
   headers.set("cache-control", "private, no-store");
   headers.set("content-type", "application/json");
-  headers.set("vary", "cf-access-jwt-assertion");
+  headers.set("vary", "cf-access-jwt-assertion, Cookie");
   return new Response(JSON.stringify(body), { ...init, headers });
 }

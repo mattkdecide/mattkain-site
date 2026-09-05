@@ -74,3 +74,10 @@ test("same-origin write and private response helpers enforce browser/cache bound
   assert.equal(isSameOriginWrite(new Request("https://mattkain.com/api/photos", { method: "POST", headers: { origin: "https://evil.example" } })), false);
   assert.equal(privateJson({ ok: true }).headers.get("cache-control"), "private, no-store");
 });
+
+test("rejects future not-before and malformed expiry claims", async () => {
+  for (const claims of [{ nbf: Date.now() / 1000 + 600 }, { exp: "not-a-time" }]) {
+    const request = new Request("https://mattkain.com/api/candidates", { headers: { "cf-access-jwt-assertion": await token(claims) } });
+    assert.equal(await verifyAccessOwner(request, env), null);
+  }
+});

@@ -35,6 +35,7 @@ export async function PUT(request: Request) {
           secret_iv = excluded.secret_iv, updated_at = excluded.updated_at`)
         .bind(user.id, clientId, encrypted.encrypted, encrypted.iv, now, now),
       env.DB.prepare("DELETE FROM google_connections WHERE user_id = ?").bind(user.id),
+      env.DB.prepare("DELETE FROM oauth_states WHERE user_id = ?").bind(user.id),
     ]);
     return privateJson({ configured: true, clientId });
   } catch (error) {

@@ -1,0 +1,98 @@
+name: PBS Medicine Status Check
+
+on:
+  schedule:
+    - cron: '0 9 * * 4'  # Every Thursday at 9am UTC
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch PBS page
+        id: fetch
+        run: |
+          HTTP_STATUS=$(curl -s -o /tmp/pbs_page.html -w "%{http_code}" \
+            -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" \
+            -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" \
+            -H "Accept-Language: en-AU,en;q=0.9" \
+            --connect-timeout 30 --max-time 60 \
+            "https://www.pbs.gov.au/medicinestatus/document/1460")
+
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "::error::Fetch failed with HTTP status $HTTP_STATUS"
+            exit 1
+          fi
+
+          python3 - <<'EOF'
+import re
+with open('/tmp/pbs_page.html', 'r', encoding='utf-8', errors='ignore') as f:
+    html = f.read()
+# Remove script/style blocks
+html = re.sub(r'<(script|style)[^>]*>.*?</(script|style)>', '', html, flags=re.DOTALL | re.IGNORECASE)
+# Strip remaining tags
+text = re.sub(r'<[^>]+>', ' ', html)
+# Normalize whitespace
+text = re.sub(r'\s+', ' ', text).strip()
+with open('/tmp/pbs_text.txt', 'w') as f:
+    f.write(text)
+EOF
+
+          HASH=$(sha256sum /tmp/pbs_text.txt | awk '{print $1}')
+          echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+
+      - name: Compare with stored hash
+        id: compare
+        run: |
+          HASH_FILE=".github/pbs-medicine-1460.hash"
+          NEW_HASH="${{ steps.fetch.outputs.hash }}"
+
+          if [ ! -f "$HASH_FILE" ]; then
+            echo "status=first_run" >> "$GITHUB_OUTPUT"
+          elif [ "$(cat "$HASH_FILE")" = "$NEW_HASH" ]; then
+            echo "status=unchanged" >> "$GITHUB_OUTPUT"
+          else
+            echo "status=changed" >> "$GITHUB_OUTPUT"
+          fi
+
+          mkdir -p .github
+          echo "$NEW_HASH" > "$HASH_FILE"
+
+      - name: Commit updated hash
+        if: steps.compare.outputs.status != 'unchanged'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/pbs-medicine-1460.hash
+          git commit -m "chore: update PBS medicine 1460 status hash [skip ci]"
+          git push
+
+      - name: Open alert issue
+        if: steps.compare.outputs.status == 'changed'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const date = new Date().toISOString().split('T')[0];
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `PBS Medicine 1460 page updated — ${date}`,
+              body: [
+                '## PBS Medicine Status Page Changed',
+                '',
+                '**Page:** https://www.pbs.gov.au/medicinestatus/document/1460',
+                `**Detected:** ${date}`,
+                '',
+                'The content of this PBS medicine status page has changed since the last weekly check.',
+                'Please visit the page to see what has changed.',
+                '',
+                '---',
+                '*Automated check — [view workflow](.github/workflows/pbs-medicine-check.yml)*'
+              ].join('\n')
+            });

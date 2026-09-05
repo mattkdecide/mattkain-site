@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mattkain-fathers",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "REPLACE_STAGING_HOST/fathers*", "zone_name": "REPLACE_ZONE" }],
+  "assets": { "binding": "ASSETS", "directory": "dist/client" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mattkain-fathers",
+      "database_id": "REPLACE_AFTER_OWNER_APPROVES_PROVISIONING",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "mattkain-fathers-private"
+    }
+  ],
+  "vars": {
+    "CF_ACCESS_TEAM_DOMAIN": "https://REPLACE.cloudflareaccess.com",
+    "CF_ACCESS_AUD": "REPLACE_WITH_ACCESS_APPLICATION_AUD",
+    "OWNER_EMAILS": "REPLACE_WITH_OWNER_EMAIL",
+    "GOOGLE_REDIRECT_URI": "https://REPLACE_STAGING_HOST/fathers/api/google/callback"
+  }
+}

@@ -1,17 +1,19 @@
 import { env } from "cloudflare:workers";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { verifyAccessOwner } from "@/lib/security";
 import { encryptToken, exchangeCode, loadGoogleAppConfig } from "@/lib/google-photos";
+
+import { appPath } from "@/lib/paths";
 
 type StateRow = { user_id: string; user_email: string; dad: string; expires_at: number };
 
 function home(request: Request, params: Record<string, string>) {
-  const url = new URL("/", request.url);
+  const url = new URL(appPath("/"), request.url);
   for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
-  return Response.redirect(url, 302);
+  return new Response(null, { status: 302, headers: { location: url.href, "cache-control": "private, no-store" } });
 }
 
 export async function GET(request: Request) {
-  const user = await getChatGPTUser();
+  const user = await verifyAccessOwner(request, env);
   if (!user) return home(request, { google: "signin-required" });
   const url = new URL(request.url);
   const state = url.searchParams.get("state");
@@ -19,8 +21,8 @@ export async function GET(request: Request) {
   if (!state || !code || url.searchParams.has("error")) return home(request, { google: "cancelled" });
 
   try {
-    const saved = await env.DB.prepare("SELECT user_id, user_email, dad, expires_at FROM oauth_states WHERE state = ?")
-      .bind(state).first<StateRow>();
+    const saved = await env.DB.prepare("DELETE FROM oauth_states WHERE state = ? AND user_id = ? AND expires_at > ? RETURNING user_id, user_email, dad, expires_at")
+      .bind(state, user.id, Date.now()).first<StateRow>();
     if (!saved || saved.expires_at < Date.now() || saved.user_id !== user.id) return home(request, { google: "invalid-state" });
 
     const config = await loadGoogleAppConfig(user.id);

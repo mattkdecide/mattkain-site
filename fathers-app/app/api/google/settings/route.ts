@@ -21,7 +21,7 @@ export async function PUT(request: Request) {
   const clientId = String(body.clientId ?? "").trim();
   const clientSecret = String(body.clientSecret ?? "").trim();
   if (!clientId.endsWith(".apps.googleusercontent.com") || clientSecret.length < 8) {
-    return Response.json({ error: "Enter the Web application client ID and client secret from Google Cloud" }, { status: 400 });
+    return privateJson({ error: "Enter the Web application client ID and client secret from Google Cloud" }, { status: 400 });
   }
   try {
     const encrypted = await encryptToken(clientSecret);
@@ -39,6 +39,6 @@ export async function PUT(request: Request) {
     return privateJson({ configured: true, clientId });
   } catch (error) {
     console.error("Unable to save Google Photos settings", error);
-    return Response.json({ error: "The Google settings could not be saved" }, { status: 500 });
+    return privateJson({ error: "The Google settings could not be saved" }, { status: 500 });
   }
 }

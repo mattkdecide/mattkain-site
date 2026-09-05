@@ -16,7 +16,7 @@ All writes additionally require an exact same-origin `Origin` and reject cross-s
 
 ## Configuration (after owner approval)
 
-1. Run `npm ci` with Node.js `>=22.13.0`.
+1. Run `npm ci` with Node.js `>=22.15.0`.
 2. Copy `wrangler.example.jsonc` to ignored `wrangler.jsonc`; provision D1 and R2 and replace the placeholders. Never commit account IDs, credentials, owner addresses, or secrets.
 3. Apply every migration in `drizzle/` to the staging D1 database.
 4. Create a Cloudflare Access self-hosted application and owner-only policy for the private application paths. Set `CF_ACCESS_TEAM_DOMAIN`, `CF_ACCESS_AUD`, and `OWNER_EMAILS` exactly as shown by Access.

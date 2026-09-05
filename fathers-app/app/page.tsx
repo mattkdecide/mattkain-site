@@ -40,7 +40,7 @@ export default function Home() {
     setLoading(true);
     try {
       const response = await fetch(`/api/photos?dad=${active.id}`);
-      const data = await response.json();
+      const data = await response.json() as { photos?: Photo[] };
       setPhotos(data.photos ?? []);
     } finally { setLoading(false); }
   }
@@ -51,12 +51,12 @@ export default function Home() {
 
   async function loadCandidates() {
     const response = await fetch(`/api/candidates?dad=${active.id}`);
-    const data = await response.json();
+    const data = await response.json() as { candidates?: Candidate[] };
     setCandidates(data.candidates ?? []);
   }
 
   useEffect(() => {
-    fetch("/api/google/status").then((response) => response.json()).then(setGoogleStatus).catch(() => setGoogleStatus({ connected: false, configured: false }));
+    fetch("/api/google/status").then((response) => response.json() as Promise<GoogleStatus>).then(setGoogleStatus).catch(() => setGoogleStatus({ connected: false, configured: false }));
   }, []);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks/exhaustive-deps
@@ -68,7 +68,7 @@ export default function Home() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ id }),
     });
-    const data = await response.json();
+    const data = await response.json() as { error?: string; complete?: boolean; imported?: number; importing?: boolean; pollAfterMs?: number };
     if (!response.ok) throw new Error(data.error ?? "Import failed");
     if (data.complete) {
       setImporting(false);
@@ -89,7 +89,7 @@ export default function Home() {
     if (!googleStatus?.configured) {
       setShowGoogleSetup(true);
       const response = await fetch("/api/google/settings");
-      const data = await response.json();
+      const data = await response.json() as { clientId?: string; redirectUri?: string };
       setClientId(data.clientId ?? "");
       setRedirectUri(data.redirectUri ?? "");
       return;
@@ -100,7 +100,7 @@ export default function Home() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ dad: active.id }),
       });
-      const data = await response.json();
+      const data = await response.json() as { error?: string; url?: string };
       if (!response.ok || !data.url) {
         setNotice(data.error ?? "Google Photos connection could not be started.");
         return;
@@ -113,7 +113,7 @@ export default function Home() {
     setNotice("Opening Google Photos…");
     try {
       const response = await fetch("/api/google/picker", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ dad: active.id }) });
-      const data = await response.json();
+      const data = await response.json() as { error?: string; pickerUri: string; id: string };
       if (!response.ok) throw new Error(data.error ?? "Google Photos could not be opened");
       if (pickerWindow) pickerWindow.location.href = data.pickerUri;
       else window.open(data.pickerUri, "_blank", "noopener,noreferrer");
@@ -134,7 +134,7 @@ export default function Home() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ clientId, clientSecret }),
       });
-      const data = await response.json();
+      const data = await response.json() as { error?: string };
       if (!response.ok) throw new Error(data.error ?? "The Google settings could not be saved");
       setGoogleStatus({ configured: true, connected: false });
       setClientSecret("");

@@ -1,4 +1,4 @@
-interface Env {
+interface FathersEnv {
   ASSETS: Fetcher;
   BUCKET: R2Bucket;
   DB: D1Database;
@@ -10,4 +10,10 @@ interface Env {
   GOOGLE_CLIENT_SECRET?: string;
   GOOGLE_REDIRECT_URI?: string;
   GOOGLE_TOKEN_ENCRYPTION_KEY?: string;
+}
+
+declare namespace Cloudflare {
+  // Cloudflare's module uses this mergeable interface for its env export.
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface Env extends FathersEnv {}
 }

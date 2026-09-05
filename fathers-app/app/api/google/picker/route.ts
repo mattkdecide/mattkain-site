@@ -35,11 +35,11 @@ export async function POST(request: Request) {
   if (!user) return privateJson({ error: "Owner access required" }, { status: 401 });
   if (!isSameOriginWrite(request)) return privateJson({ error: "Cross-origin request rejected" }, { status: 403 });
   const body = await request.json().catch(() => ({})) as { dad?: string };
-  if (!body.dad || !isDad(body.dad)) return Response.json({ error: "Unknown album" }, { status: 400 });
+  if (!body.dad || !isDad(body.dad)) return privateJson({ error: "Unknown album" }, { status: 400 });
 
   try {
     const token = await tokenFor(user.id);
-    if (!token) return Response.json({ error: "Connect Google Photos first" }, { status: 409 });
+    if (!token) return privateJson({ error: "Connect Google Photos first" }, { status: 409 });
     const response = await googleFetch("/sessions", token, { method: "POST", body: "{}" });
     if (!response.ok) throw new Error(`Picker session creation failed (${response.status})`);
     const session = await response.json() as PickerSession;
@@ -51,10 +51,10 @@ export async function POST(request: Request) {
       (id, google_session_id, user_id, dad, status, next_page_token, imported_count, expires_at, created_at, updated_at)
       VALUES (?, ?, ?, ?, 'awaiting_selection', NULL, 0, ?, ?, ?)`)
       .bind(id, session.id, user.id, body.dad, expiresAt, now, now).run();
-    return Response.json({ id, pickerUri: session.pickerUri });
+    return privateJson({ id, pickerUri: session.pickerUri });
   } catch (error) {
     console.error("Unable to create picker session", error);
-    return Response.json({ error: "Google Photos could not be opened" }, { status: 502 });
+    return privateJson({ error: "Google Photos could not be opened" }, { status: 502 });
   }
 }
 
@@ -64,17 +64,17 @@ export async function PATCH(request: Request) {
   if (!isSameOriginWrite(request)) return privateJson({ error: "Cross-origin request rejected" }, { status: 403 });
   const body = await request.json().catch(() => ({})) as { id?: string };
   const id = body.id ?? null;
-  if (!id) return Response.json({ error: "Missing picker session" }, { status: 400 });
+  if (!id) return privateJson({ error: "Missing picker session" }, { status: 400 });
 
   try {
     let row = await env.DB.prepare(`SELECT id, google_session_id, dad, status, next_page_token, imported_count, expires_at
       FROM picker_sessions WHERE id = ? AND user_id = ?`).bind(id, user.id).first<PickerRow>();
-    if (!row) return Response.json({ error: "Picker session not found" }, { status: 404 });
-    if (row.status === "complete") return Response.json({ complete: true, imported: row.imported_count });
-    if (row.expires_at < Date.now()) return Response.json({ error: "This selection has expired. Please start again." }, { status: 410 });
+    if (!row) return privateJson({ error: "Picker session not found" }, { status: 404 });
+    if (row.status === "complete") return privateJson({ complete: true, imported: row.imported_count });
+    if (row.expires_at < Date.now()) return privateJson({ error: "This selection has expired. Please start again." }, { status: 410 });
 
     const token = await tokenFor(user.id);
-    if (!token) return Response.json({ error: "Reconnect Google Photos" }, { status: 409 });
+    if (!token) return privateJson({ error: "Reconnect Google Photos" }, { status: 409 });
 
     if (row.status === "awaiting_selection") {
       const sessionResponse = await googleFetch(`/sessions/${encodeURIComponent(row.google_session_id)}`, token);
@@ -82,7 +82,7 @@ export async function PATCH(request: Request) {
       const session = await sessionResponse.json() as PickerSession;
       if (!session.mediaItemsSet) {
         const interval = Number.parseFloat(session.pollingConfig?.pollInterval ?? "3") || 3;
-        return Response.json({ complete: false, waiting: true, pollAfterMs: Math.max(2000, interval * 1000) });
+        return privateJson({ complete: false, waiting: true, pollAfterMs: Math.max(2000, interval * 1000) });
       }
       await env.DB.prepare("UPDATE picker_sessions SET status = 'importing', updated_at = ? WHERE id = ?")
         .bind(Date.now(), row.id).run();
@@ -124,15 +124,15 @@ export async function PATCH(request: Request) {
     if (page.nextPageToken) {
       await env.DB.prepare("UPDATE picker_sessions SET next_page_token = ?, imported_count = ?, updated_at = ? WHERE id = ?")
         .bind(page.nextPageToken, imported, Date.now(), row.id).run();
-      return Response.json({ complete: false, importing: true, imported, pollAfterMs: 250 });
+      return privateJson({ complete: false, importing: true, imported, pollAfterMs: 250 });
     }
 
     await googleFetch(`/sessions/${encodeURIComponent(row.google_session_id)}`, token, { method: "DELETE" });
     await env.DB.prepare("UPDATE picker_sessions SET status = 'complete', imported_count = ?, updated_at = ? WHERE id = ?")
       .bind(imported, Date.now(), row.id).run();
-    return Response.json({ complete: true, imported });
+    return privateJson({ complete: true, imported });
   } catch (error) {
     console.error("Google Photos import failed", error);
-    return Response.json({ error: "The selection could not be imported. Please try again." }, { status: 502 });
+    return privateJson({ error: "The selection could not be imported. Please try again." }, { status: 502 });
   }
 }

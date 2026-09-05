@@ -21,11 +21,11 @@ export async function POST(request: Request) {
     const file = form.get("photo");
     const dad = String(form.get("dad") ?? "");
     const caption = String(form.get("caption") ?? "").slice(0, 160);
-    if (!(file instanceof File) || !isDad(dad)) return Response.json({ error: "A valid photo and album are required" }, { status: 400 });
-    if (!file.type.startsWith("image/") || file.size > 20 * 1024 * 1024) return Response.json({ error: "Use an image smaller than 20 MB" }, { status: 400 });
+    if (!(file instanceof File) || !isDad(dad)) return privateJson({ error: "A valid photo and album are required" }, { status: 400 });
+    if (!file.type.startsWith("image/") || file.size > 20 * 1024 * 1024) return privateJson({ error: "Use an image smaller than 20 MB" }, { status: 400 });
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-").slice(-100);
     const key = `${dad}/${Date.now()}-${crypto.randomUUID()}-${safeName}`;
     await env.BUCKET.put(key, file.stream(), { httpMetadata: { contentType: file.type }, customMetadata: { caption } });
-    return Response.json({ key }, { status: 201 });
-  } catch { return Response.json({ error: "That photo could not be added. Please try again." }, { status: 500 }); }
+    return privateJson({ key }, { status: 201 });
+  } catch { return privateJson({ error: "That photo could not be added. Please try again." }, { status: 500 }); }
 }

@@ -9,11 +9,11 @@ export async function POST(request: Request) {
   if (!isSameOriginWrite(request)) return privateJson({ error: "Cross-origin request rejected" }, { status: 403 });
   const body = await request.json().catch(() => ({})) as { dad?: string };
   const dad = body.dad ?? "";
-  if (!isDad(dad)) return Response.json({ error: "Unknown album" }, { status: 400 });
+  if (!isDad(dad)) return privateJson({ error: "Unknown album" }, { status: 400 });
 
   try {
     const config = await loadGoogleAppConfig(user.id);
-    if (!config) return Response.json({ error: "Set up Google Photos first" }, { status: 409 });
+    if (!config) return privateJson({ error: "Set up Google Photos first" }, { status: 409 });
     const state = crypto.randomUUID();
     const now = Date.now();
     await env.DB.batch([
@@ -24,6 +24,6 @@ export async function POST(request: Request) {
     return privateJson({ url: googleAuthorisationUrl(state, config) });
   } catch (error) {
     console.error("Unable to start Google connection", error);
-    return Response.json({ error: "Google Photos connection is not configured yet" }, { status: 503 });
+    return privateJson({ error: "Google Photos connection is not configured yet" }, { status: 503 });
   }
 }

@@ -40,3 +40,9 @@ next-env.d.ts
 /.sites-runtime/
 /outputs/
 /work/
+
+# Local Cloudflare credentials and deployment configuration
+.dev.vars*
+/wrangler.json
+/wrangler.jsonc
+*.tsbuildinfo

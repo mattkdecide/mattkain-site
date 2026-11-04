@@ -2,6 +2,10 @@ name: Refresh midterm results
 on:
   schedule:
     - cron: '0,15,30,45 * * * *'
+  push:
+    paths:
+      - '.github/workflows/midterms-refresh.yml'
+      - 'midterms-2026/refresh.py'
   workflow_dispatch:
 permissions:
   contents: write
@@ -15,7 +19,7 @@ jobs:
     steps:
       - id: window
         run: |
-          if [ "$(date -u +%s)" -lt "$(date -u -d '2026-11-04 11:08:15' +%s)" ]; then
+          if [ "${{ github.event_name }}" != 'schedule' ] || [ "$(date -u +%s)" -lt "$(date -u -d '2026-11-04 11:08:15' +%s)" ]; then
             echo 'active=true' >> "$GITHUB_OUTPUT"
           fi
       - uses: actions/checkout@v4

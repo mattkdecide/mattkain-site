@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en-AU"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>2026 US midterm results</title>
+<style>
+:root{color-scheme:dark;--background:#0b1220;--foreground:#f3f6fc;--muted:#202c40;--border:#40516a;--blue:#438fff;--red:#ff646b;--yellow:#ffd16a}
+body{margin:auto;max-width:850px;padding:20px;font:16px/1.5 system-ui,sans-serif;background:var(--background);color:var(--foreground)}
+.viz-grid,.viz-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}.card{flex:1;min-width:215px;padding:12px;background:var(--muted);border-radius:8px}.viz-stat-value{font-size:1.4rem}.text-small,small{font-size:.83rem}.text-muted{color:#b8c8dc}.btn{background:var(--muted);color:inherit;border:1px solid var(--border);border-radius:5px;padding:8px 14px;font:inherit}.btn[aria-pressed=true]{border-color:var(--yellow)}button{cursor:pointer}a{color:#a9ccff}hr{border:0;border-top:1px solid var(--border)}
+</style><main>
+<section id="results-board">
+<style>
+#results-board {padding:12px 0;color:var(--foreground)}
+#results-board h2 {margin:8px 0}
+#results-board .tiles {display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(2px,.65vw,6px);margin:16px 0}
+#results-board .tiles button {min-width:0;min-height:32px;aspect-ratio:1.1;display:grid;place-items:center;padding:0;background:var(--muted);color:var(--foreground);border:1px solid var(--border);border-radius:4px;font:inherit;font-size:clamp(11px,2vw,15px)}
+#results-board .tiles .hit {background:color-mix(in srgb,var(--blue) 36%,var(--background));border-color:var(--blue);font-weight:500}
+#results-board .tiles .multi {background:color-mix(in srgb,var(--blue) 64%,var(--background))}
+#results-board .tiles [aria-pressed=true] {outline:2px solid var(--foreground);outline-offset:1px}
+#results-board .detail {min-height:3em}
+#results-board .key {display:inline-block;width:.8em;height:.8em;background:color-mix(in srgb,var(--blue) 36%,var(--background));border:1px solid var(--blue)}
+#results-board .tiles [data-colour=dem] {background:color-mix(in srgb,var(--blue) 44%,var(--background))}
+#results-board .tiles [data-colour=rep] {background:color-mix(in srgb,var(--red) 44%,var(--background))}
+#results-board .tiles [data-colour=mixed] {background:linear-gradient(115deg,color-mix(in srgb,var(--blue) 44%,var(--background)) 50%,color-mix(in srgb,var(--red) 44%,var(--background)) 50%)}
+#results-board .tiles .flip {border:2px solid var(--yellow)}
+#results-board .tiles small {font-size:10px;letter-spacing:-.045em;white-space:nowrap}
+@media(max-width:540px){#results-board .tiles small{display:none}}
+</style>
+<div class="text-small text-muted">US ELECTION DESK · 4 NOVEMBER 2026 · BRISBANE TIME</div>
+<h2>US midterm results</h2>
+<div class="viz-grid">
+<div class="card viz-stat"><strong>Senate balance</strong><div class="viz-stat-value">49 D-aligned · 39 R</div><div>12 uncalled · 65 seats carried over</div><small>Fox News · 2:18 pm Brisbane</small></div>
+<div class="card viz-stat"><strong>House calls</strong><div class="viz-stat-value">166 D · 104 R</div><div>165 uncalled · 270 of 435 called</div><small>AP feed via Fox News · 2:47 pm Brisbane</small></div>
+</div>
+<div class="viz-row" role="group" aria-label="Chamber">
+<button class="btn" type="button" data-mode="senate" aria-pressed="true">Senate</button>
+<button class="btn" type="button" data-mode="house" aria-pressed="false">House</button>
+</div>
+<div class="tiles" role="group" aria-label="US state tile map"></div>
+<div class="text-small">Blue = Democratic call · Red = Republican call · Split = both parties · Grey = no call mapped</div>
+<div class="text-small">Gold outline = verified party flip · Tap a state for the previous and winning party</div>
+<hr>
+<div class="detail" aria-live="polite"></div>
+<div class="text-small text-muted">National scoreboards and mapped calls use different source snapshots. Gold outlines cover 5 Senate and 6 House flips verified by location. State and district coverage is partial.</div>
+</section>
+<script>
+(() => {
+ const root = document.getElementById('results-board');
+ const grid = root.querySelector('.tiles');
+ const detail = root.querySelector('.detail');
+ const modes = [...root.querySelectorAll('[data-mode]')];
+ const states = [
+ 'AK . . . . . . . . . . ME',
+ '. . . . . . . . . . VT NH',
+ 'WA ID MT ND MN WI MI . . NY MA RI',
+ 'OR NV WY SD IA IL IN OH PA NJ CT .',
+ 'CA UT CO NE MO KY WV VA MD DE . .',
+ '. AZ NM KS AR TN NC SC . . . .',
+ '. . . OK LA MS AL GA . . . .',
+ 'HI . . TX . . . FL . . . .'
+ ];
+ const full = Object.fromEntries('AK:Alaska ME:Maine VT:Vermont NH:New_Hampshire WA:Washington ID:Idaho MT:Montana ND:North_Dakota MN:Minnesota WI:Wisconsin MI:Michigan NY:New_York MA:Massachusetts RI:Rhode_Island OR:Oregon NV:Nevada WY:Wyoming SD:South_Dakota IA:Iowa IL:Illinois IN:Indiana OH:Ohio PA:Pennsylvania NJ:New_Jersey CT:Connecticut CA:California UT:Utah CO:Colorado NE:Nebraska MO:Missouri KY:Kentucky WV:West_Virginia VA:Virginia MD:Maryland DE:Delaware AZ:Arizona NM:New_Mexico KS:Kansas AR:Arkansas TN:Tennessee NC:North_Carolina SC:South_Carolina OK:Oklahoma LA:Louisiana MS:Mississippi AL:Alabama GA:Georgia HI:Hawaii TX:Texas FL:Florida'.split(' ').map(pair=>pair.split(':')));
+ const senate = {
+ KS:['D','Kansas pickup','R'],NC:['D','Roy Cooper','R'],OH:['D','Sherrod Brown','R'],SC:['D','Annie Andrews','R'],TX:['D','James Talarico','R'],
+ CO:['D','John Hickenlooper','D'],DE:['D','Chris Coons','D'],GA:['D','Jon Ossoff','D'],IL:['D','Juliana Stratton','D'],
+ MA:['D','Ed Markey','D'],NH:['D','Chris Pappas','D'],NJ:['D','Cory Booker','D'],NM:['D','Ben Ray Luján','D'],
+ OR:['D','Jeff Merkley','D'],RI:['D','Jack Reed','D'],VA:['D','Mark Warner','D'],
+ AR:['R','Tom Cotton','R'],FL:['R','Ashley Moody','R'],KY:['R','Andy Barr','R'],OK:['R','Kevin Hern','R'],
+ SD:['R','Mike Rounds','R'],TN:['R','Bill Hagerty','R'],WV:['R','Shelley Moore Capito','R'],WY:['R','Harriet Hageman','R']
+ };
+ const house = {
+ CA:['D08 D10 D15 R20 D21 D30 D43 D44 D52'],CT:['D03 D04'],DE:['D01'],FL:['R02 R04 R05 R06 R12 R17 R19 D20 D23 D24 R28'],
+ GA:['D02 R03 D04 D05 D06 R10 D13 R14'],IA:['R04'],ID:['R01'],IL:['D01 D02 D04 D07 D09 D13 D17'],
+ IN:['R04 R06'],KY:['R01 D03 R05 D06*'],LA:['D02'],MA:['D02 D05 D07'],MD:['R01 D06'],MI:['R09 D12'],
+ MO:['R04 D05 R06'],MS:['D02 R04'],MT:['R02'],NC:['D11*'],NJ:['D06 D07*'],NM:['D03'],
+ NY:['D05 D08 D09 D10 D12 D13 D14 D26'],OH:['R02 D03 R04 D11 D13'],OK:['R02 R03'],
+ OR:['D01'],PA:['D04 D07* D08* D10* D12 D17'],TX:['D20'],VT:['D01'],WA:['D06 D07 D10'],WI:['D02 D04']
+ };
+ let mode = 'senate', selected = 'NC';
+ states.forEach((row,y)=>row.split(' ').forEach((state,x)=>{
+   if(state==='.') return;
+   const tile = document.createElement('button');
+   tile.type='button';
+   tile.className='cursor-interaction';
+   tile.dataset.state=state;
+   tile.style.gridArea=(y+1)+' / '+(x+1);
+   tile.textContent=state;
+   tile.addEventListener('click',()=>{selected=state;draw()});
+   grid.append(tile);
+ }));
+ const stateName = state => full[state].replaceAll('_',' ');
+ function calls(state){
+   if(mode==='senate') return senate[state] ? [senate[state]] : [];
+   return (house[state]?.[0] || '').split(' ').filter(Boolean).map(code =>
+      [code[0],state+'-'+code.slice(1,3),code.endsWith('*')?'R':null]);
+ }
+ function draw(){
+   modes.forEach(button=>button.setAttribute('aria-pressed',button.dataset.mode===mode));
+   for(const tile of grid.children){
+     const state=tile.dataset.state;
+     const results=calls(state);
+     const d=results.filter(r=>r[0]==='D').length;
+     const r=results.length-d;
+     const flipped=results.some(([party,,prior])=>prior && party!==prior);
+     tile.dataset.colour=d&&r?'mixed':d?'dem':r?'rep':'none';
+     tile.classList.toggle('flip',flipped);
+     tile.setAttribute('aria-pressed',state===selected);
+     tile.textContent=state;
+     if(mode==='house' && results.length){
+       const count=document.createElement('small');
+       count.textContent=[d&&'D'+d,r&&'R'+r].filter(Boolean).join(' ');
+       tile.append(count);
+     }
+     tile.setAttribute('aria-label',stateName(state)+', '+d+' Democratic and '+r+' Republican calls mapped'+(flipped?', verified flip':''));
+   }
+   const label=document.createElement('strong');
+   label.textContent=stateName(selected);
+   const lines=calls(selected).map(([party,name,prior])=>name+' · '+(prior?prior+' → ':'')+party);
+   detail.replaceChildren(label,document.createElement('br'),lines.join('  |  ') || 'No call mapped in this view.');
+ }
+ modes.forEach(button=>button.addEventListener('click',()=>{mode=button.dataset.mode;draw()}));
+ draw();
+})();
+</script>
+
+<footer class="text-small text-muted">Election-night snapshot · Sources: <a href="https://www.foxnews.com/elections/2026/midterm-results/house">House scoreboard</a> · <a href="https://www.foxnews.com/elections?page=44">Senate scoreboard</a> · <a href="https://apnews.com/article/ef6199e25927a9ac9f4c18eae0e497cd">AP election reporting</a></footer></main></html>

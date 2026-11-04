@@ -26,7 +26,7 @@ body{margin:auto;max-width:850px;padding:20px;font:16px/1.5 system-ui,sans-serif
 <div class="text-small text-muted">US ELECTION DESK · 4 NOVEMBER 2026 · BRISBANE TIME</div>
 <h2>US midterm results</h2>
 <div class="viz-row" aria-label="Live results sources"><a class="btn" href="https://www.foxnews.com/elections/2026/midterm-results/house">Live House results</a><a class="btn" href="https://www.foxnews.com/elections">Live Senate results</a></div>
-<p class="text-small text-muted">This board is a fixed election-night snapshot. The live results links open the source scoreboards.</p>
+<p class="text-small text-muted">The board checks for updated snapshots every 15 minutes. The source scoreboards may report calls sooner.</p>
 <div class="viz-grid">
 <div class="card viz-stat"><strong>Senate balance</strong><div class="viz-stat-value">49 D-aligned · 39 R</div><div>12 uncalled · 65 seats carried over</div><small>Fox News · 2:18 pm Brisbane</small></div>
 <div class="card viz-stat"><strong>House calls</strong><div class="viz-stat-value">166 D · 104 R</div><div>165 uncalled · 270 of 435 called</div><small>AP feed via Fox News · 2:47 pm Brisbane</small></div>
@@ -76,6 +76,7 @@ body{margin:auto;max-width:850px;padding:20px;font:16px/1.5 system-ui,sans-serif
  OR:['D01'],PA:['D04 D07* D08* D10* D12 D17'],TX:['D20'],VT:['D01'],WA:['D06 D07 D10'],WI:['D02 D04']
  };
  let mode = 'senate', selected = 'NC';
+ let live;
  states.forEach((row,y)=>row.split(' ').forEach((state,x)=>{
    if(state==='.') return;
    const tile = document.createElement('button');
@@ -89,6 +90,13 @@ body{margin:auto;max-width:850px;padding:20px;font:16px/1.5 system-ui,sans-serif
  }));
  const stateName = state => full[state].replaceAll('_',' ');
  function calls(state){
+   if(live){
+     return Object.entries(live[mode].calls).filter(([,row])=>row[0]===state).map(([seat,[,party,name]])=>{
+       const old = mode==='senate' && senate[state]?.[1]===name ? senate[state][2] :
+         mode==='house' && house[state]?.[0].includes('D'+seat.slice(-2)+'*') ? 'R' : null;
+       return [party,seat+' '+name,old];
+     });
+   }
    if(mode==='senate') return senate[state] ? [senate[state]] : [];
    return (house[state]?.[0] || '').split(' ').filter(Boolean).map(code =>
       [code[0],state+'-'+code.slice(1,3),code.endsWith('*')?'R':null]);
@@ -119,6 +127,23 @@ body{margin:auto;max-width:850px;padding:20px;font:16px/1.5 system-ui,sans-serif
  }
  modes.forEach(button=>button.addEventListener('click',()=>{mode=button.dataset.mode;draw()}));
  draw();
+ async function refresh(){
+   try {
+     const response=await fetch('https://raw.githubusercontent.com/mattkdecide/mattkain-site/main/midterms-2026/results.json',{cache:'no-store'});
+     if(!response.ok) return;
+     live=await response.json();
+     const cards=root.querySelectorAll('.viz-stat');
+     ['senate','house'].forEach((key,i)=>{
+       const {totals,remaining,stamp}=live[key];
+       cards[i].querySelector('.viz-stat-value').textContent=totals[0]+(i?' D':' D-aligned')+' · '+totals[1]+' R';
+       cards[i].querySelector('.viz-stat-value').nextElementSibling.textContent=remaining+' uncalled'+(i?'':' · includes seats carried over');
+       cards[i].querySelector('small').textContent='Source updated '+new Date(stamp).toLocaleString('en-AU',{timeZone:'Australia/Brisbane'})+' Brisbane';
+     });
+     draw();
+   } catch {}
+ }
+ refresh();
+ setInterval(refresh,900000);
 })();
 </script>
 

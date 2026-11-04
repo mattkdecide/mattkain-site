@@ -1,0 +1,32 @@
+name: Refresh midterm results
+on:
+  schedule:
+    - cron: '0,15,30,45 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: midterms-refresh
+jobs:
+  refresh:
+    if: ${{ github.event.repository.fork == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - id: window
+        run: |
+          if [ "$(date -u +%s)" -lt "$(date -u -d '2026-11-04 11:08:15' +%s)" ]; then
+            echo 'active=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.window.outputs.active == 'true'
+      - name: Validate and publish snapshot
+        if: steps.window.outputs.active == 'true'
+        run: |
+          python3 midterms-2026/refresh.py
+          if git diff --quiet -- midterms-2026/results.json; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add midterms-2026/results.json
+          git commit -m 'Refresh election results snapshot'
+          git push

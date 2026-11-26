@@ -30,6 +30,10 @@
     audio { display: block; width: 100%; height: 38px; }
     .foot { margin: 15px 0 0; color: #e3d7e7; font: .75rem/1.5 system-ui, sans-serif; }
     .foot a { color: inherit; text-underline-offset: 3px; }
+    .lyrics { padding: clamp(40px, 7vw, 84px) 20px; border-top: 1px solid #736081; background: radial-gradient(circle at 50% 0, #292544, #101126 60%); }
+    .lyrics-inner { max-width: 760px; margin: 0 auto; }
+    .lyrics h2 { margin: 0 0 28px; color: #f3dfb7; font: 900 clamp(2.2rem, 5vw, 4rem)/1 Impact, Haettenschweiler, 'Arial Black', sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+    .lyrics pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: #f6f0e9; font: 400 clamp(1rem, 1.5vw, 1.15rem)/1.72 Georgia, 'Times New Roman', serif; }
     @media (max-width: 700px) {
       .art { object-fit: contain; object-position: center 12%; }
       .shade { background: linear-gradient(180deg, rgba(7,8,22,.05), rgba(7,8,22,.07) 35%, rgba(7,8,22,.72) 66%, #101126); }
@@ -58,9 +62,125 @@
           <audio id="audio" controls autoplay preload="auto" playsinline src="when-they-call-your-name.m4a"></audio>
         </div>
       </section>
-      <p class="foot">If your browser blocks autoplay, press play to start the song. <a href="when-they-call-your-name.m4a" download>Download audio</a></p>
+      <p class="foot">If your browser blocks autoplay, press play to start the song. <a href="when-they-call-your-name.m4a" download>Download audio</a> · <a href="#lyrics">Read lyrics</a></p>
     </div>
   </main>
+  <section class="lyrics" id="lyrics" aria-labelledby="lyrics-heading">
+    <div class="lyrics-inner">
+      <h2 id="lyrics-heading">Lyrics</h2>
+      <pre>WHEN THEY CALL YOUR NAME, CALL MINE (V2)
+
+Adobe asked for one name to call –
+one point of contact, joined at the hip.
+Publicis gave them three –
+one for BizPro, one for CPro, one for Creator.
+Three names. One promise.
+We GOT you, bro!
+
+VERSE 1
+I sit beside the client.
+I know their business through and through.
+The plan gets locked in week thirteen –
+we'll change it all by week two.
+Back at the agency, I fight for them
+on every Teams call, every WIP,
+and when someone cries "click inflation!"
+I raise one eyebrow, and I quip:
+"Tell me the why."
+
+PRECHORUS
+Every market, every plan, every switch we've ever thrown –
+I can see it all from here, like Neo reading code.
+Clicks are up but sales are down – are we pacing behind?
+A tracking error? A broken dash? I can read your mind.
+Korea knows just what to do, and India stands tall,
+ANZ and Singapore – one team across them all.
+I tell you what we found, what it's worth, what we can try,
+then hold our team to what we said, and look you in the eye.
+
+CHORUS
+When they call your name, call mine!
+POC!
+One voice on the line, all AY-pack behind me.
+Knock on one door – get the whole damn team.
+When they call your name, call mine!
+Call the goddam, mother-flippin, ass-kickin POC!
+
+VERSE 2
+[2:48–3:50 | Opera. Voices stack beat by beat.]
+Who builds the plan? The pen is yours.
+Who calls the publisher on this buy? The floor is yours.
+Ours are the skills. Ours is the bar.
+Ours are the people. Ours is the P&amp;L.
+Week on week, we're climbing!
+ Then why are we pacing behind?
+Both can be true – pull the quarter into view.
+How fast must we run to make the line?
+A custom report on social sentiment? Outside our scope!
+Can we get it live by five o'clock? Now that's a joke!
+But here's what I can do – I'll show you how to make the business grow!
+
+PRECHORUS
+Who holds us to the date we gave? POC!
+Who calls it out when we're making stuff up? POC!
+Who pushes us to be better, hit the KPIs, so we don't miss our targets and get our fee cut? POC!
+
+CHORUS
+When they call your name, call mine! POC!
+One voice on the line, all APAC behind me.
+Knock on one door – get the whole damn team.
+When they call your name, call mine!
+Call the supersonic, record-settin', attention-gettin' POC!
+
+INTERLUDE
+Forty-eight people on the old RTB,
+fifty slides of testimony.
+Now it's five a side. Lead with the goal –
+how are we pacing? Let the media roll.
+Find the ten per cent that's driving all the gap –
+that's where we dig. I'll bring the answer back.
+
+MONDAY!
+Preview's in – and last week threw a CPC spike.
+A price change? A promo? A page that wouldn't load?
+We bring the insight that the data showed.
+
+TUESDAY!
+Adobe's go-to-market call.
+What did they ask? I take it back inside,
+and make sure the team knows what to prioritise.
+
+WEDNESDAY!
+Nothing much happens on Wednesday.
+
+THURSDAY!
+The dashboard's in – write the narrative.
+Pete needs to send it out tonight!
+Fifty slides, performance calls – make sure we got it right!
+
+FRIDAY!
+We know how the week will end,
+and Monday we'll continue the trend –
+we carry what we learned, and the cycle never ends!
+
+PRECHORUS
+Each quarter's plan, the SOR – what's ready, what's slipping?
+And at the QBR – which bets are worth keeping?
+If I don't know, I can always find out.
+The client will help prioritise, that's what partnership's about.
+They want us to keep on pushing, that is understood
+but "Great is the enemy of good".
+
+That was the short version.
+
+CHORUS
+When they call your name, call mine! POC!
+One voice on the line, all APAC behind me.
+Knock on one door – get the whole damn team.
+When they call your name, call mine! POC!
+Call the gold-plated, always jaded, supersonic, gin-n-tonic, ass-kickin, finger-lickin, CPM and cost-per-clickin, never kiddin, take-no-shittin, mother-flippin POC!</pre>
+    </div>
+  </section>
   <script>
     const audio = document.getElementById('audio');
     const button = document.getElementById('play');

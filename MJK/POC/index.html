@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101126">
-  <meta name="description" content="When They Call Your Name (Ballad of the POC) — listen on mattkain.com.">
+  <meta name="description" content="When They Call Your Name (Ballad of the POC) — watch the music video on mattkain.com.">
   <title>When They Call Your Name — Ballad of the POC</title>
   <style>
     :root { color-scheme: dark; font-family: Georgia, 'Times New Roman', serif; }
     * { box-sizing: border-box; }
     html, body { min-height: 100%; margin: 0; }
     body { background: #101126; color: #fff7e9; }
-    .stage { position: relative; display: flex; min-height: 100svh; align-items: flex-end; overflow: hidden; isolation: isolate; }
+    .stage { position: relative; display: flex; min-height: 100svh; align-items: center; overflow: hidden; isolation: isolate; }
     .stage::before { content: ''; position: absolute; inset: -24px; z-index: -2; background: url('warriors.png') center / cover; filter: blur(22px) brightness(.4); }
     .art { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
     .shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(7,8,22,.16), transparent 42%, rgba(7,8,22,.43) 65%, rgba(7,8,22,.92)); pointer-events: none; }
@@ -20,14 +20,13 @@
     h1 { margin: 0 auto; font: 900 clamp(2.7rem, 7.5vw, 7rem)/.88 Impact, Haettenschweiler, 'Arial Black', sans-serif; letter-spacing: -.045em; text-transform: uppercase; -webkit-text-stroke: clamp(1px, .25vw, 3px) #352648; color: #ffe8a8; background: linear-gradient(#fff7d7 3%, #f8d782 35%, #b8753c 52%, #fff0b0 67%, #a85d35 96%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 4px 0 #492b52) drop-shadow(0 8px 0 #1a1b38) drop-shadow(0 12px 18px #050714); }
     h1 span { display: block; }
     .subtitle { display: inline-block; margin: 18px 0 27px; padding: 5px 20px; border-top: 2px solid #f8dea0; border-bottom: 2px solid #f8dea0; color: #fff0c6; font: 800 clamp(.95rem, 2.2vw, 1.6rem)/1.2 'Arial Black', system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 3px 6px #120d28; }
-    .player { display: flex; align-items: center; gap: 16px; width: min(100%, 650px); margin: 0 auto; padding: 16px; border: 1px solid rgba(249,236,206,.35); border-radius: 15px; background: rgba(14,17,37,.74); box-shadow: 0 16px 50px rgba(0,0,0,.3); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); text-align: left; }
-    .play { display: grid; flex: 0 0 62px; width: 62px; height: 62px; place-items: center; border: 1px solid #e9d4a6; border-radius: 50%; background: #f4dfb3; color: #15172f; font: 700 1.4rem/1 system-ui, sans-serif; cursor: pointer; transition: transform .2s, background .2s; }
+    .player { width: min(100%, 960px); margin: 0 auto; padding: 12px; border: 1px solid rgba(249,236,206,.35); border-radius: 16px; background: rgba(14,17,37,.82); box-shadow: 0 16px 50px rgba(0,0,0,.45); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; background: #080a16; }
+    .player-actions { display: flex; align-items: center; gap: 14px; padding: 12px 4px 2px; text-align: left; }
+    .play { flex: none; padding: 11px 16px; border: 1px solid #e9d4a6; border-radius: 999px; background: #f4dfb3; color: #15172f; font: 700 .85rem/1.2 system-ui, sans-serif; cursor: pointer; transition: transform .2s, background .2s; }
     .play:hover { transform: scale(1.06); background: #fff0cc; }
     .play:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
-    .player-body { min-width: 0; width: 100%; }
-    .track-title { margin: 0 0 4px; font: 700 .95rem/1.3 system-ui, sans-serif; }
-    .status { min-height: 1.3em; margin: 0 0 9px; color: #d8cde2; font: .78rem/1.3 system-ui, sans-serif; }
-    audio { display: block; width: 100%; height: 38px; }
+    .status { margin: 0; color: #e8dfec; font: .85rem/1.4 system-ui, sans-serif; }
     .foot { margin: 15px 0 0; color: #e3d7e7; font: .75rem/1.5 system-ui, sans-serif; }
     .foot a { color: inherit; text-underline-offset: 3px; }
     .lyrics { padding: clamp(40px, 7vw, 84px) 20px; border-top: 1px solid #736081; background: radial-gradient(circle at 50% 0, #292544, #101126 60%); }
@@ -40,8 +39,8 @@
       .content { padding-bottom: max(24px, env(safe-area-inset-bottom)); }
       h1 { font-size: clamp(2.5rem, 10vw, 5rem); }
       .subtitle { margin-top: 14px; }
-      .player { gap: 12px; padding: 12px; }
-      .play { flex-basis: 54px; width: 54px; height: 54px; }
+      .player { padding: 6px; }
+      .player-actions { flex-wrap: wrap; padding: 10px 6px 4px; }
     }
     @media (prefers-reduced-motion: reduce) { .play { transition: none; } }
   </style>
@@ -54,15 +53,17 @@
       <p class="eyebrow">MJK / POC</p>
       <h1><span>When They Call</span><span>Your Name</span></h1>
       <p class="subtitle">(Ballad of the POC)</p>
-      <section class="player" aria-label="Song player">
-        <button class="play" id="play" type="button" aria-label="Play song">▶</button>
-        <div class="player-body">
-          <p class="track-title">When They Call Your Name</p>
-          <p class="status" id="status" role="status">Loading audio…</p>
-          <audio id="audio" controls autoplay preload="auto" playsinline src="when-they-call-your-name.m4a"></audio>
+      <section class="player" aria-label="Music video player">
+        <video id="video" controls autoplay playsinline preload="auto" poster="warriors.png" aria-label="When They Call Your Name music video">
+          <source src="https://github.com/mattkdecide/mattkain-site/releases/download/poc-video-2026-11-26/when-they-call-your-name.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+        <div class="player-actions">
+          <button class="play" id="play" type="button">Play with sound</button>
+          <p class="status" id="status" role="status">Loading video…</p>
         </div>
       </section>
-      <p class="foot">If your browser blocks autoplay, press play to start the song. <a href="when-they-call-your-name.m4a" download>Download audio</a> · <a href="#lyrics">Read lyrics</a></p>
+      <p class="foot">Browsers may start the video muted. Tap “Play with sound” to hear the song. <a href="https://github.com/mattkdecide/mattkain-site/releases/download/poc-video-2026-11-26/when-they-call-your-name.mp4">Download video</a> · <a href="#lyrics">Read lyrics</a></p>
     </div>
   </main>
   <section class="lyrics" id="lyrics" aria-labelledby="lyrics-heading">
@@ -182,26 +183,29 @@ Call the gold-plated, always jaded, supersonic, gin-n-tonic, ass-kickin, finger-
     </div>
   </section>
   <script>
-    const audio = document.getElementById('audio');
+    const video = document.getElementById('video');
     const button = document.getElementById('play');
     const status = document.getElementById('status');
     function updatePlayer() {
-      const playing = !audio.paused && !audio.ended;
-      button.textContent = playing ? 'Ⅱ' : '▶';
-      button.setAttribute('aria-label', playing ? 'Pause song' : 'Play song');
-      status.textContent = playing ? 'Now playing' : audio.ended ? 'Finished — play again' : 'Ready to play';
+      const playing = !video.paused && !video.ended;
+      button.textContent = playing && !video.muted ? 'Pause video' : 'Play with sound';
+      status.textContent = playing && video.muted ? 'Playing muted — tap to hear sound' : playing ? 'Now playing' : video.ended ? 'Finished — play again' : 'Ready to play';
     }
     button.addEventListener('click', async () => {
-      if (!audio.paused) { audio.pause(); return; }
-      try { await audio.play(); }
-      catch { status.textContent = 'Audio could not start. Try the player controls below.'; }
+      if (!video.paused && !video.muted) { video.pause(); return; }
+      video.muted = false;
+      try { await video.play(); updatePlayer(); }
+      catch { status.textContent = 'Video could not start. Try the player controls.'; }
     });
-    audio.addEventListener('play', updatePlayer);
-    audio.addEventListener('pause', updatePlayer);
-    audio.addEventListener('ended', updatePlayer);
-    audio.addEventListener('error', () => { status.textContent = 'Audio unavailable. Try downloading the file.'; });
-    audio.play().then(updatePlayer).catch(() => {
-      status.textContent = 'Autoplay blocked — press play to begin';
+    video.addEventListener('play', updatePlayer);
+    video.addEventListener('pause', updatePlayer);
+    video.addEventListener('volumechange', updatePlayer);
+    video.addEventListener('ended', updatePlayer);
+    video.addEventListener('error', () => { status.textContent = 'Video unavailable. Try downloading the file.'; });
+    video.play().then(updatePlayer).catch(async () => {
+      video.muted = true;
+      try { await video.play(); updatePlayer(); }
+      catch { status.textContent = 'Autoplay blocked — tap “Play with sound” to begin'; }
     });
   </script>
 </body>
